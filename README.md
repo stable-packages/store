@@ -39,6 +39,37 @@ So that even if there are multiple version of your library exists in an applicat
 To use this global store properly, your data structure should not change across versions.
 One way to achieve this is to add versioning to your store to begin with.
 
+## Usage
+
+```ts
+import { getStore } from 'global-store'
+
+const defaultValue = { ... }
+const store = getStore('my-module-key:some-store', defaultValue)
+
+store.value....
+
+```
+
+## How does it different with <any store / data manager>
+
+`global-store` itself is simple, in fact so dead simple that any one just starting to write program can create one.
+It does not have any bells and whistles to do fancy thing.
+
+Which is a GREAT THING.
+It follows SRP to the core.
+And it is very unlikely to change.
+
+The main advantage of `global-store` is the promise of a locked version library.
+So you can rely on there will only be one version of `global-store` exists in an application.
+
+## About patch version increment
+
+Patch version change may still cause problem if the a module lock the exact version of this library.
+But it rarely happens, and we need some version flexibility to make improvements to the library.
+
+So, any module / package author, you should not version lock your module. :tada:
+
 ## Multi-versions issue
 
 Say your are writing `your-module-a`.
@@ -91,30 +122,6 @@ Yes it does, and it is funny that it sounds like we are going full circle back a
 You can easily imagine if `global-store` support them, it will be a neverending story and version locking is just not possible.
 
 If you need to share states between process / iframe, use the same old IPC, web worker, process, whatever, to share the data between those `global-store`s.
-
-## Usage
-
-```ts
-import { getStore } from 'global-store'
-
-const defaultValue = { ... }
-const store = getStore('my-module-key:some-store', defaultValue)
-
-store.value....
-
-```
-
-## How does it different with <any store / data manager>
-
-`global-store` itself is simple, in fact so dead simple that any one just starting to write program can create one.
-It does not have any bells and whistles to do fancy thing.
-
-Which is a GREAT THING.
-It follows SRP to the core.
-And it is very unlikely to change.
-
-The main advantage of `global-store` is the promise of a locked version library.
-So you can rely on there will only be one version of `global-store` exists in an application.
 
 ## Contribute
 
