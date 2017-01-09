@@ -7,6 +7,76 @@
 
 A version locked global store.
 
+Global state is bad.
+You should avoid using any global state as much as possible.
+This includes singleton, global namespace data and **private module data**.
+
+Furthermore, with version resolution mechanism provided by package manager, such as `npm`, you have [a even bigger problem](#multi-version-issue).
+
+In general, avoid any mutable global state.
+It will make your code hard to test and hard to maintain.
+
+**I can't stress that enough**.
+
+Then why am I making this library?
+
+There are some situation you do need to have some global states.
+It is ok to have global state only if it does not affect your codes testability and maintainability.
+
+This library provides a holy ground for those global states.
+
+It is an in-memory store, and will ever only be an in-memory store.
+
+This library will move to version `1.0` as soon as possible.
+But once it reaches `1.0`, it will never update to other major or minor releases.
+i.e. there will be no `1.1` or `2.0` of this library.
+
+It may release patches to add misc info, e.g. improve typings, fix typos, or add `flow` support, but that's it.
+
+With the version locked, you can rest assure there will be one and only one version of this library ever available in any application.
+So that even if there are multiple version of your library exists in an application, they will have access to the same global store.
+
+To use this global store properly, your data structure should not change across versions.
+One way to achieve this is to add versioning to your store to begin with.
+
+## How about global namespace
+
+You may wonder that global namespace "provides" the same functionality.
+Yes it does, and it is funny that it sounds like we are going full circle back and realize the goodness of global namespace.
+
+`global-store` provide the same functionality of global namespace in this regards, and it provide the same functionality when global namespace is not available, i.e. in NodeJS.
+
+## What about cross process / iframe sharing
+
+`global-store` does not do this in order to keep the version locked.
+You can easily imagine if `global-store` support them, it will be a neverending story and version locking is just not possible.
+
+If you need to share states between process / iframe, use the same old IPC, web worker, process, whatever, to share the data between those `global-store`s.
+
+## Usage
+
+```ts
+import { getStore } from 'global-store'
+
+const defaultValue = { ... }
+const store = getStore('my-module-key:some-store', defaultValue)
+
+store.value....
+
+```
+
+## How does it different with <any store / data manager>
+
+`global-store` itself is simple, in fact so dead simple that any one just starting to write program can create one.
+It does not have any bells and whistles to do fancy thing.
+
+Which is a GREAT THING.
+It follows SRP to the core.
+And it is very unlikely to change.
+
+The main advantage of `global-store` is the promise of a locked version library.
+So you can rely on there will only be one version of `global-store` exists in an application.
+
 ## Contribute
 
 ```sh
