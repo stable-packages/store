@@ -11,7 +11,7 @@ Global state is bad.
 You should avoid using any global state as much as possible.
 This includes singleton, global namespace data and **private module data**.
 
-Furthermore, with version resolution mechanism provided by package manager, such as `npm`, you have [a even bigger problem](#multi-version-issue).
+Furthermore, with version resolution mechanism provided by package manager, such as `npm`, you have [a even bigger problem](#multi-versions-issue).
 
 In general, avoid any mutable global state.
 It will make your code hard to test and hard to maintain.
@@ -38,6 +38,45 @@ So that even if there are multiple version of your library exists in an applicat
 
 To use this global store properly, your data structure should not change across versions.
 One way to achieve this is to add versioning to your store to begin with.
+
+## Multi-versions issue
+
+Say your are writing `your-module-a`.
+It has some mutable private module data, e.g.:
+
+```ts
+const cakeSold = 0
+
+export function getCake() {
+  cakeSold++
+  return new Cake()
+}
+
+export function getCakeSold() {
+  return cakeSold
+}
+```
+
+You released `your-module-a@1.0`.
+
+Someone else notice `your-module-a`, liked it, and start using it in his own module, `his-module-b`.
+
+He released `his-module-b@1.5` using `your-module-a@1.0`.
+
+Some time later, you have made some changes to `your-module-a`, and release it as `your-module-a@2.0`.
+The `cakeSold`, `getCake()` and `getCakeSold()` were not changed.
+
+Now I come in and create an application, using both `your-module-a@2.0` and `his-module-b@1.5`.
+
+Since `his-module-b@1.5` uses `your-module-a@1.0`, my version tree looks like this:
+
+```sh
+- his-module-b@1.5
+  - your-module-a@1.0
+- your-module-a@2.0
+```
+
+As you can guess, in memory there will be two different `cakeSold` and your module stop working correctly.
 
 ## How about global namespace
 
