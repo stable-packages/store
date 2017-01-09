@@ -51,7 +51,7 @@ store.value....
 
 ```
 
-## How does it different with <any store / data manager>
+## How does it different with `<any store / data manager>`
 
 `global-store` itself is simple, in fact so dead simple that any one just starting to write program can create one.
 It does not have any bells and whistles to do fancy thing.
