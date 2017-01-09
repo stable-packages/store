@@ -6,15 +6,30 @@
 [![Coverage Status][coveralls-image]][coveralls-url]
 
 A version locked global store.
+This is designed to be used by packages.
+
+For application, you should consider some dependency injection library to help access to your application-wide global information.
+
+## DISCLAIMER
+
+This library is designed to use in specific scenarios.
+You should think thrice before you decide to use this library.
+Understanding the drawbacks of any global store is a must before using this library.
+
+## Overview (don't skim this!)
 
 Global state is bad.
-You should avoid using any global state as much as possible.
-This includes singleton, global namespace data and **private module data**.
 
-Furthermore, with version resolution mechanism provided by package manager, such as `npm`, you have [a even bigger problem](#multi-versions-issue).
+Specifically, *mutable global state* is bad.
 
-In general, avoid any mutable global state.
-It will make your code hard to test and hard to maintain.
+If you utilize some form of *mutable global state*, more often then not it will obstruct you from writing unit tests and your code will be harder to maintain.
+
+*Mutable global state* comes in may different forms.
+The most known ones are singleton, global namespace variable, and mutable static variables.
+
+With the advance of modularization, another form of *mutable global state* appears, which is *private module data*.
+
+Besides testability and maintainability, using global state can actually lead to [incorrect result](#multi-versions-issue).
 
 **I can't stress that enough**.
 
