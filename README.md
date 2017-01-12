@@ -4,6 +4,7 @@
 [![NPM downloads][downloads-image]][downloads-url]
 [![Build status][travis-image]][travis-url]
 [![Coverage Status][coveralls-image]][coveralls-url]
+![](http://img.badgesize.io/unional/global-store/master/dist/global-store.js)
 
 A version locked global store.
 This is designed to be used by packages.
