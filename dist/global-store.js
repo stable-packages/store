@@ -1,3 +1,4 @@
+/*! global-store.js version: 0.3.0 generated on: Thu Jan 12 2017 */
 var GlobalStore =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
