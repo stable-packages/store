@@ -61,6 +61,8 @@ One way to achieve this is to add versioning to your store to begin with.
 import getStore from 'global-store'
 
 const defaultValue = { ... }
+
+// Note: The key MUST be unique in the consuming application.
 const store = getStore('my-module-key:some-store', defaultValue)
 
 store.value....
