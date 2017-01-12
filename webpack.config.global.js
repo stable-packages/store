@@ -1,8 +1,10 @@
 'use strict';
-const path = require('path')
-const pascalCase = require('pascal-case')
 const paramCase = require('param-case')
+const pascalCase = require('pascal-case')
+const path = require('path')
+
 const pjson = require('./package.json')
+
 const packageName = pjson.name
 const filename = paramCase(packageName)
 const namespace = pascalCase(filename)

@@ -49,7 +49,7 @@ export function getStore<T>(id: string, defaultValue?: T): Store<T> {
 
 /**
  * Remove a store from the global state.
- * You normally would not do this as your module (across all versions) depends on the store.
+ * Internal for testing only
  */
 export function removeStore(store: Store<any>): void {
   if (store) {
