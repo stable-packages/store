@@ -32,12 +32,12 @@ With the advance of modularization, another form of *mutable global state* appea
 
 Besides testability and maintainability, using global state can actually lead to [incorrect result](#multi-versions-issue).
 
-**I can't stress that enough**.
-
 Then why am I making this library?
 
-There are some situation you do need to have some global states.
+There are some situations you do need to retain some information globally.
 It is ok to have global state only if it does not affect your codes testability and maintainability.
+
+**I can't stress that enough**.
 
 This library provides a holy ground for those global states.
 
@@ -82,9 +82,7 @@ So you can rely on there will only be one version of `global-store` exists in an
 ## About patch version increment
 
 Patch version change may still cause problem if the a module lock the exact version of this library.
-But it rarely happens, and we need some version flexibility to make improvements to the library.
-
-So, any module / package author, you should not version lock your module. :tada:
+But it rarely happens, and we need some versioning flexibility to make improvements to the library.
 
 ## Multi-versions issue
 
