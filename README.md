@@ -58,12 +58,13 @@ One way to achieve this is to add versioning to your store to begin with.
 ## Usage
 
 ```ts
-import getStore from 'global-store'
+import { getStore, Store } from 'global-store'
 
-const defaultValue = { ... }
+interface StoreType { ... }
+const defaultValue: StoreType = { ... }
 
 // Note: The key MUST be unique in the consuming application.
-const store = getStore('my-module-key:some-store', defaultValue)
+const store: Store<StoreType> = getStore('my-module-key:some-store', defaultValue)
 
 store.value....
 

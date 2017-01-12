@@ -1,4 +1,4 @@
 import { getStore, Store } from './getStore'
 
-export default getStore
-export { Store }
+// Avoid using default export so it will play nicely in CommonJS and global namespace.
+export { getStore, Store }
