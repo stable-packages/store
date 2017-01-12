@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist/global",
+    "sourceRoot": "/global-store"
+  },
+  "files": [
+    "src/index.ts"
+  ],
+  "include": [
+    "typings/index.d.ts"
+  ]
+}

@@ -8,7 +8,7 @@ const filename = paramCase(packageName)
 const namespace = pascalCase(filename)
 
 module.exports = {
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   entry: {
     [filename]: './dist/commonjs/index'
   },
@@ -19,9 +19,10 @@ module.exports = {
     libraryTarget: 'var'
   },
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.js$/,
+        enforce: 'pre',
+        test: /\.js?$/,
         loader: "source-map-loader"
       }
     ]
