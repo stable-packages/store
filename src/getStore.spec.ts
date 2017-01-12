@@ -3,9 +3,14 @@ import test from 'ava'
 import { getLogger, Logger, Appender } from 'aurelia-logging'
 
 import { removeStore } from './getStore'
-import { getStore } from './index'
+import defaultGet, { getStore } from './index'
 
 const logger = getLogger('GlobalStore:spec')
+
+test('shape', t => {
+  t.is(defaultGet, getStore)
+})
+
 test('simple string store', t => {
   const store = getStore('something')
   store.value = 'somevalue'

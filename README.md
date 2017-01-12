@@ -58,7 +58,7 @@ One way to achieve this is to add versioning to your store to begin with.
 ## Usage
 
 ```ts
-import { getStore, Store } from 'global-store'
+import getStore, { Store } from 'global-store'
 
 interface StoreType { ... }
 const defaultValue: StoreType = { ... }
