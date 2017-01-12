@@ -3,7 +3,7 @@ import test from 'ava'
 import { getLogger, Logger, Appender } from 'aurelia-logging'
 
 import { removeStore } from './getStore'
-import getStore from './index'
+import { getStore } from './index'
 
 const logger = getLogger('GlobalStore:spec')
 test('simple string store', t => {
