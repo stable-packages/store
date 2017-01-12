@@ -7,9 +7,18 @@
 ![](http://img.badgesize.io/unional/global-store/master/dist/global-store.js)
 
 A version locked global store.
-This is designed to be used by packages.
 
-For application, you should consider some dependency injection library to help access to your application-wide global information.
+This is designed to be used by packages.
+For application, you should consider using a dependency injection library to help access to your application-wide global information.
+
+This library will move to version `1.0` as soon as possible.
+But once it reaches `1.0`, it will never update to other major or minor releases.
+i.e. there will be no `1.1` or `2.0` of this library.
+
+It may release patches to add misc info, e.g. improve typings, fix typos, or add `flow` support, but that's it.
+
+With the version locked, you can rest assure there will be one and only one version of this library ever available in any application.
+So that even if there are multiple version of your library exists in an application, they will have access to the same global store.
 
 ## DISCLAIMER
 
@@ -42,15 +51,6 @@ It is ok to have global state only if it does not affect your codes testability 
 This library provides a holy ground for those global states.
 
 It is an in-memory store, and will ever only be an in-memory store.
-
-This library will move to version `1.0` as soon as possible.
-But once it reaches `1.0`, it will never update to other major or minor releases.
-i.e. there will be no `1.1` or `2.0` of this library.
-
-It may release patches to add misc info, e.g. improve typings, fix typos, or add `flow` support, but that's it.
-
-With the version locked, you can rest assure there will be one and only one version of this library ever available in any application.
-So that even if there are multiple version of your library exists in an application, they will have access to the same global store.
 
 To use this global store properly, your data structure should not change across versions.
 One way to achieve this is to add versioning to your store to begin with.
