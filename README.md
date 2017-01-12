@@ -94,7 +94,7 @@ It has some mutable private module data, e.g.:
 ```ts
 const cakeSold = 0
 
-export function getCake() {
+export function sellCake() {
   cakeSold++
   return new Cake()
 }
