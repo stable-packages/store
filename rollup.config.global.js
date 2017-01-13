@@ -15,7 +15,6 @@ export default {
   moduleId: pkg.name,
   moduleName,
   entry: 'dist/commonjs/index.js',
-  exports: 'named',
   dest: `dist/${paramCase(pkg.name)}.js`,
   format: 'iife',
   sourceMap: true,
