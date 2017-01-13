@@ -15,5 +15,5 @@ before_install:
 script:
   - npm run verify
 
-after_script:
+after_success:
   - npm run coveralls

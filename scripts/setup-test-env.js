@@ -4,4 +4,4 @@ const ColorAppender = require('aurelia-logging-color').ColorAppender
 
 LogManager.addAppender(new ColorAppender())
 
-LogManager.setLevel(LogManager.logLevel.none)
+LogManager.setLevel(LogManager.logLevel.debug)
