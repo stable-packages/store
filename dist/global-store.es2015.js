@@ -1,0 +1,2 @@
+!function(t){"use strict";function e(t){return t&&t.__esModule?t.default:t}function o(t,e){return e={exports:{}},t(e,e.exports),e.exports}function r(t,e){return i[t]=i[t]||new u(t,e)}function n(t){t&&delete i[t.id]}class u{constructor(t,e={}){this.id=t,this.value=e}}const i={};var s=r,l=n,c={getStore:s,removeStore:l},f=o(function(t,e){const o=c;e.getStore=o.getStore,Object.defineProperty(e,"__esModule",{value:!0}),e.default=o.getStore}),d=e(f),S=f.getStore;t.default=d,t.getStore=S}(this.GlobalStore=this.GlobalStore||{});
+//# sourceMappingURL=global-store.es2015.js.map
