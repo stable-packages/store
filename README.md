@@ -72,6 +72,8 @@ store.value....
 
 ```
 
+When you are bundling your package, make sure you exclude this library.
+
 ## How does it different with `<any store / data manager>`
 
 `global-store` itself is simple, in fact so dead simple that any one just starting to write program can create one.
