@@ -27,12 +27,20 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: `${filename}.es5.js`,
     library: globalVariable,
-    libraryTarget: 'var'
+    libraryTarget: 'var',
+    devtoolModuleFilenameTemplate: (info) => {
+      if (info.identifier.lastIndexOf('.ts') === info.identifier.length - 3) {
+        return `webpack:///${pjson.name}/${info.resource.slice(9)}`
+      }
+      else {
+        return `webpack:///${info.resourcePath}`
+      }
+    }
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
-      compress: {warnings: false},
-      output: {comments: false},
+      compress: { warnings: false },
+      output: { comments: false },
       sourceMap: true
     })
   ]

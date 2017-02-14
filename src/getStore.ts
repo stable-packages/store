@@ -6,7 +6,7 @@ export interface Store<T> {
   /**
    * ID of the store.
    */
-  id: string
+  id: string | symbol
 
   /**
    * The store value.
@@ -27,23 +27,24 @@ class StoreImpl<T> implements Store<T> {
    * If consumer use this is simple type store (`string`, `number` etc),
    * this `{}` is wasted but it is a trade off to be made.
    */
-  constructor(public id: string, defaultValue: T = {} as T) {
+  constructor(public id: string | symbol, defaultValue: T = {} as T) {
     this.value = defaultValue
    }
 }
 
-const globalState: { [i: string]: Store<any> } = {}
+const globalState = {}
 
 /**
  * Gets or creates a store.
  * @param id A unique identifier to the store.
- * This id MUST be unique across all modules in an application.
+ * It can be a symbol created from `Symbol.for(key)`,
+ * or a runtime-wide unique string:
  * You should make it descriptive.
  * You should use your module's name or unique key as part of the id.
- * @param defaultValue Optional, but most of the time you will specify it.
- * You can skip the defaultValue for very basic use cases: basic types and hash.
+ * You can add some secret random string to it.
+ * @param defaultValue Optional default value.
  */
-export function getStore<T>(id: string, defaultValue?: T): Store<T> {
+export function getStore<T>(id: string | symbol, defaultValue?: T): Store<T> {
   return globalState[id] = globalState[id] || new StoreImpl<T>(id, defaultValue)
 }
 

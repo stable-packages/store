@@ -12,18 +12,17 @@ test('shape', t => {
 })
 
 test('simple string store', t => {
-  const store = getStore('something')
-  store.value = 'somevalue'
-
+  const store = getStore('something', 'somevalue')
   t.is(store.value, 'somevalue')
 
   t.is(getStore('something', ''), store)
 
+  // Retain current value instead of the new default value.
+  t.is(store.value, 'somevalue')
+
   removeStore(store)
   const store2 = getStore('something')
   t.not(store2, store)
-
-  t.notThrows(() => removeStore(undefined as any))
 })
 
 test('complex store', t => {
@@ -33,4 +32,13 @@ test('complex store', t => {
 
   const another = getStore('aurelia-logging:global', defaultValue)
   t.is(another.value.loggers[0], logger)
+})
+
+test('empty store', t => {
+  const store = getStore('empty-store')
+  t.deepEqual(store.value, {})
+
+  store.value = 1
+  const another = getStore('empty-store')
+  t.is(another.value, 1)
 })
