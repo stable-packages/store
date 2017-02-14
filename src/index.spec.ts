@@ -2,43 +2,63 @@ import test from 'ava'
 
 import { getLogger, Logger, Appender } from 'aurelia-logging'
 
-import { removeStore } from './getStore'
-import defaultGet, { getStore } from './index'
+import create, { get, set } from './index'
 
 const logger = getLogger('GlobalStore:spec')
 
-test('shape', t => {
-  t.is(defaultGet, getStore)
-})
-
-test('simple string store', t => {
-  const store = getStore('something', 'somevalue')
-  t.is(store.value, 'somevalue')
-
-  t.is(getStore('something', ''), store)
+test('simple string', t => {
+  const str = get('something', 'somevalue')
+  t.is(str, 'somevalue')
 
   // Retain current value instead of the new default value.
-  t.is(store.value, 'somevalue')
+  t.is(get('something', ''), str)
 
-  removeStore(store)
-  const store2 = getStore('something')
-  t.not(store2, store)
+  set('something', 'abc')
+  const str2 = get('something')
+  t.not(str2, str)
 })
 
 test('complex store', t => {
   const defaultValue = { loggers: [] as Logger[], appenders: [] as Appender[] }
-  const store = getStore('aurelia-logging:global', defaultValue)
-  store.value.loggers.push(logger)
+  const value = get('aurelia-logging:global', defaultValue)
+  value.loggers.push(logger)
 
-  const another = getStore('aurelia-logging:global', defaultValue)
-  t.is(another.value.loggers[0], logger)
+  const another = get<typeof defaultValue>('aurelia-logging:global')
+  t.is(another.loggers[0], logger)
 })
 
 test('empty store', t => {
-  const store = getStore('empty-store')
-  t.deepEqual(store.value, {})
+  const value = get('empty-store')
+  t.is(value, undefined)
 
-  store.value = 1
-  const another = getStore('empty-store')
-  t.is(another.value, 1)
+  set('empty-store', 1)
+  const another = get('empty-store')
+  t.is(another, 1)
+})
+
+test('create', t => {
+  const defaultValue = { a: 1 }
+  const store = create('create-store', defaultValue)
+  const actual = store.get()
+  t.deepEqual(actual, defaultValue)
+
+  const newValue = { a: 2 }
+  store.set(newValue)
+  t.is(store.get(), newValue)
+})
+
+test('get/set with symbol', t => {
+  const sym = Symbol.for('get/set with symbol')
+  const actual = get(sym, 'x')
+  t.is(actual, 'x')
+  set(sym, 'y')
+  t.is(get(sym), 'y')
+})
+
+test('create with symbol', t => {
+  const sym = Symbol.for('create with symbol')
+  const store = create(sym, { a: 1, b: 2 })
+  t.deepEqual(store.get(), { a: 1, b: 2 })
+  store.set({ a: 3, b: 4 })
+  t.deepEqual(store.get(), { a: 3, b: 4 })
 })
