@@ -73,6 +73,25 @@ value.hachou = 2
 store.set(value)
 ```
 
+If you prefer functional programming, you can also do this:
+
+```ts
+import { get, set } from 'global-store'
+
+interface SomeInfo { ... }
+const defaultValue: SomeInfo = { ... }
+
+// Note: The id MUST be runtime-wide unique.
+const value = get('my-module:some-purpose:<some-random-string>', defaultValue)
+
+// Or use symbol
+const value = get(Symbol.for('my-module:some-purpose'), defaultValue)
+
+// update value
+value.hachou = 2
+set('my-module:some-purpose:<some-random-string>', value)
+```
+
 When you bundle your library, remember to exclude this library or else that really defeat the purpose.
 
 ## How does it different with `<any store / data manager>`
