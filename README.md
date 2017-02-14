@@ -10,36 +10,34 @@
 
 A version locked global store.
 
-This is designed to be used by packages.
-For application, you should consider using a dependency injection library to help access to your application-wide global information.
-
-This library will move to version `1.0` as soon as possible.
-But once it reaches `1.0`, it will never update to other major or minor releases.
+Once this library reaches `1.0`, it will never update to other major or minor releases.
 i.e. there will be no `1.1` or `2.0` of this library.
 
 It may release patches to add misc info, e.g. improve typings, fix typos, or add `flow` support, but that's it.
 
-With the version locked, you can rest assure there will be one and only one version of this library ever available in any application.
-So that even if there are multiple version of your library exists in an application, they will have access to the same global store.
+## Objective
 
-## DISCLAIMER
+This libary provides a reliable place in memory for your library to store and retrieve any information.
+With the version locked, even if there are multiple versions of your library exist in an application, they will access the same global store.
 
-This library is designed to use in specific scenarios.
-You should think thrice before you decide to use this library.
-Understanding the drawbacks of any global store is a must before using this library.
+This library is designed to be used in specific scenarios.
+You should think thrice before deciding to use this library.
+You should understad the drawbacks of using mutable global state before using this library.
 
 ## Overview (don't skim this!)
 
 Global state is bad.
 
-Specifically, *mutable global state* is bad.
+Specifically, globally referenced state is bad.
+
+Furthermore, *mutable globally referenced state* is worse (for simplicity, we will refer it to simply *mutable global state* in this document).
 
 If you utilize some form of *mutable global state*, more often then not it will obstruct you from writing unit tests and your code will be harder to maintain.
 
 *Mutable global state* comes in may different forms.
-The most known ones are singleton, global namespace variable, and mutable static variables.
+Well known *mutable global state* are singleton, global namespace variable, and mutable static variables.
 
-With the advance of modularization, another form of *mutable global state* appears, which is *private module data*.
+With modularization, *private module data* is added to the list.
 
 Besides testability and maintainability, using global state can actually lead to [incorrect result](#multi-versions-issue).
 
@@ -54,25 +52,28 @@ This library provides a holy ground for those global states.
 
 It is an in-memory store, and will ever only be an in-memory store.
 
-To use this global store properly, your data structure should not change across versions.
-One way to achieve this is to add versioning to your store to begin with.
-
 ## Usage
 
 ```ts
-import getStore, { Store } from 'global-store'
+import create from 'global-store'
 
-interface StoreType { ... }
-const defaultValue: StoreType = { ... }
+interface SomeInfo { ... }
+const defaultValue: SomeInfo = { ... }
 
-// Note: The key MUST be unique in the consuming application.
-const store: Store<StoreType> = getStore('my-module-key:some-store', defaultValue)
+// Note: The id MUST be runtime-wide unique.
+const store = create('my-module:some-purpose:<some-random-string>', defaultValue)
 
-store.value....
+// Or use symbol
+const store = create(Symbol.for('my-module:some-purpose'), defaultValue)
 
+const value = store.get()
+
+// update value
+value.hachou = 2
+store.set(value)
 ```
 
-When you are bundling your package, make sure you exclude this library.
+When you bundle your library, remember to exclude this library or else that really defeat the purpose.
 
 ## How does it different with `<any store / data manager>`
 
@@ -88,7 +89,7 @@ So you can rely on there will only be one version of `global-store` exists in an
 
 ## About patch version increment
 
-Patch version change may still cause problem if the a module lock the exact version of this library.
+Patch version change may still cause problem if the a module locks the exact version of this library.
 But it rarely happens, and we need some versioning flexibility to make improvements to the library.
 
 ## Multi-versions issue
@@ -135,7 +136,9 @@ As you can guess, in memory there will be two different `cakeSold` and your modu
 You may wonder that global namespace "provides" the same functionality.
 Yes it does, and it is funny that it sounds like we are going full circle back and realize the goodness of global namespace.
 
-`global-store` provide the same functionality of global namespace in this regards, and it provide the same functionality when global namespace is not available, i.e. in NodeJS.
+`global-store` provides the same functionality of global namespace in this regards, but without the publicity.
+
+If your library only work on the server side, e.g. NodeJS, you can consider using environment variable instead of this library.
 
 ## What about cross process / iframe sharing
 
