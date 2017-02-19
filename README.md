@@ -61,7 +61,7 @@ interface SomeInfo { ... }
 const defaultValue: SomeInfo = { ... }
 
 // Note: The id MUST be runtime-wide unique.
-const store = create('my-module:some-purpose:<some-random-string>', defaultValue)
+const store = create('my-module:some-purpose:[some-random-string]', defaultValue)
 
 // Or use symbol
 const store = create(Symbol.for('my-module:some-purpose'), defaultValue)
@@ -82,7 +82,7 @@ interface SomeInfo { ... }
 const defaultValue: SomeInfo = { ... }
 
 // Note: The id MUST be runtime-wide unique.
-const value = get('my-module:some-purpose:<some-random-string>', defaultValue)
+const value = get('my-module:some-purpose:[some-random-string]', defaultValue)
 
 // Or use symbol
 const value = get(Symbol.for('my-module:some-purpose'), defaultValue)
