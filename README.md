@@ -148,7 +148,7 @@ Since `his-module-b@1.5` uses `your-module-a@1.0`, my version tree looks like th
 - your-module-a@2.0
 ```
 
-As you can guess, in memory there will be two different `cakeSold` and your module stop working correctly.
+As you can guess, in memory there will be two different `cakeSold` and your module stopped working correctly.
 
 ## How about global namespace
 
@@ -157,7 +157,7 @@ Yes it does, and it is funny that it sounds like we are going full circle back a
 
 `global-store` provides the same functionality of global namespace in this regards, but without the publicity.
 
-If your library only work on the server side, e.g. NodeJS, you can consider using environment variable instead of this library.
+If your library only works on the server side, e.g. NodeJS, you can also consider using environment variable directly.
 
 ## What about cross process / iframe sharing
 
