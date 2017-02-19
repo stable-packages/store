@@ -32,9 +32,9 @@ Specifically, globally referenced state is bad.
 
 Furthermore, *mutable globally referenced state* is worse (for simplicity, we will refer it to simply *mutable global state* in this document).
 
-If you utilize some form of *mutable global state*, more often then not it will obstruct you from writing unit tests and your code will be harder to maintain.
+If you utilize some form of *mutable global state*, more often than not it will obstruct you from writing unit tests and your code will be harder to maintain.
 
-*Mutable global state* comes in may different forms.
+*Mutable global state* comes in many different forms.
 Well known *mutable global state* are singleton, global namespace variable, and mutable static variables.
 
 With modularization, *private module data* is added to the list.
