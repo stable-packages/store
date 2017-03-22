@@ -25,7 +25,7 @@ With the version locked, even if there are multiple versions of your library exi
 This library is designed to be used by libraries only.
 Specifically, for libraries that want to have some global states in memory for the lifetime of the application.
 
-For example, caching, configuration object, etc.
+For example, caching, registry, etc.
 
 You should understand the drawbacks of using any global state in your library,
 and mitigate the drawbacks by properly structure your code to get around these drawbacks.
