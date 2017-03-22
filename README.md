@@ -10,19 +10,27 @@
 
 A version locked global store.
 
+The objective is to have the only one *instance* of `global-store` in any given application.
+
 Once this library reaches `1.0`, it will never update to other major or minor releases.
 i.e. there will be no `1.1` or `2.0` of this library.
 
 It may release patches to add misc info, e.g. improve typings, fix typos, or add `flow` support, but that's it.
 
-## Objective
+## Summary
 
 This libary provides a reliable place in memory for your library to store and retrieve any information.
 With the version locked, even if there are multiple versions of your library exist in an application, they will access the same global store.
 
-This library is designed to be used in specific scenarios.
-You should think thrice before deciding to use this library.
-You should understad the drawbacks of using mutable global state before using this library.
+This library is designed to be used by libraries only.
+Specifically, for libraries that want to have some global states in memory for the lifetime of the application.
+
+For example, caching, configuration object, etc.
+
+You should understand the drawbacks of using any global state in your library,
+and mitigate the drawbacks by properly structure your code to get around these drawbacks.
+
+For application code, you do not need this library.
 
 ## Overview (don't skim this!)
 
@@ -48,7 +56,7 @@ It is ok to have global state only if it does not affect your codes testability 
 
 **I can't stress that enough**.
 
-This library provides a holy ground for those global states.
+This library attempts to provide a holy ground for those global states.
 
 It is an in-memory store, and will ever only be an in-memory store.
 
@@ -92,19 +100,10 @@ value.hachou = 2
 set('my-module:some-purpose:<some-random-string>', value)
 ```
 
+For `Symbol`, remember to use `Symbol.for()` instead of `Symbol()`.
+The latter doesn't work for this purpose.
+
 When you bundle your library, remember to exclude this library or else that really defeat the purpose.
-
-## How does it different with `<any store / data manager>`
-
-`global-store` itself is simple, in fact so dead simple that any one just starting to write program can create one.
-It does not have any bells and whistles to do fancy thing.
-
-Which is a GREAT THING.
-It follows SRP to the core.
-And it is very unlikely to change.
-
-The main advantage of `global-store` is the promise of a locked version library.
-So you can rely on there will only be one version of `global-store` exists in an application.
 
 ## About patch version increment
 
