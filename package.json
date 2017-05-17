@@ -1,7 +1,7 @@
 {
   "name": "global-store",
   "description": "A version locked global store.",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "main": "dist/es5/index.js",
   "module": "dist/es2015/index.js",
   "typings": "dist/es5/index.d.ts",
