@@ -8,6 +8,7 @@ const globalState: any = {}
  * You should make it descriptive.
  * You should use your module's name or unique key as part of the id.
  * You can add some secret random string to it.
+ * e.g. `my-module:some-purpose:some-random-string`
  * @param defaultValue Optional default value.
  */
 export function get<T>(id: string | symbol, defaultValue?: T): T {
@@ -23,6 +24,14 @@ export function set(id: string | symbol, value: any) {
 
 /**
  * Creates a store of type T.
+ * @param id A unique identifier to the store.
+ * It can be a symbol created from `Symbol.for(key)`,
+ * or a runtime-wide unique string:
+ * You should make it descriptive.
+ * You should use your module's name or unique key as part of the id.
+ * You can add some secret random string to it.
+ * e.g. `my-module:some-purpose:some-random-string`
+ * @param defaultValue Optional default value.
  */
 export default function create<T>(id: string | symbol, defaultValue?: T): Store<T> {
   return {
