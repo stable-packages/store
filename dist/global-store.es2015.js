@@ -17,7 +17,9 @@ function get(id, defaultValue) {
     return globalState[id] = globalState[id] || defaultValue;
 }
 /**
- * Set a value
+ * Sets a value.
+ * @param id The unique identifier of the store.
+ * @param value Any value you want to save.
  */
 function set(id, value) {
     globalState[id] = value;

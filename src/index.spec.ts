@@ -7,14 +7,14 @@ import create, { get, set } from './index'
 const logger = getLogger('GlobalStore:spec')
 
 test('simple string', t => {
-  const str = get('something', 'somevalue')
+  const str = get('someSimpleKey', 'somevalue')
   t.is(str, 'somevalue')
 
   // Retain current value instead of the new default value.
-  t.is(get('something', ''), str)
+  t.is(get('someSimpleKey', ''), str)
 
-  set('something', 'abc')
-  const str2 = get('something')
+  set('someSimpleKey', 'abc')
+  const str2 = get('someSimpleKey')
   t.not(str2, str)
 })
 
@@ -27,7 +27,7 @@ test('complex store', t => {
   t.is(another.loggers[0], logger)
 })
 
-test('empty store', t => {
+test('getting store before setting should return undefined', t => {
   const value = get('empty-store')
   t.is(value, undefined)
 
@@ -36,7 +36,7 @@ test('empty store', t => {
   t.is(another, 1)
 })
 
-test('create', t => {
+test('create a store.', t => {
   const defaultValue = { a: 1 }
   const store = create('create-store', defaultValue)
   const actual = store.get()

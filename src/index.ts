@@ -16,7 +16,9 @@ export function get<T>(id: string | symbol, defaultValue?: T): T {
 }
 
 /**
- * Set a value
+ * Sets a value.
+ * @param id The unique identifier of the store.
+ * @param value Any value you want to save.
  */
 export function set(id: string | symbol, value: any) {
   globalState[id] = value
