@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { getLogger, Logger, Appender } from 'aurelia-logging'
 
-import create, { get, set } from './index'
+import defaultCreate, { create, get, set } from './index'
 
 const logger = getLogger('GlobalStore:spec')
 
@@ -61,4 +61,8 @@ test('create with symbol', t => {
   t.deepEqual(store.get(), { a: 1, b: 2 })
   store.set({ a: 3, b: 4 })
   t.deepEqual(store.get(), { a: 3, b: 4 })
+})
+
+test('default export is `create`', t => {
+  t.is(defaultCreate, create)
 })

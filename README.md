@@ -63,7 +63,7 @@ It is an in-memory store, and will ever only be an in-memory store.
 ## Usage
 
 ```ts
-import create from 'global-store'
+import { create } from 'global-store'
 
 interface SomeInfo { ... }
 const defaultValue: SomeInfo = { ... }

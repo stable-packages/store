@@ -24,6 +24,11 @@ export function set(id: string | symbol, value: any) {
   globalState[id] = value
 }
 
+export interface Store<T> {
+  get(): T
+  set(value: T): void
+}
+
 /**
  * Creates a store of type T.
  * @param id A unique identifier to the store.
@@ -35,7 +40,7 @@ export function set(id: string | symbol, value: any) {
  * e.g. `my-module:some-purpose:some-random-string`
  * @param defaultValue Optional default value.
  */
-export default function create<T>(id: string | symbol, defaultValue?: T): Store<T> {
+export function create<T>(id: string | symbol, defaultValue?: T): Store<T> {
   return {
     get() {
       return get<T>(id, defaultValue)
@@ -46,7 +51,4 @@ export default function create<T>(id: string | symbol, defaultValue?: T): Store<
   }
 }
 
-export interface Store<T> {
-  get(): T
-  set(value: T): void
-}
+export default create
