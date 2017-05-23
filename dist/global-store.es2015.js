@@ -48,6 +48,7 @@ function create(id, defaultValue) {
 
 exports.get = get;
 exports.set = set;
+exports.create = create;
 exports['default'] = create;
 
 }((this.GlobalStore = this.GlobalStore || {})));
