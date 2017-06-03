@@ -11,7 +11,7 @@ const globalState: any = {}
  * e.g. `my-module:some-purpose:some-random-string`
  * @param defaultValue Optional default value.
  */
-export function get<T>(id: string | symbol, defaultValue?: T): T {
+export function get<T = any>(id: string | symbol, defaultValue?: T): T {
   return globalState[id] = globalState[id] || defaultValue
 }
 
@@ -40,7 +40,7 @@ export interface Store<T> {
  * e.g. `my-module:some-purpose:some-random-string`
  * @param defaultValue Optional default value.
  */
-export function create<T>(id: string | symbol, defaultValue?: T): Store<T> {
+export function create<T = any>(id: string | symbol, defaultValue?: T): Store<T> {
   return {
     get() {
       return get<T>(id, defaultValue)
