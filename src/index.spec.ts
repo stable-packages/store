@@ -69,8 +69,9 @@ test('default export is `create`', t => {
 
 test('by default the store is created with value any', t => {
   const store = create('default any store')
-  const value = store.get()
-  value.anything = 1
+  let value = store.get()
+  value = 1
+  value = 'anything'
   store.set(value)
   t.pass('value type is any')
 })
