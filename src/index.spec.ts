@@ -66,3 +66,12 @@ test('create with symbol', t => {
 test('default export is `create`', t => {
   t.is(defaultCreate, create)
 })
+
+test('by default the store is created with value any', t => {
+  const store = create('default any store')
+  let value = store.get()
+  value = 1
+  value = 'anything'
+  store.set(value)
+  t.pass('value type is any')
+})
