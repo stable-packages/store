@@ -1,5 +1,6 @@
 # global-store
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/unional/global-store.svg)](https://greenkeeper.io/)
 [![unstable][unstable-image]][unstable-url]
 [![NPM version][npm-image]][npm-url]
 [![NPM downloads][downloads-image]][downloads-url]
@@ -90,7 +91,7 @@ interface SomeInfo { ... }
 const defaultValue: SomeInfo = { ... }
 
 // Note: The id MUST be runtime-wide unique.
-const value = get('my-module:some-purpose:[some-random-string]', defaultValue)
+const value = get('my-module:some-purpose:<some-random-string>', defaultValue)
 
 // Or use symbol
 const value = get(Symbol.for('my-module:some-purpose'), defaultValue)
