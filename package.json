@@ -25,7 +25,7 @@
     "prepublishOnly": "npm run build && npm run bundle",
     "preversion": "git pull && npm run verify",
     "test": "npm run clean && tsc && ava",
-    "verify": "npm run lint && npm run coverage && npm run prepare && npm run dependency-check",
+    "verify": "npm run lint && npm run coverage && npm run prepublishOnly && npm run dependency-check",
     "watch": "npm run clean && node scripts/watch.js"
   },
   "author": {
