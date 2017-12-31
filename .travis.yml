@@ -1,12 +1,16 @@
 language: node_js
 
+cache:
+  directories:
+    - ~/.npm
 notifications:
-  email:
-    on_success: never
-    on_failure: change
+  email: false
 
 node_js:
-  - "stable"
+  - '9'
+  - '8'
+  - '7'
+  - '6'
 
 branches:
   only:
