@@ -6,7 +6,10 @@ notifications:
     on_failure: change
 
 node_js:
-  - "stable"
+  - '9'
+  - '8'
+  - '7'
+  - '6'
 
 branches:
   only:
