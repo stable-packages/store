@@ -12,10 +12,11 @@ const globalVariable = pascalCase(filename)
 module.exports = {
   devtool: 'source-map',
   entry: './src/index.ts',
+  mode: 'production',
   module: {
     rules: [
       {
-        loader: "ts-loader",
+        loader: 'ts-loader',
         test: /\.tsx?$/,
         options: {
           configFile: 'tsconfig.es5.json',
@@ -27,11 +28,7 @@ module.exports = {
   output: {
     path: path.resolve('dist'),
     filename: `${filename}.es5.js`,
-    library: globalVariable,
-    devtoolModuleFilenameTemplate: (info) => {
-      if (info.identifier.lastIndexOf('.ts') === info.identifier.length - 3)
-        return `webpack:///${pjson.name}/${info.resource.slice(6)}`
-    }
+    library: globalVariable
   },
   plugins: [
     new UglifyJS({
