@@ -7,8 +7,9 @@ notifications:
   email: false
 
 node_js:
+  - '10'
   - '9'
-  - '8.0.0'
+  - '8'
   - '7'
   - '6'
 
