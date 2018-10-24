@@ -7,7 +7,6 @@ module.exports = {
   },
   'reporters': [
     'default',
-    '@unional/jest-progress-reporter',
     ['jest-audio-reporter', { volume: 0.3 }],
   ],
   'roots': [
