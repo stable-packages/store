@@ -1,9 +1,6 @@
-import t from 'assert'
-import a from 'assertron'
-
-import { getLogger, Logger, Appender } from 'aurelia-logging'
-
-import defaultCreate, { create, get, set } from './index'
+import t from 'assert';
+import { Appender, getLogger, Logger } from 'aurelia-logging';
+import defaultCreate, { create, get, set } from './index';
 
 const logger = getLogger('GlobalStore:spec')
 
