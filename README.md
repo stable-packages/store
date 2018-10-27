@@ -67,13 +67,16 @@ It is an in-memory store, and will ever only be an in-memory store.
 import { create } from 'global-store'
 
 interface SomeInfo { ... }
-const defaultValue: SomeInfo = { ... }
+
+function createDefault(): SomeInfo {
+  return { ... }
+}
 
 // Note: The id MUST be runtime-wide unique.
-const store = create('my-module:some-purpose:[some-random-string]', defaultValue)
+const store = create('my-module:some-purpose:[some-random-string]', createDefault())
 
 // Or use symbol
-const store = create(Symbol.for('my-module:some-purpose'), defaultValue)
+const store = create(Symbol.for('my-module:some-purpose'), createDefault())
 
 const value = store.get()
 
@@ -88,13 +91,16 @@ If you prefer functional programming, you can also do this:
 import { get, set } from 'global-store'
 
 interface SomeInfo { ... }
-const defaultValue: SomeInfo = { ... }
+
+function createDefault(): SomeInfo {
+  return { ... }
+}
 
 // Note: The id MUST be runtime-wide unique.
-const value = get('my-module:some-purpose:<some-random-string>', defaultValue)
+const value = get('my-module:some-purpose:<some-random-string>', createDefault())
 
 // Or use symbol
-const value = get(Symbol.for('my-module:some-purpose'), defaultValue)
+const value = get(Symbol.for('my-module:some-purpose'), createDefault())
 
 // update value
 value.hachou = 2
@@ -103,6 +109,9 @@ set('my-module:some-purpose:<some-random-string>', value)
 
 For `Symbol`, remember to use `Symbol.for()` instead of `Symbol()`.
 The latter doesn't work for this purpose.
+
+It is recommended to use a function to create the default value.
+This way, you can easily reset your store during testing.
 
 When you bundle your library, remember to exclude this library or else that really defeat the purpose.
 
