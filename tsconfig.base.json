@@ -19,6 +19,9 @@
     "sourceMap": true,
     "strictNullChecks": true
   },
+  "exclude": [
+    "*.js.flow"
+  ],
   "files": [
     "src/index.ts"
   ]

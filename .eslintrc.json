@@ -1,5 +1,9 @@
 {
+  "parser": "babel-eslint",
   "extends": "plugin:harmony/latest",
+  "plugins": [
+    "flowtype"
+  ],
   "root": true,
   "env": {
     "node": true

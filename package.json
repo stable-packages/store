@@ -8,7 +8,8 @@
   "files": [
     "dist",
     "dist-es5",
-    "dist-es2015"
+    "dist-es2015",
+    "flow-typed"
   ],
   "scripts": {
     "build": "npm run build-es5 && npm run build-es2015 && npm run bundle",
@@ -45,8 +46,10 @@
     "assertron": "^5.2.0",
     "aurelia-logging": "^1.5.0",
     "aurelia-polyfills": "^1.3.0",
+    "babel-eslint": "^10.0.1",
     "dependency-check": "^3.2.1",
     "eslint": "^5.7.0",
+    "eslint-plugin-flowtype": "^3.1.1",
     "eslint-plugin-harmony": "^1.0.4",
     "greenkeeper-lockfile": "^1.15.1",
     "jest": "^23.6.0",
