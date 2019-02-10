@@ -64,7 +64,7 @@ It is an in-memory store, and will ever only be an in-memory store.
 ## Usage
 
 ```ts
-import { create } from 'global-store'
+import { createStore } from 'global-store'
 
 interface SomeInfo { ... }
 
@@ -73,38 +73,16 @@ function createDefault(): SomeInfo {
 }
 
 // Note: The id MUST be runtime-wide unique.
-const store = create('my-module:some-purpose:[some-random-string]', createDefault())
+const store = createStore('my-module:some-purpose:[some-random-string]', createDefault())
 
 // Or use symbol
-const store = create(Symbol.for('my-module:some-purpose'), createDefault())
+const store = createStore(Symbol.for('my-module:some-purpose'), createDefault())
 
 const value = store.get()
 
 // update value
 value.hachou = 2
 store.set(value)
-```
-
-If you prefer functional programming, you can also do this:
-
-```ts
-import { get, set } from 'global-store'
-
-interface SomeInfo { ... }
-
-function createDefault(): SomeInfo {
-  return { ... }
-}
-
-// Note: The id MUST be runtime-wide unique.
-const value = get('my-module:some-purpose:<some-random-string>', createDefault())
-
-// Or use symbol
-const value = get(Symbol.for('my-module:some-purpose'), createDefault())
-
-// update value
-value.hachou = 2
-set('my-module:some-purpose:<some-random-string>', value)
 ```
 
 For `Symbol`, remember to use `Symbol.for()` instead of `Symbol()`.
