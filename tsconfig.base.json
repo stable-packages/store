@@ -12,12 +12,11 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "newLine": "LF",
-    "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": false,
     "sourceMap": true,
-    "strictNullChecks": true
+    "strict": true
   },
   "exclude": [
     "*.js.flow"

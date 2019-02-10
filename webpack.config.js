@@ -34,5 +34,9 @@ module.exports = {
     new UglifyJS({
       sourceMap: true
     })
-  ]
+  ],
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js'],
+    mainFields: ['browser', 'main']
+  }
 }
