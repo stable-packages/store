@@ -9,7 +9,8 @@
     "dist",
     "dist-es5",
     "dist-es2015",
-    "flow-typed"
+    "flow-typed",
+    "index.js.flow"
   ],
   "scripts": {
     "build": "npm run build-es5 && npm run build-es2015 && npm run bundle",
