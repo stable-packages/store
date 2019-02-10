@@ -1,5 +1,7 @@
-export type Store<T> = { get(): T, set(value: T): void }
+declare module 'global-store' {
+  declare export type Store<T> = { get(): T, set(value: T): void }
 
-declare export function create<T>(id: string | symbol, defaultValue: T): Store<T>
+  declare export function createStore<T>(id: string | symbol, defaultValue: T): Store<T>
 
-declare export default create
+  declare export default createStore
+}
