@@ -5,6 +5,9 @@
   },
   "buildOnSave": false,
   "compileOnSave": false,
+  "compilerOptions": {
+    "noEmit": true
+  },
   "include": [
     "src"
   ]
