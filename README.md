@@ -48,7 +48,7 @@ Well known *mutable global state* are singleton, global namespace variable, and 
 
 With modularization, *private module data* is added to the list.
 
-Besides testability and maintainability, using global state can actually lead to [incorrect result](#multi-versions-issue).
+Besides testability and maintainability, using *private module data* can lead to [incorrect result](#multi-versions-issue).
 
 Then why am I making this library?
 
