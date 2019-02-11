@@ -138,7 +138,7 @@ In the example above, after `b.ts` is processed, the `value` in `a.ts` is still 
 
 The same goes for functional style.
 
-The best practice is mutate the object instead of replacing it.
+The best practice is mutating the object instead of replacing it.
 Using the functional style as an example:
 
 ```ts
