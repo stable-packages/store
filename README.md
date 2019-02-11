@@ -130,7 +130,7 @@ const value = store.get()
 // b.ts
 import { createStore } from 'global-store'
 
-const store = createStore('some-store', { a: 1 })
+const store = createStore('some-store')
 store.set({ a: 2 })
 ```
 
