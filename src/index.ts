@@ -1,4 +1,3 @@
-import { createStore } from './createStore'
+export * from './createStore';
 
-export { createStore }
-export default createStore
+export { createStore as default } from './createStore';

@@ -1,71 +1,136 @@
 import t from 'assert';
-import { Appender, getLogger, Logger } from 'aurelia-logging';
-import defaultCreate, { createStore } from '.';
+import { typeAssert } from 'type-plus';
+import { createStore, getStoreValue, setStoreValue } from '.';
 
-const logger = getLogger('GlobalStore:spec')
+describe('createStore()', () => {
+  test('create a store without default value is initialized with undefined', () => {
+    const store = createStore('store-without-default')
+    expect(store.get()).toBeUndefined()
+  })
 
-test('simple string', () => {
-  const store = createStore('someSimpleKey', 'somevalue')
-  const str = store.get()
-  t.strictEqual(str, 'somevalue')
+  test('create store without default has type any', () => {
+    const store = createStore('store-is-any')
+    store.set(1)
+    store.set(true)
+    store.set('a')
+  })
 
-  // Retain current value instead of the new default value.
-  const sameStore = createStore('someSimpleKey', '')
-  const str2 = sameStore.get()
-  t.strictEqual(str2, str)
+  test('store type by default follows shape of the default value', () => {
+    const strStore = createStore('str-store', 'abc')
+    typeAssert.isString(strStore.get())
 
-  store.set('abc')
-  const str3 = sameStore.get()
-  t.notStrictEqual(str3, str)
+    const numStore = createStore('num-store', 1)
+    typeAssert.isNumber(numStore.get())
+
+    const boolStore = createStore('bool-store', false)
+    typeAssert.isBoolean(boolStore.get())
+  })
+
+  test('store type can be overriden', () => {
+    const store = createStore<{ a?: string }>('override', {})
+    typeAssert.isString(store.get().a!)
+  })
+
+  test('initialized with default value', () => {
+    const defaultValue = { a: 1 }
+    const store = createStore('init-value', defaultValue)
+    const actual = store.get()
+    expect(actual).toBe(defaultValue)
+  })
+
+  test('update value by set()', () => {
+    const store = createStore('set-store', {})
+
+    const newValue = { a: 2 }
+    store.set(newValue)
+    t.strictEqual(store.get(), newValue)
+  })
+
+  test('store id can be symbol', () => {
+    const sym = Symbol.for('create with symbol')
+    const store = createStore(sym, { a: 1, b: 2 })
+    t.deepStrictEqual(store.get(), { a: 1, b: 2 })
+    store.set({ a: 3, b: 4 })
+    t.deepStrictEqual(store.get(), { a: 3, b: 4 })
+  })
+
+  test('property reference are persisted', () => {
+    const store = createStore('prop-ref', { a: { b: 1 } })
+    const orig = store.get()
+    orig.a = { b: 3 }
+    const actual = store.get()
+    expect(actual.a).toEqual(orig.a)
+  })
+
+  test('create with same id will get existing store', () => {
+    createStore('same-name', { a: 1 })
+    const actual = createStore('same-name')
+    expect(actual.get()).toEqual({ a: 1 })
+  })
 })
 
-test('complex store', () => {
-  const defaultValue = { loggers: [] as Logger[], appenders: [] as Appender[] }
-  const store = createStore('aurelia-logging:global', defaultValue)
-  const value = store.get()
-  value.loggers.push(logger)
+describe('getStoreValue()/setStoreValue()', () => {
+  test('get a store value without default value is initialized with undefined', () => {
+    const value = getStoreValue('store-without-default-fn')
+    expect(value).toBeUndefined()
+  })
 
-  const anotherStore = createStore<typeof defaultValue>('aurelia-logging:global')
-  t.strictEqual(anotherStore.get().loggers[0], logger)
-})
+  test('get a store value without default has type any', () => {
+    let value = getStoreValue('store-is-any-fn')
+    value = 1
+    value = true
+    value = 'a'
+    expect(value).toBe('a')
+  })
 
-test('getting store before setting should return undefined', () => {
-  const store = createStore('empty-store')
-  const value = store.get()
-  t.strictEqual(value, undefined)
+  test('store type by default follows shape of the default value', () => {
+    const strValue = getStoreValue('str-store-fn', 'abc')
+    typeAssert.isString(strValue)
 
-  store.set(1)
-  const another = store.get()
-  t.strictEqual(another, 1)
-})
+    const numValue = getStoreValue('num-store-fn', 1)
+    typeAssert.isNumber(numValue)
 
-test('create a store.', () => {
-  const defaultValue = { a: 1 }
-  const store = createStore('create-store', defaultValue)
-  const actual = store.get()
-  t.deepStrictEqual(actual, defaultValue)
+    const boolValue = getStoreValue('bool-store-fn', false)
+    typeAssert.isBoolean(boolValue)
+  })
 
-  const newValue = { a: 2 }
-  store.set(newValue)
-  t.strictEqual(store.get(), newValue)
-})
+  test('store type can be overriden', () => {
+    const value = getStoreValue<{ a?: string }>('override-fn', {})
+    typeAssert.isString(value.a!)
+  })
 
-test('create with symbol', () => {
-  const sym = Symbol.for('create with symbol')
-  const store = createStore(sym, { a: 1, b: 2 })
-  t.deepStrictEqual(store.get(), { a: 1, b: 2 })
-  store.set({ a: 3, b: 4 })
-  t.deepStrictEqual(store.get(), { a: 3, b: 4 })
-})
+  test('initialized with default value', () => {
+    const defaultValue = { a: 1 }
+    const actual = getStoreValue('init-value-fn', defaultValue)
+    expect(actual).toBe(defaultValue)
+  })
 
-test('default export is `createStore`', () => {
-  t.strictEqual(defaultCreate, createStore)
-})
+  test('update value by set()', () => {
+    getStoreValue('set-store-fn', {})
 
-test('by default the store is created with value any', () => {
-  const store = createStore('default any store')
-  let value = store.get()
-  value = 1
-  value = 'anything'
-  store.set(value)
+    const newValue = { a: 2 }
+    setStoreValue('set-store-fn', newValue)
+    t.strictEqual(getStoreValue('set-store-fn'), newValue)
+  })
+
+  test('store id can be symbol', () => {
+    const sym = Symbol.for('create with symbol fn')
+    const actual = getStoreValue(sym, { a: 1, b: 2 })
+    t.deepStrictEqual(actual, { a: 1, b: 2 })
+    setStoreValue(sym, { a: 3, b: 4 })
+    t.deepStrictEqual(getStoreValue(sym), { a: 3, b: 4 })
+  })
+
+  test('property reference are persisted', () => {
+    const orig = getStoreValue('prop-ref-fn', { a: { b: 1 } })
+    orig.a = { b: 3 }
+    const actual = getStoreValue('prop-ref-fn')
+    expect(actual.a).toEqual(orig.a)
+  })
+
+  test('get with same id will get existing store', () => {
+    getStoreValue('same-name-fn', { a: 1 })
+    const actual = getStoreValue('same-name-fn')
+    expect(actual).toEqual({ a: 1 })
+  })
 })

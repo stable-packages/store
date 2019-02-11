@@ -85,6 +85,28 @@ value.hachou = 2
 store.set(value)
 ```
 
+If you prefer functional programming, you can also do this:
+
+```ts
+import { getStoreValue, setStoreValue } from 'global-store'
+
+interface SomeInfo { ... }
+
+function createDefault(): SomeInfo {
+  return { ... }
+}
+
+// Note: The id MUST be runtime-wide unique.
+const value = getStoreValue('my-module:some-purpose:<some-random-string>', createDefault())
+
+// Or use symbol
+const value = getStoreValue(Symbol.for('my-module:some-purpose'), createDefault())
+
+// update value
+value.hachou = 2
+setStoreValue('my-module:some-purpose:<some-random-string>', value)
+```
+
 For `Symbol`, remember to use `Symbol.for()` instead of `Symbol()`.
 The latter doesn't work for this purpose.
 
@@ -92,6 +114,41 @@ It is recommended to use a function to create the default value.
 This way, you can easily reset your store during testing.
 
 When you bundle your library, remember to exclude this library or else that really defeat the purpose.
+
+## Aware of reference changes
+
+Be aware that what you are persisting is a simple object.
+That means if you set a new object, other part of your code may not aware of it.
+
+```ts
+// a.ts
+import { createStore } from 'global-store'
+
+const store = createStore('some-store', { a: 1 })
+const value = store.get()
+
+// b.ts
+import { createStore } from 'global-store'
+
+const store = createStore('some-store', { a: 1 })
+store.set({ a: 2 })
+```
+
+In the example above, after `b.ts` is processed, the `value` in `a.ts` is still `{ a: 1 }`,
+
+The same goes for functional style.
+
+The best practice is mutate the object instead of replacing it.
+Using the functional style as an example:
+
+```ts
+import { getStoreValue, setStoreValue } from 'global-store'
+
+const value = getStoreValue('some-store', { a: { b: 1 } })
+
+value.a = { b: 2 }
+setStoreValue('some-store', value) // reuse the same reference
+```
 
 ## About patch version increment
 
