@@ -1,6 +1,6 @@
 {
   "name": "global-store",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "A version locked global store.",
   "homepage": "https://github.com/unional/global-store",
   "bugs": {
