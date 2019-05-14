@@ -9,8 +9,15 @@
 <body>
   <!--Scripts are added inside body to ensoure sequential loading-->
   <!--TODO add additional scripts needed to run the code-->
-  <!-- <script src="dist/global-store.es2015.js"></script> -->
-  <script src="dist/global-store.es5.js"></script>
+  <!-- <script src="dist/global-store.es5js"></script> -->
+  <!-- <script src="dist/global-store.es.js"></script> -->
+  <script src="node_modules/systemjs/dist/system.js"></script>
+  <script>
+    System.import('/dist/global-store.systemjs.js')
+      .then(g => {
+        console.log(g)
+      })
+  </script>
 </body>
-
+  Open developer tool and check out console
 </html>

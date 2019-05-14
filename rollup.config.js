@@ -5,20 +5,19 @@ export default {
   output: [
     // ES module version, for modern browsers
     {
-      file: 'lib/global-store-es.js',
-      // dir: 'public/module',
+      exports: 'named',
+      file: 'dist/global-store.es.js',
       format: 'es',
       sourcemap: true
     },
     // SystemJS version, for older browsers
     {
-      file: 'lib/global-store-systemjs.js',
-      // dir: 'public/nomodule',
+      exports: 'named',
+      file: 'dist/global-store.systemjs.js',
       format: 'system',
       sourcemap: true
     }
   ],
-  experimentalCodeSplitting: true,
   plugins: [
     typescript()
   ]
