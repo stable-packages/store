@@ -2,7 +2,6 @@
 const paramCase = require('param-case')
 const pascalCase = require('pascal-case')
 const path = require('path')
-const UglifyJS = require('uglifyjs-webpack-plugin')
 
 const pjson = require('./package.json')
 
@@ -30,11 +29,6 @@ module.exports = {
     filename: `${filename}.es5.js`,
     library: globalVariable
   },
-  plugins: [
-    new UglifyJS({
-      sourceMap: true
-    })
-  ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     mainFields: ['browser', 'main']
