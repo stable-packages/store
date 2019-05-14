@@ -2,6 +2,7 @@ declare module 'global-store' {
   declare export type Store<T> = { get(): T, set(value: T): void }
 
   declare export function createStore<T>(id: string | symbol, defaultValue: T): Store<T>
-
+  declare export function getStoreValue<T>(id: string | symbol, defaultValue: T): T
+  declare export function setStoreValue<T>(id: string | symbol, defaultValue: any): void
   declare export default createStore
 }

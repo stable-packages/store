@@ -10,7 +10,7 @@ const globalVariable = pascalCase(filename)
 
 module.exports = {
   devtool: 'source-map',
-  entry: './src/index.ts',
+  entry: './src/index',
   mode: 'production',
   module: {
     rules: [

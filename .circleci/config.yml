@@ -13,13 +13,10 @@ workflows:
       - node8:
           requires:
             - node-latest
-      - node6:
-          requires:
-            - node-latest
 jobs:
   local:
     docker:
-      - image: circleci/node:11
+      - image: circleci/node:latest
     steps:
       - checkout
       - run: npm run verify
@@ -73,16 +70,6 @@ jobs:
   node8:
     docker:
       - image: 'circleci/node:8'
-    steps:
-      - checkout
-      - attach_workspace:
-          at: '.'
-      - run: npm run verify
-      - store_test_results:
-          path: .reports/junit
-  node6:
-    docker:
-      - image: 'circleci/node:6'
     steps:
       - checkout
       - attach_workspace:
