@@ -23,9 +23,9 @@ For stable version, please check out [here](https://github.com/unional/global-st
 
 ## Who need this
 
-- library that can be used by other libraries, and
-- library that has state, and/or
-- library that want to protect its state from modification.
+- library can be used by other libraries, and
+- library with state, and/or
+- library wants to protect its state from modification.
 
 ## Why do you need this
 
