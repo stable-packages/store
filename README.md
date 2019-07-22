@@ -25,8 +25,10 @@
 ## Why do you need this
 
 If you use a file level variable to store some states,
-and your library might be used by other libraries,
-the state it store would scatter around the memory and you will get inconsistent result:
+and your library can be used by other libraries,
+the state it stores would scatter around the memory and you will get inconsistent result.
+
+For example, you have this:
 
 ```ts
 const registry = {}
@@ -36,7 +38,7 @@ export function addComponent(name: string, component: any) {
 }
 ```
 
-This is because when your library is used by other libraries,
+When your library is used by other libraries,
 they may use different versions.
 For example:
 
@@ -53,11 +55,11 @@ both versions of your library are loaded thus two instance of the `registry` var
 Solution to this problem is to use some form of global storage such as `process.env` in NodeJS,
 and `localStorage` or global variable in browser.
 
-The problem is that these mechanism are shared by everything else in the application,
+The problem is that these mechanisms are shared by everything else in the application,
 completely exposed to everyone,
-and there is no mechanism to consolidate your state when they are populated my each copy of your library.
+and there is no mechanism to consolidate your state when they are populated by each version of your library being loaded.
 
-These are the problems addressed by [`global-store`](https://github.com/unional/global-store)
+These are the problems addressed by [`global-store`](https://github.com/unional/global-store).
 
 ## API
 
