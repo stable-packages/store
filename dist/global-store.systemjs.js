@@ -111,7 +111,7 @@ System.register([], function (exports) {
                 var isLocked = false;
                 var testing = false;
                 return {
-                    openForTesting: function () {
+                    disableProtection: function () {
                         if (isLocked)
                             throw new Prohibited(moduleName, 'enable testing');
                         testing = true;

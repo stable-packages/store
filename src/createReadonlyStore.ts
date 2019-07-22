@@ -16,12 +16,12 @@ export type ReadonlyStore<T extends StoreValue> = Store<T> & {
    */
   getWritable(): T
   /**
-   * Open the store for testing.
+   * Disable the readonly feature of the store.
    * Calling this function will make the store not readonly.
    * It will behaves just like the normal `Store`.
    * Obviously, you should only call this during testing.
    */
-  openForTesting(): void,
+  disableProtection(): void,
   /**
    * Lock the store so that it cannot be modified.
    * @param finalizer A finalizer object to do a final process of the value.
@@ -50,7 +50,7 @@ export function createReadonlyStore<
   let isLocked = false
   let testing = false
   return {
-    openForTesting() {
+    disableProtection() {
       if (isLocked) throw new Prohibited(moduleName, 'enable testing')
       testing = true
     },

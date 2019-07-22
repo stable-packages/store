@@ -12,8 +12,8 @@ test('create with same id will get existing store', () => {
   const store1 = createReadonlyStore(moduleName, 'same-key', () => ({ a: 1 }))
   const store2 = createReadonlyStore(moduleName, 'same-key', () => ({ a: 1 }))
 
-  store1.openForTesting()
-  store2.openForTesting()
+  store1.disableProtection()
+  store2.disableProtection()
 
   store1.get().a = 2
 
@@ -30,8 +30,8 @@ test('store is typed by the initializer', () => {
   const store1 = createReadonlyStore(moduleName, 'typed-by-initializer', () => ({ a: 1 }))
   const store2 = createReadonlyStore(moduleName, 'typed-by-initializer', prev => ({ ...prev, b: 1 }))
 
-  store1.openForTesting()
-  store2.openForTesting()
+  store1.disableProtection()
+  store2.disableProtection()
 
   assertType.isNumber(store1.get().a)
   assertType.isNumber(store2.get().b)
@@ -54,7 +54,7 @@ test('initializer receives the previous initial value', () => {
 test('call reset() on 1st store gets latest initial value', () => {
   const store1 = createReadonlyStore(moduleName, '2nd-reset-get-1st', () => ({ a: 1 }))
   createReadonlyStore(moduleName, '2nd-reset-get-1st', () => ({ a: 2, b: true }))
-  store1.openForTesting()
+  store1.disableProtection()
 
   store1.reset()
   expect(store1.get()).toEqual({ a: 2, b: true })
@@ -67,13 +67,13 @@ test('call get() on not locked store throws', () => {
 
 test('call openForTesting() when the store is locked will throw', () => {
   const store = createReadonlyStore(moduleName, 'locked-test-throw', () => ({ a: 1 })).lock()
-  a.throws(() => store.openForTesting(), Prohibited)
+  a.throws(() => store.disableProtection(), Prohibited)
 })
 
 test('call lock() after openForTesting() will not lock the store', () => {
   const store = createReadonlyStore(moduleName, 'test-lock-noop', () => ({ a: 1 }))
 
-  store.openForTesting()
+  store.disableProtection()
   store.lock()
   store.reset() // did not throw
 })

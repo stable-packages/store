@@ -100,7 +100,7 @@ function createReadonlyStore(moduleName, key, initializer) {
     var isLocked = false;
     var testing = false;
     return {
-        openForTesting: function () {
+        disableProtection: function () {
             if (isLocked)
                 throw new Prohibited(moduleName, 'enable testing');
             testing = true;

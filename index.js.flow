@@ -8,7 +8,7 @@ declare module 'global-store' {
 
   declare export type ReadonlyStore<T: StoreValue> = Store<T> & {
     getWritable(): T,
-    openForTesting(): ValidationError,
+    disableProtection(): void,
     lock(finalizer?: $Shape<{
       [K: $Keys<T>]: (value: $PropertyType<T, K>) => $PropertyType<T, K>
     }> & {

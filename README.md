@@ -159,7 +159,7 @@ Then the store is locked, the following happens:
 - [`get()`](#ReadonlyStore#get()) is open to be used.
 - [`reset()`](#ReadonlyStore#reset()) results in error.
 - [`getWritable()`](#ReadonlyStore#getWritable()) results in error.
-- [`openForTesting()`](#ReadonlyStore#openForTesting()) results in error.
+- [`disableProtection()`](#ReadonlyStore#disableProtection()) results in error.
 
 `lock()` takes an optional `finalizer` argument.
 It can contains properties matching the property names of the store,
@@ -193,11 +193,11 @@ you need a mechanism to access the store and configure it.
 
 Once the store is locked, calling `getWritable()` results in error.
 
-#### ReadonlyStore#openForTesting()
+#### ReadonlyStore#disableProtection()
 
 During testing,
 you need a mechanism to allow the [`get()`](#ReadonlyStore#get()) calls to go through without locking the store.
-`openForTesting()` tells the store to turn off all checks so it can be used during test.
+`disableProtection()` tells the store to turn off all checks so it can be used during test.
 
 Due to its power, you should not have any code calling this method except in your test code.
 
