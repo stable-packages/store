@@ -54,7 +54,6 @@ export function createReadonlyStore<
       if (isLocked) throw new Prohibited(moduleName, 'enable testing')
       testing = true
     },
-    // todo: getter/setter for properties
     get() {
       if (!testing && !isLocked) throw new AccessedBeforeLock(moduleName)
       return getStoreValue(readonlyStores, { moduleName, key })
