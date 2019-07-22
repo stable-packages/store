@@ -5,7 +5,7 @@
 [![Build status][travis-image]][travis-url]
 [![Coverage Status][coveralls-image]][coveralls-url]
 ![badge-size-es5-url]
-![badge-size-es2015-url]
+![badge-size-esnext-url]
 [![Greenkeeper badge](https://badges.greenkeeper.io/unional/global-store.svg)](https://greenkeeper.io/)
 
 [`global-store`](https://github.com/unional/global-store) provides version stable stores for library.
@@ -206,4 +206,4 @@ Any application that eventually uses your library should do the same, install [`
 [coveralls-image]: https://coveralls.io/repos/github/unional/global-store/badge.svg
 [coveralls-url]: https://coveralls.io/github/unional/global-store
 [badge-size-es5-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es5.js.svg?label=es5_size
-[badge-size-es2015-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es2015.js.svg?label=es2015_size
+[badge-size-esnext-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es.js.svg?label=esnext_size
