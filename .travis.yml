@@ -5,6 +5,7 @@ cache:
 notifications:
   email: false
 node_js:
+  - '12'
   - '11'
   - '10'
   - '8'
@@ -14,8 +15,9 @@ branches:
     - /^greenkeeper.*$/
 
 script:
-  - npm run verify
+  - yarn
+  - yarn verify:ci
 
 after_success:
-  - ./scripts/run-on-node-version.sh latest "npm install --no-save coveralls && npm run coveralls"
-  - ./scripts/run-on-node-version.sh latest "npm install --no-save codecov && npm run codecov"
+  - ./scripts/run-on-node-version.sh latest "npm install -g codacy-coverage && cat ./coverage/lcov.info | codacy-coverage"
+  - ./scripts/run-on-node-version.sh latest "npm install -g coveralls && cat ./coverage/lcov.info | coveralls"

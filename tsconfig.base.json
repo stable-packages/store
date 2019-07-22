@@ -19,6 +19,9 @@
   "exclude": [
     "*.js.flow"
   ],
+  "include": [
+    "typings"
+  ],
   "files": [
     "src/index.ts"
   ]

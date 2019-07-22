@@ -9,6 +9,46 @@
 ![badge-size-es2015-url]
 [![Greenkeeper badge](https://badges.greenkeeper.io/unional/global-store.svg)](https://greenkeeper.io/)
 
+[`global-store`](https://github.com/unional/global-store) provides version stable stores for library.
+
+## Who need this
+
+- libraries that want its state to be shared regardless of how many versions of it exist in memory.
+- libraries that want to protect its state from modification.
+
+## `createStore()`
+
+`createStore()` is a simple, version stable store.
+
+```ts
+import { createStore } from 'global-store'
+
+const store = createStore({
+  moduleName: 'your-module',
+  key: 'unique-string' // or Symbol.for('unique-string')
+}, (previousInitState) => ({ ...previousInitState, prop1: false, prop2: [] as string[] }))
+
+console.log(store.get().prop1) // false
+
+store.get().prop1 = true
+store.get().prop2.push('a')
+console.log(store.get()) // { prop1: true, prop2: ['a'] }
+```
+
+- `id: { moduleName: string, key: string | symbol }`: id of the store. You can use symbol as `key`, but remember to use `Symbol.for()` instead of `Symbol()`. The latter doesn't work for this purpose.
+- `initializer: (previous) => initValue`: initializer to initialize the store. If
+
+It is recommended to use a function to create the default value.
+This way, you can easily reset your store during testing.
+
+When you bundle your library, remember to exclude this library or else that really defeat the purpose.
+
+## `createReadonlyStore()`
+
+`createReadonlyStore()` is a version stable store that prevents modification.
+
+
+
 A version locked global store.
 
 The objective is to have the only one *instance* of `global-store` in any given application.
