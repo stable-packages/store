@@ -64,7 +64,7 @@ export function createReadonlyStore<
       return getStoreValue(readonlyStores, { moduleName, key })
     },
     lock(finalizer) {
-      if (!isLocked) {
+      if (!testing && !isLocked) {
         if (finalizer) {
           updateStoreValue(readonlyStores, { moduleName, key }, finalizer)
         }
