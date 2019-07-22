@@ -17,6 +17,9 @@
 
 [`global-store`](https://github.com/unional/global-store) provides version stable stores for library.
 
+Once this library reaches `1.0`, it will forever be backward compatible.
+Meaning there will never be a breaking change and `2.0` version of this library.
+
 PLEASE NOTE: This document describes the new `1.0.0-beta` version (finally!! :tada:).
 
 For the current stable version, please check out [here](https://github.com/unional/global-store/blob/v0.8.2/README.md).
