@@ -2,11 +2,17 @@
 
 [![NPM version][npm-image]][npm-url]
 [![NPM downloads][downloads-image]][downloads-url]
-[![Build status][travis-image]][travis-url]
-[![Coverage Status][coveralls-image]][coveralls-url]
 ![badge-size-es5-url]
 ![badge-size-esnext-url]
-[![Greenkeeper badge](https://badges.greenkeeper.io/unional/global-store.svg)](https://greenkeeper.io/)
+
+[![Circle CI][circleci-image]][circleci-url]
+[![Travis CI][travis-image]][travis-url]
+[![Codecov][codecov-image]][codecov-url]
+[![Coveralls Status][coveralls-image]][coveralls-url]
+
+[![Greenkeeper][greenkeeper-image]][greenkeeper-url]
+[![Visual Studio Code][vscode-image]][vscode-url]
+[![Wallaby.js][wallaby-image]][wallaby-url]
 
 [`global-store`](https://github.com/unional/global-store) provides version stable stores for library.
 
@@ -197,13 +203,25 @@ You also should mark [`global-store`](https://github.com/unional/global-store) a
 
 Any application that eventually uses your library should do the same, install [`global-store`](https://github.com/unional/global-store) as their own dependency.
 
+[badge-size-es5-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es5.js.svg?label=es5_size
+[badge-size-esnext-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es.js.svg?label=esnext_size
+[circleci-image]: https://circleci.com/gh/unional/global-store/tree/master.svg?style=shield
+[circleci-url]: https://circleci.com/gh/unional/global-store/tree/master
+[codecov-image]: https://codecov.io/gh/unional/global-store/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/unional/global-store
+[coveralls-image]: https://coveralls.io/repos/github/unional/global-store/badge.svg
+[coveralls-url]: https://coveralls.io/github/unional/global-store
+[downloads-image]: https://img.shields.io/npm/dm/global-store.svg?style=flat
+[downloads-url]: https://npmjs.org/package/global-store
+[greenkeeper-image]: https://badges.greenkeeper.io/unional/global-store.svg
+[greenkeeper-url]: https://greenkeeper.io/
 [npm-image]: https://img.shields.io/npm/v/global-store.svg?style=flat
 [npm-url]: https://npmjs.org/package/global-store
 [downloads-image]: https://img.shields.io/npm/dm/global-store.svg?style=flat
 [downloads-url]: https://npmjs.org/package/global-store
 [travis-image]: https://img.shields.io/travis/unional/global-store/master.svg?style=flat
 [travis-url]: https://travis-ci.org/unional/global-store?branch=master
-[coveralls-image]: https://coveralls.io/repos/github/unional/global-store/badge.svg
-[coveralls-url]: https://coveralls.io/github/unional/global-store
-[badge-size-es5-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es5.js.svg?label=es5_size
-[badge-size-esnext-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es.js.svg?label=esnext_size
+[vscode-image]: https://img.shields.io/badge/vscode-ready-green.svg
+[vscode-url]: https://code.visualstudio.com/
+[wallaby-image]: https://img.shields.io/badge/wallaby.js-configured-green.svg
+[wallaby-url]: https://wallabyjs.com
