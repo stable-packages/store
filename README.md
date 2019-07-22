@@ -18,8 +18,9 @@
 
 ## Who need this
 
-- libraries that want its state to be shared regardless of how many versions of it exist in memory.
-- libraries that want to protect its state from modification.
+- library that can be used by other libraries, and
+- library that has state, and/or
+- library that want to protect its state from modification.
 
 ## Why do you need this
 
