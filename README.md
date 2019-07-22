@@ -208,7 +208,7 @@ yarn add global-store
 ## Bundling
 
 If your library will be a standalone bundle, make sure to exclude [`global-store`](https://github.com/unional/global-store).
-If not, there will be multiple copies of [`global-store`](https://github.com/unional/global-store) loaded and will completely defeat the purose.
+If not, there will be multiple copies of [`global-store`](https://github.com/unional/global-store) loaded and will completely defeat the purpose.
 
 You also should mark [`global-store`](https://github.com/unional/global-store) as a peer dependency and tell people who use your library to include [`global-store`](https://github.com/unional/global-store) as their dependency.
 
