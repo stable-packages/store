@@ -61,7 +61,7 @@ These are the problems addressed by [`global-store`](https://github.com/unional/
 
 ## API
 
-### `createStore()`
+### createStore()
 
 `createStore()` is a version stable store.
 
@@ -122,7 +122,7 @@ Reset the store to its initial value.
 
 This is used mostly in your test, so that the tests would not interferred each other.
 
-### `createReadonlyStore()`
+### createReadonlyStore()
 
 `createReadonlyStore()` is a version stable store that prevents modification.
 
