@@ -31,7 +31,7 @@ For stable version, please check out [here](https://github.com/unional/global-st
 
 If you use a file level variable to store some states,
 and your library can be used by other libraries,
-the state it stores would scatter around the memory and you will get inconsistent result.
+the state it stores could scatter around the memory and you will get inconsistent result.
 
 For example, you have this:
 
@@ -55,7 +55,7 @@ app
 ```
 
 Since the versions are not compatible,
-both versions of your library are loaded thus two instance of the `registry` variable exists.
+both versions of your library are loaded thus two instances of the `registry` variable exist and contain different values.
 
 Solution to this problem is to use some form of global storage such as `process.env` in NodeJS,
 and `localStorage` or global variable in browser.
