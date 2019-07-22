@@ -15,7 +15,7 @@
 [![Visual Studio Code][vscode-image]][vscode-url]
 [![Wallaby.js][wallaby-image]][wallaby-url]
 
-[`global-store`](https://github.com/unional/global-store) provides version stable stores for library.
+[`global-store`][global-store] provides version stable stores for library.
 
 Once this library reaches `1.0`, it will forever be backward compatible.
 Meaning there will never be a breaking change and `2.0` version of this library.
@@ -67,7 +67,7 @@ The problem is that these mechanisms are shared by everything else in the applic
 completely exposed to everyone,
 and there is no mechanism to consolidate your state when they are populated by each version of your library being loaded.
 
-These are the problems addressed by [`global-store`](https://github.com/unional/global-store).
+These are the problems addressed by [`global-store`][global-store].
 
 ## API
 
@@ -210,12 +210,12 @@ yarn add global-store
 
 ## Bundling
 
-If your library will be a standalone bundle, make sure to exclude [`global-store`](https://github.com/unional/global-store).
-If not, there will be multiple copies of [`global-store`](https://github.com/unional/global-store) loaded and will completely defeat the purpose.
+If your library will be a standalone bundle, make sure to exclude [`global-store`][global-store].
+If not, there will be multiple copies of [`global-store`][global-store] loaded and will completely defeat the purpose.
 
-You also should mark [`global-store`](https://github.com/unional/global-store) as a peer dependency and tell people who use your library to include [`global-store`](https://github.com/unional/global-store) as their dependency.
+You also should mark [`global-store`][global-store] as a peer dependency and tell people who use your library to include [`global-store`][global-store] as their dependency.
 
-Any application that eventually uses your library should do the same, install [`global-store`](https://github.com/unional/global-store) as their own dependency.
+Any application that eventually uses your library should do the same, install [`global-store`][global-store] as their own dependency.
 
 [badge-size-es5-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es5.js.svg?label=es5_size
 [badge-size-esnext-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es.js.svg?label=esnext_size
@@ -227,6 +227,7 @@ Any application that eventually uses your library should do the same, install [`
 [coveralls-url]: https://coveralls.io/github/unional/global-store
 [downloads-image]: https://img.shields.io/npm/dm/global-store.svg?style=flat
 [downloads-url]: https://npmjs.org/package/global-store
+[global-store]: https://github.com/unional/global-store
 [greenkeeper-image]: https://badges.greenkeeper.io/unional/global-store.svg
 [greenkeeper-url]: https://greenkeeper.io/
 [npm-beta-image]: https://img.shields.io/npm/v/global-store/beta.svg?style=flat
