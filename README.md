@@ -17,6 +17,9 @@
 
 [`global-store`](https://github.com/unional/global-store) provides version stable stores for library.
 
+PLEASE NOTE: This document describes the new `1.0.0-beta` version.
+For stable version, please check out [here](https://github.com/unional/global-store/blob/v0.8.2/README.md).
+
 ## Who need this
 
 - library that can be used by other libraries, and
