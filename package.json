@@ -19,7 +19,6 @@
     "dist",
     "lib",
     "libm",
-    "flow-typed",
     "index.js.flow",
     "src"
   ],

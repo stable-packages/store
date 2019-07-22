@@ -42,7 +42,7 @@ var Prohibited = /** @class */ (function (_super) {
     __extends(Prohibited, _super);
     function Prohibited(moduleName, action) {
         var _newTarget = this.constructor;
-        var _this = _super.call(this, "Unable to '" + action + "' on a locked store used by module '" + moduleName + "'") || this;
+        var _this = _super.call(this, "Unable to perform '" + action + "' on a locked store from module '" + moduleName + "'") || this;
         _this.moduleName = moduleName;
         _this.action = action;
         Object.setPrototypeOf(_this, _newTarget.prototype);
@@ -86,37 +86,41 @@ function createStoreValue(initialValue) {
 var readonlyStores = {};
 /**
  * Creates a readonly store of type T.
- * @param id A unique identifier to the store.
- * @param initializer Initializing function for the store
- * @param mode The store mode. Defaults to 'initialize'.
+ * @param moduleName Name of your module. This will be used during reporting.
+ * @param key Specific key of the store scoped to your module. This will not appear in reporting.
+ * You can use `Symbol.for(<some key>)` to make the store accessible accross service workers and iframes.
+ *
+ * It is recommend that the key contains the purpose as well as a random value such as GUID.
+ * e.g. `some-purpose:c0574313-5f6c-4c02-a875-ad793d47b695`
+ * This key should not change across versions.
+ * @param initializer Initializing function for the store.
  */
-function createReadonlyStore(id, initializer) {
-    initStoreValue(readonlyStores, id, initializer);
+function createReadonlyStore(moduleName, key, initializer) {
+    initStoreValue(readonlyStores, { moduleName: moduleName, key: key }, initializer);
     var isLocked = false;
     var testing = false;
     return {
         openForTesting: function () {
             if (isLocked)
-                throw new Prohibited(id.moduleName, 'enable testing');
+                throw new Prohibited(moduleName, 'enable testing');
             testing = true;
         },
-        // todo: getter/setter for properties
         get: function () {
             if (!testing && !isLocked)
-                throw new AccessedBeforeLock(id.moduleName);
-            return getStoreValue(readonlyStores, id);
+                throw new AccessedBeforeLock(moduleName);
+            return getStoreValue(readonlyStores, { moduleName: moduleName, key: key });
         },
         getWritable: function () {
             if (!testing && isLocked)
-                throw new Prohibited(id.moduleName, 'ReadonlyStore#getWritable');
-            return getStoreValue(readonlyStores, id);
+                throw new Prohibited(moduleName, 'ReadonlyStore#getWritable');
+            return getStoreValue(readonlyStores, { moduleName: moduleName, key: key });
         },
         lock: function (finalizer) {
-            if (!isLocked) {
+            if (!testing && !isLocked) {
                 if (finalizer) {
-                    updateStoreValue(readonlyStores, id, finalizer);
+                    updateStoreValue(readonlyStores, { moduleName: moduleName, key: key }, finalizer);
                 }
-                freezeStoreValue(readonlyStores, id);
+                freezeStoreValue(readonlyStores, { moduleName: moduleName, key: key });
                 isLocked = true;
                 testing = false;
             }
@@ -124,8 +128,8 @@ function createReadonlyStore(id, initializer) {
         },
         reset: function () {
             if (!testing && isLocked)
-                throw new Prohibited(id.moduleName, 'ReadonlyStore#reset');
-            resetStoreValue(readonlyStores, id);
+                throw new Prohibited(moduleName, 'ReadonlyStore#reset');
+            resetStoreValue(readonlyStores, { moduleName: moduleName, key: key });
         }
     };
 }
@@ -160,14 +164,20 @@ function freezeArray(storeValue, k) {
 var stores = {};
 /**
  * Creates a store of type T.
- * @param id A unique identifier to the store.
+ * @param moduleName Name of your module. This will be used during reporting.
+ * @param key Specific key of the store scoped to your module. This will not appear in reporting.
+ * You can use `Symbol.for(<some key>)` to make the store accessible accross service workers and iframes.
+ *
+ * It is recommend that the key contains the purpose as well as a random value such as GUID.
+ * e.g. `some-purpose:c0574313-5f6c-4c02-a875-ad793d47b695`
+ * This key should not change across versions.
  * @param initializer Initializing function for the store
  */
-function createStore(id, initializer) {
-    initStoreValue(stores, id, initializer);
+function createStore(moduleName, key, initializer) {
+    initStoreValue(stores, { moduleName: moduleName, key: key }, initializer);
     return {
-        get: function () { return getStoreValue(stores, id); },
-        reset: function () { return resetStoreValue(stores, id); }
+        get: function () { return getStoreValue(stores, { moduleName: moduleName, key: key }); },
+        reset: function () { return resetStoreValue(stores, { moduleName: moduleName, key: key }); }
     };
 }
 
