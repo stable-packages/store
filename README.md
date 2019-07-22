@@ -63,7 +63,7 @@ These are the problems addressed by [`global-store`](https://github.com/unional/
 
 ### createStore()
 
-`createStore()` is a version stable store.
+`createStore()` creates a version stable store.
 
 ```ts
 import { createStore } from 'global-store'
@@ -81,7 +81,7 @@ store.get().prop2.push('a')
 console.log(store.get()) // { prop1: true, prop2: ['a'] }
 ```
 
-#### `createStore(moduleName, key, initializer)`
+#### createStore(moduleName, key, initializer)
 - `moduleName: string`: Name of your module. This is typically your npm package name.
 - `key: string | symbol`: Together with `moduleName`, `key` + `moduleName` forms an unique id to the store.
   The `key` should be unique for each store you create.
@@ -97,7 +97,7 @@ console.log(store.get()) // { prop1: true, prop2: ['a'] }
   To property setup your store,
   you can use a property such as `revisions` or `versions` to help this process.
 
-#### `Store#get()`
+#### Store#get()
 
 Gets the store value.
 Also use this to update the store.
@@ -116,7 +116,7 @@ store.get().a = 2
 console.log(store.get().a) // 2
 ```
 
-#### `Store#reset()`
+#### Store#reset()
 
 Reset the store to its initial value.
 
@@ -124,9 +124,10 @@ This is used mostly in your test, so that the tests would not interferred each o
 
 ### createReadonlyStore()
 
-`createReadonlyStore()` is a version stable store that prevents modification.
+`createReadonlyStore()` creates a version stable store that prevents modification.
 
-It is created the same way as `createStore()`, with the additional features:
+It signature is the same as `createStore()`.
+The returned `ReadonlyStore` has the following additional features:
 
 #### ReadonlyStore#get()
 
