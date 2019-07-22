@@ -1,53 +1,39 @@
-const storeMap: any = {}
+import { StoreInitializer, StoreValue } from './types';
+import { Stores } from './typesInternal';
+import { getStoreValue, initStoreValue, resetStoreValue } from './util';
 
-export interface Store<T> {
+export type Store<T extends StoreValue> = {
+  /**
+   * Gets value from the store.
+   */
   get(): T
-  set(value: T): void
+  /**
+   * Resets the store to its initial value.
+   * You should only use this during testing.
+   */
+  reset(): void
 }
+
+const stores: Stores = {}
 
 /**
  * Creates a store of type T.
- * @param id A unique identifier to the store.
- * It can be a symbol created from `Symbol.for(key)`,
- * or a runtime-wide unique string:
- * You should make it descriptive.
- * You should use your module's name or unique key as part of the id.
- * You can add some secret random string to it.
- * e.g. `my-module:some-purpose:some-random-string`
- * @param defaultValue Optional default value.
+ * @param moduleName Name of your module. This will be used during reporting.
+ * @param key Specific key of the store scoped to your module. This will not appear in reporting.
+ * You can use `Symbol.for(<some key>)` to make the store accessible accross service workers and iframes.
+ *
+ * It is recommend that the key contains the purpose as well as a random value such as GUID.
+ * e.g. `some-purpose:c0574313-5f6c-4c02-a875-ad793d47b695`
+ * This key should not change across versions.
+ * @param initializer Initializing function for the store
  */
-export function createStore<T = any>(id: string | symbol, defaultValue?: T): Store<T> {
-  getStoreValue(id, defaultValue)
+export function createStore<
+  T extends StoreValue
+>(moduleName: string, key: string | symbol, initializer: StoreInitializer<T>): Store<T> {
+  initStoreValue(stores, { moduleName, key }, initializer)
+
   return {
-    get() {
-      return getStoreValue(id)
-    },
-    set(value: T) {
-      setStoreValue(id, value)
-    }
+    get: () => getStoreValue(stores, { moduleName, key }),
+    reset: () => resetStoreValue(stores, { moduleName, key })
   }
-}
-
-/**
- * Gets a global store value.
- * @param id A unique identifier to the store.
- * It can be a symbol created from `Symbol.for(key)`,
- * or a runtime-wide unique string:
- * You should make it descriptive.
- * You should use your module's name or unique key as part of the id.
- * You can add some secret random string to it.
- * e.g. `my-module:some-purpose:some-random-string`
- * @param defaultValue Optional default value.
- */
-export function getStoreValue<T = any>(id: string | symbol, defaultValue?: T): T {
-  return storeMap[id] = storeMap[id] || defaultValue
-}
-
-/**
- * Sets a global store value.
- * @param id The unique identifier of the store.
- * @param value Any value you want to save.
- */
-export function setStoreValue(id: string | symbol, value: any) {
-  storeMap[id] = value
 }
