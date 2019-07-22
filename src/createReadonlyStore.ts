@@ -23,13 +23,13 @@ export type ReadonlyStore<T extends StoreValue> = Store<T> & {
    */
   openForTesting(): void,
   /**
-   * Freezes the store so that it cannot be modified.
+   * Lock the store so that it cannot be modified.
    * @param finalizer A finalizer object to do a final process of the value.
    * You can use this to change the value, or freeze object.
    * By default, the value itself will be frozen,
    * If it contains array properties, those will also be frozen.
    */
-  lock(finalizer?: Partial<{ [K in keyof T]: (current: T[K]) => T[K] }>): ReadonlyStore<T>
+  lock(finalizer?: Partial<{ [K in keyof T]: (value: T[K]) => T[K] }> & Record<keyof any, (value: any) => any>): ReadonlyStore<T>
 }
 
 /**
