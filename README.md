@@ -151,7 +151,7 @@ This avoids the store to be used accidentially without protection.
 
 Lock the store, making it read only.
 
-Then the store is locked, the following happens:
+When the store is locked, the following happens:
 
 - the value is frozen, making each property read only.
 - if the property is an array, it is also frozen,
