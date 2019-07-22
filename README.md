@@ -19,7 +19,7 @@
 
 PLEASE NOTE: This document describes the new `1.0.0-beta` version (finally!! :tada:).
 
-For stable version, please check out [here](https://github.com/unional/global-store/blob/v0.8.2/README.md).
+For the current stable version, please check out [here](https://github.com/unional/global-store/blob/v0.8.2/README.md).
 
 ## Who need this
 
