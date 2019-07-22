@@ -85,19 +85,21 @@ console.log(store.get()) // { prop1: true, prop2: ['a'] }
 
 #### createStore(moduleName, key, initializer)
 - `moduleName: string`: Name of your module. This is typically your npm package name.
-- `key: string | symbol`: Together with `moduleName`, `key` + `moduleName` forms an unique id to the store.
-  The `key` should be unique for each store you create.
+- `key: string | symbol`: The `key` should be unique for each store you create.
   You can use some random string such as UUID.
   You can also use `symbol`, but not that you need to use the `Symbol.for('key')` variant as `Symbol()` does not work for this purpose.
+  Together with `moduleName`, `key` + `moduleName` forms an unique id to the store.
 - `initializer: (previous) => initValue`: initializer to initialize the store.
   Since there may be multiple copies of your library loaded,
-  multiple calls to `createStore()` may occurs.
+  multiple calls to [`createStore()`](#createStore()) may occur.
   For the first call, the `previous` argument will be an empty object.
-  For subsequence calls, it will be the value returned by the previous call.
+  For subsequence calls, it will be the value returned by the last call.
   Since there is no way to control the load order,
-  `createStore()` can be called by a newer version of your libary before an older version of your libary calls it.
-  To property setup your store,
-  you can use a property such as `revisions` or `versions` to help this process.
+  [`createStore()`](#createStore()) can be called by a newer version of your libary before an older version.
+  That means your `initializer` needs to be future proof.
+  To do that, you should carry over what the previous call have created,
+  and fill in the pieces your specific version needs.
+  In addition, you can use a property such as `revisions` or `versions` to help this process.
 
 #### Store#get()
 
@@ -128,7 +130,7 @@ This is used mostly in your test, so that the tests would not interferred each o
 
 `createReadonlyStore()` creates a version stable store that prevents modification.
 
-It signature is the same as `createStore()`.
+Its signature is the same as [`createStore()`](#createStore()).
 The returned `ReadonlyStore` has the following additional features:
 
 #### ReadonlyStore#get()
@@ -146,10 +148,10 @@ Then the store is locked, the following happens:
 - the value is frozen, making each property read only.
 - if the property is an array, it is also frozen,
   making it unable to add or remove entry.
-- `get()` is open to be used.
-- `reset()` results in error.
-- `getWritable()` results in error.
-- `openForTesting()` results in error.
+- [`get()`](#ReadonlyStore#get()) is open to be used.
+- [`reset()`](#ReadonlyStore#reset()) results in error.
+- [`getWritable()`](#ReadonlyStore#getWritable()) results in error.
+- [`openForTesting()`](#ReadonlyStore#openForTesting()) results in error.
 
 `lock()` takes an optional `finalizer` argument.
 It can contains properties matching the property names of the store,
@@ -186,7 +188,7 @@ Once the store is locked, calling `getWritable()` results in error.
 #### ReadonlyStore#openForTesting()
 
 During testing,
-you need a mechanism to allow the `get()` calls to go through without locking the store.
+you need a mechanism to allow the [`get()`](#ReadonlyStore#get()) calls to go through without locking the store.
 `openForTesting()` tells the store to turn off all checks so it can be used during test.
 
 Due to its power, you should not have any code calling this method except in your test code.
