@@ -156,10 +156,10 @@ When the store is locked, the following happens:
 - the value is frozen, making each property read only.
 - if the property is an array, it is also frozen,
   making it unable to add or remove entry.
-- [`get()`](#ReadonlyStore#get) is open to be used.
-- [`reset()`](#ReadonlyStore#reset) results in error.
-- [`getWritable()`](#ReadonlyStore#getWritable) results in error.
-- [`disableProtection()`](#ReadonlyStore#disableProtection) results in error.
+- [`get()`](#ReadonlyStoreget) is open to be used.
+- [`reset()`](#ReadonlyStorereset) results in error.
+- [`getWritable()`](#ReadonlyStoregetWritable) results in error.
+- [`disableProtection()`](#ReadonlyStoredisableProtection) results in error.
 
 `lock()` takes an optional `finalizer` argument.
 It can contains properties matching the property names of the store,
@@ -196,7 +196,7 @@ Once the store is locked, calling `getWritable()` results in error.
 #### ReadonlyStore#disableProtection()
 
 During testing,
-you need a mechanism to allow the [`get()`](#ReadonlyStore#get) calls to go through without locking the store.
+you need a mechanism to allow the [`get()`](#ReadonlyStoreget) calls to go through without locking the store.
 `disableProtection()` tells the store to turn off all checks so it can be used during test.
 
 Due to its power, you should not have any code calling this method except in your test code.
