@@ -15,7 +15,7 @@
 [![Visual Studio Code][vscode-image]][vscode-url]
 [![Wallaby.js][wallaby-image]][wallaby-url]
 
-[`global-store`][global-store] provides version stable stores for library.
+[global-store] provides version stable stores for library.
 
 Once this library reaches `1.0`, it will forever be backward compatible.
 Meaning there will never be a breaking change and `2.0` version of this library.
@@ -99,11 +99,11 @@ console.log(store.get()) // { prop1: true, prop2: ['a'] }
   Together with `moduleName`, `key` + `moduleName` forms an unique id to the store.
 - `initializer: (previous) => initValue`: initializer to initialize the store.
   Since there may be multiple copies of your library loaded,
-  multiple calls to [`createStore()`](#createStore()) may occur.
+  multiple calls to [`createStore()`](#createStore) may occur.
   For the first call, the `previous` argument will be an empty object.
   For subsequence calls, it will be the value returned by the last call.
   Since there is no way to control the load order,
-  [`createStore()`](#createStore()) can be called by a newer version of your libary before an older version.
+  [`createStore()`](#createStore) can be called by a newer version of your libary before an older version.
   That means your `initializer` needs to be future proof.
   To do that, you should carry over what the previous call have created,
   and fill in the pieces your specific version needs.
@@ -138,7 +138,7 @@ This is used mostly in your test, so that the tests would not interferred each o
 
 `createReadonlyStore()` creates a version stable store that prevents modification.
 
-Its signature is the same as [`createStore()`](#createStore()).
+Its signature is the same as [`createStore()`](#createStore).
 The returned `ReadonlyStore` has the following additional features:
 
 #### ReadonlyStore#get()
@@ -156,10 +156,10 @@ When the store is locked, the following happens:
 - the value is frozen, making each property read only.
 - if the property is an array, it is also frozen,
   making it unable to add or remove entry.
-- [`get()`](#ReadonlyStore#get()) is open to be used.
-- [`reset()`](#ReadonlyStore#reset()) results in error.
-- [`getWritable()`](#ReadonlyStore#getWritable()) results in error.
-- [`disableProtection()`](#ReadonlyStore#disableProtection()) results in error.
+- [`get()`](#ReadonlyStore#get) is open to be used.
+- [`reset()`](#ReadonlyStore#reset) results in error.
+- [`getWritable()`](#ReadonlyStore#getWritable) results in error.
+- [`disableProtection()`](#ReadonlyStore#disableProtection) results in error.
 
 `lock()` takes an optional `finalizer` argument.
 It can contains properties matching the property names of the store,
@@ -196,7 +196,7 @@ Once the store is locked, calling `getWritable()` results in error.
 #### ReadonlyStore#disableProtection()
 
 During testing,
-you need a mechanism to allow the [`get()`](#ReadonlyStore#get()) calls to go through without locking the store.
+you need a mechanism to allow the [`get()`](#ReadonlyStore#get) calls to go through without locking the store.
 `disableProtection()` tells the store to turn off all checks so it can be used during test.
 
 Due to its power, you should not have any code calling this method except in your test code.
