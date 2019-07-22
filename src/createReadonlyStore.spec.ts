@@ -65,9 +65,17 @@ test('call get() on not locked store throws', () => {
   a.throws(() => store.get(), AccessedBeforeLock)
 })
 
-test('set testing to true when the store is locked will throw', () => {
-  const store = createReadonlyStore(moduleName, 'locked-testing-to-true', () => ({ a: 1 })).lock()
+test('call openForTesting() when the store is locked will throw', () => {
+  const store = createReadonlyStore(moduleName, 'locked-test-throw', () => ({ a: 1 })).lock()
   a.throws(() => store.openForTesting(), Prohibited)
+})
+
+test('call lock() after openForTesting() will not lock the store', () => {
+  const store = createReadonlyStore(moduleName, 'test-lock-noop', () => ({ a: 1 }))
+
+  store.openForTesting()
+  store.lock()
+  store.reset() // did not throw
 })
 
 test('can call get() after the store is locked', () => {
