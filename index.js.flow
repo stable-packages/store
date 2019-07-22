@@ -1,8 +1,19 @@
 declare module 'global-store' {
-  declare export type Store<T> = { get(): T, set(value: T): void }
+  declare export type StoreValue = Record<string | Symbol, any>
+  declare export type StoreInitializer<T: StoreValue> = (previous: StoreValue) => T
 
-  declare export function createStore<T>(id: string | symbol, defaultValue: T): Store<T>
-  declare export function getStoreValue<T>(id: string | symbol, defaultValue: T): T
-  declare export function setStoreValue<T>(id: string | symbol, defaultValue: any): void
+  declare export type Store<T: StoreValue> = { get(): T, reset(): void }
+  declare export function createStore<T: StoreValue>(moduleName: string, key: string | symbol, initializer: StoreInitializer<T>): Store<T>
   declare export default createStore
+
+  declare export type ReadonlyStore<T: StoreValue> = Store<T> & {
+    getWritable(): T,
+    openForTesting(): ValidationError,
+    lock(finalizer?: $Shape<{
+      [K: $Keys<T>]: (value: $PropertyType<T, K>) => $PropertyType<T, K>
+    }> & {
+      [K: $Keys<any>]: (value: any) => any
+    }): ReadonlyStore<T>
+  }
+  declare export function createReadonlyStore<T: StoreValue>(moduleName: string, key: string | symbol, initializer: StoreInitializer<T>): ReadonlyStore<T>
 }
