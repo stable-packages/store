@@ -1,6 +1,7 @@
 # global-store
 
 [![NPM version][npm-image]][npm-url]
+[![NPM beta version][npm-beta-image]][npm-url]
 [![NPM downloads][downloads-image]][downloads-url]
 ![badge-size-es5-url]
 ![badge-size-esnext-url]
@@ -221,6 +222,7 @@ Any application that eventually uses your library should do the same, install [`
 [downloads-url]: https://npmjs.org/package/global-store
 [greenkeeper-image]: https://badges.greenkeeper.io/unional/global-store.svg
 [greenkeeper-url]: https://greenkeeper.io/
+[npm-beta-image]: https://img.shields.io/npm/v/global-store/beta.svg?style=flat
 [npm-image]: https://img.shields.io/npm/v/global-store.svg?style=flat
 [npm-url]: https://npmjs.org/package/global-store
 [downloads-image]: https://img.shields.io/npm/dm/global-store.svg?style=flat
