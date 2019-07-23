@@ -69,6 +69,13 @@ and there is no mechanism to consolidate your state when they are populated by e
 
 These are the problems addressed by [global-store].
 
+## Installation
+
+```sh
+npm install global-store
+yarn add global-store
+```
+
 ## API
 
 ### createStore()
@@ -200,13 +207,6 @@ you need a mechanism to allow the [`get()`](#ReadonlyStoreget) calls to go throu
 `disableProtection()` tells the store to turn off all checks so it can be used during test.
 
 Due to its power, you should not have any code calling this method except in your test code.
-
-## Installation
-
-```sh
-npm install global-store
-yarn add global-store
-```
 
 ## Bundling
 
