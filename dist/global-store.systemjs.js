@@ -169,36 +169,36 @@ System.register([], function (exports) {
             function createReadonlyStore(moduleName, key, version, initializer) {
                 initStoreValue(readonlyStores, { moduleName: moduleName, key: key }, version, initializer);
                 var isLocked = false;
-                var testing = false;
+                var disabled = false;
                 return {
                     disableProtection: function () {
                         if (isLocked)
-                            throw new Prohibited(moduleName, 'enable testing');
-                        testing = true;
+                            throw new Prohibited(moduleName, 'ReadonlyStore#disableProtection');
+                        disabled = true;
                     },
                     get: function () {
-                        if (!testing && !isLocked)
+                        if (!disabled && !isLocked)
                             throw new AccessedBeforeLock(moduleName);
                         return getStoreValue(readonlyStores, { moduleName: moduleName, key: key });
                     },
                     getWritable: function () {
-                        if (!testing && isLocked)
+                        if (!disabled && isLocked)
                             throw new Prohibited(moduleName, 'ReadonlyStore#getWritable');
                         return getStoreValue(readonlyStores, { moduleName: moduleName, key: key });
                     },
                     lock: function (finalizer) {
-                        if (!testing && !isLocked) {
+                        if (!disabled && !isLocked) {
                             if (finalizer) {
                                 updateStoreValue(readonlyStores, { moduleName: moduleName, key: key }, finalizer);
                             }
                             freezeStoreValue(readonlyStores, { moduleName: moduleName, key: key });
                             isLocked = true;
-                            testing = false;
+                            disabled = false;
                         }
                         return this;
                     },
                     reset: function () {
-                        if (!testing && isLocked)
+                        if (!disabled && isLocked)
                             throw new Prohibited(moduleName, 'ReadonlyStore#reset');
                         resetStoreValue(readonlyStores, { moduleName: moduleName, key: key });
                     }
