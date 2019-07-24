@@ -4,10 +4,12 @@ System.register([], function (exports) {
         execute: function () {
 
             exports({
+                createAsyncReadonlyStore: createAsyncReadonlyStore,
                 createAsyncStore: createAsyncStore,
                 createReadonlyStore: createReadonlyStore,
                 createStore: createStore,
                 default: createStore,
+                initializeAsyncReadonlyStore: initializeAsyncReadonlyStore,
                 initializeAsyncStore: initializeAsyncStore
             });
 
@@ -88,109 +90,6 @@ System.register([], function (exports) {
                 }
             }
 
-            function getStoreValue(stores, id) {
-                var moduleStore = getModuleStore(stores, id.moduleName);
-                return moduleStore[id.key].value;
-            }
-            function initStoreValue(stores, id, initializer) {
-                var moduleStore = getModuleStore(stores, id.moduleName);
-                var store = moduleStore[id.key];
-                var init = initializer(store && store.init || {});
-                moduleStore[id.key] = { init: init, value: createStoreValue(init) };
-            }
-            function resetStoreValue(stores, id) {
-                var moduleStore = getModuleStore(stores, id.moduleName);
-                moduleStore[id.key].value = createStoreValue(moduleStore[id.key].init);
-            }
-            function getModuleStore(stores, moduleName) {
-                return stores[moduleName] = stores[moduleName] || {};
-            }
-            function createStoreValue(initialValue) {
-                return __assign({}, initialValue);
-            }
-
-            var stores = {};
-            /**
-             * Creates a store of type T.
-             * @param moduleName Name of your module. This will be used during reporting.
-             * @param key Specific key of the store scoped to your module. This will not appear in reporting.
-             * You can use `Symbol.for(<some key>)` to make the store accessible accross service workers and iframes.
-             *
-             * It is recommend that the key contains the purpose as well as a random value such as GUID.
-             * e.g. `some-purpose:c0574313-5f6c-4c02-a875-ad793d47b695`
-             * This key should not change across versions.
-             * @param initializer Initializing function for the store
-             */
-            function createStore(moduleName, key, initializer) {
-                initStoreValue(stores, { moduleName: moduleName, key: key }, initializer);
-                return {
-                    get: function () { return getStoreValue(stores, { moduleName: moduleName, key: key }); },
-                    reset: function () { return resetStoreValue(stores, { moduleName: moduleName, key: key }); }
-                };
-            }
-
-            var asyncStoreCreators = {};
-            /**
-             * Creates a store of type T asychronously.
-             * @param moduleName Name of your module. This will be used during reporting.
-             * @param key Specific key of the store scoped to your module. This will not appear in reporting.
-             * You can use `Symbol.for(<some key>)` to make the store accessible accross service workers and iframes.
-             *
-             * It is recommend that the key contains the purpose as well as a random value such as GUID.
-             * e.g. `some-purpose:c0574313-5f6c-4c02-a875-ad793d47b695`
-             * This key should not change across versions.
-             * @param version Version of the store. It can be numeric or string in the format of "major.minor.patch".
-             * No other string format is accepted.
-             * When it is numeric, it is compare to the patch number of the string version,
-             * if there is a mix of number and string versions.
-             * @param initializer Initializing function for the store
-             */
-            function createAsyncStore(moduleName, key, version, initializer) {
-                return __awaiter(this, void 0, Promise, function () {
-                    return __generator(this, function (_a) {
-                        return [2 /*return*/, new Promise(function (resolve) {
-                                var creatorsOfModules = asyncStoreCreators[moduleName] = asyncStoreCreators[moduleName] || {};
-                                var storeCreators = creatorsOfModules[key] = creatorsOfModules[key] || [];
-                                storeCreators.push({ version: version, resolve: resolve, initializer: initializer });
-                            })];
-                    });
-                });
-            }
-            /**
-             * Initializes the stores for `createAsyncStore()`.
-             */
-            function initializeAsyncStore(moduleName, key) {
-                var creatorsOfModules = asyncStoreCreators[moduleName];
-                if (!creatorsOfModules)
-                    return;
-                if (!key) {
-                    Object.keys(creatorsOfModules).forEach(function (k) {
-                        var storeCreators = creatorsOfModules[k];
-                        resolveCreators(moduleName, k, storeCreators);
-                    });
-                }
-                else {
-                    var storeCreators = creatorsOfModules[key];
-                    resolveCreators(moduleName, key, storeCreators);
-                }
-            }
-            function resolveCreators(moduleName, key, storeCreators) {
-                sortByVersion(storeCreators).forEach(function (_a) {
-                    var resolve = _a.resolve, initializer = _a.initializer;
-                    return resolve(createStore(moduleName, key, initializer));
-                });
-            }
-            function sortByVersion(storeCreators) {
-                return storeCreators.sort(function (a, b) { return compareVersion(typeof a.version === 'number' ? "0.0." + a.version : a.version, typeof b.version === 'number' ? "0.0." + b.version : b.version); });
-            }
-            function compareVersion(a, b) {
-                var v1 = a.split('.').map(function (v) { return Number(v); });
-                var v2 = b.split('.').map(function (v) { return Number(v); });
-                return v1[0] !== v2[0] ? v1[0] - v2[0] :
-                    v1[1] !== v2[1] ? v1[1] - v2[1] :
-                        v1[2] - v2[2];
-            }
-
             var Prohibited = exports('Prohibited', /** @class */ (function (_super) {
                 __extends(Prohibited, _super);
                 function Prohibited(moduleName, action) {
@@ -215,6 +114,45 @@ System.register([], function (exports) {
                 return AccessedBeforeLock;
             }(Error)));
 
+            function getStoreValue(stores, id) {
+                var moduleStore = getModuleStore(stores, id.moduleName);
+                return moduleStore[id.key].value;
+            }
+            function initStoreValue(stores, id, version, initializer) {
+                var moduleStore = getModuleStore(stores, id.moduleName);
+                var store = moduleStore[id.key] || { versions: [], init: {} };
+                var versions = store.versions;
+                var init = initializer(store.init, versions);
+                versions.push(version);
+                moduleStore[id.key] = { versions: versions, init: init, value: createStoreValue(init) };
+            }
+            function resetStoreValue(stores, id) {
+                var moduleStore = getModuleStore(stores, id.moduleName);
+                moduleStore[id.key].value = createStoreValue(moduleStore[id.key].init);
+            }
+            function getModuleStore(stores, moduleName) {
+                return stores[moduleName] = stores[moduleName] || {};
+            }
+            function createStoreValue(initialValue) {
+                return __assign({}, initialValue);
+            }
+            function resolveCreators(moduleName, key, storeCreators, createStore) {
+                sortByVersion(storeCreators).forEach(function (_a) {
+                    var version = _a.version, resolve = _a.resolve, initializer = _a.initializer;
+                    return resolve(createStore(moduleName, key, version, initializer));
+                });
+            }
+            function sortByVersion(storeCreators) {
+                return storeCreators.sort(function (a, b) { return compareVersion(typeof a.version === 'number' ? "0.0." + a.version : a.version, typeof b.version === 'number' ? "0.0." + b.version : b.version); });
+            }
+            function compareVersion(a, b) {
+                var v1 = a.split('.').map(function (v) { return Number(v); });
+                var v2 = b.split('.').map(function (v) { return Number(v); });
+                return v1[0] !== v2[0] ? v1[0] - v2[0] :
+                    v1[1] !== v2[1] ? v1[1] - v2[1] :
+                        v1[2] - v2[2];
+            }
+
             var readonlyStores = {};
             /**
              * Creates a readonly store of type T.
@@ -227,8 +165,8 @@ System.register([], function (exports) {
              * This key should not change across versions.
              * @param initializer Initializing function for the store.
              */
-            function createReadonlyStore(moduleName, key, initializer) {
-                initStoreValue(readonlyStores, { moduleName: moduleName, key: key }, initializer);
+            function createReadonlyStore(moduleName, key, version, initializer) {
+                initStoreValue(readonlyStores, { moduleName: moduleName, key: key }, version, initializer);
                 var isLocked = false;
                 var testing = false;
                 return {
@@ -274,6 +212,7 @@ System.register([], function (exports) {
                 var moduleStore = getModuleStore(stores, id.moduleName);
                 var store = moduleStore[id.key];
                 moduleStore[id.key] = {
+                    versions: store.versions,
                     init: store.init,
                     value: freezeValue(store.value)
                 };
@@ -290,6 +229,114 @@ System.register([], function (exports) {
                 var value = storeValue[k];
                 if (Array.isArray(value)) {
                     storeValue[k] = Object.freeze(value);
+                }
+            }
+
+            var asyncReadonlyStoreCreators = {};
+            /**
+             * Creates a readonly store of type T.
+             * @param moduleName Name of your module. This will be used during reporting.
+             * @param key Specific key of the store scoped to your module. This will not appear in reporting.
+             * You can use `Symbol.for(<some key>)` to make the store accessible accross service workers and iframes.
+             *
+             * It is recommend that the key contains the purpose as well as a random value such as GUID.
+             * e.g. `some-purpose:c0574313-5f6c-4c02-a875-ad793d47b695`
+             * This key should not change across versions.
+             * @param version Version of the store. It can be numeric or string in the format of "major.minor.patch".
+             * No other string format is accepted.
+             * When it is numeric, it is compare to the patch number of the string version,
+             * if there is a mix of number and string versions.
+             * @param initializer Initializing function for the store.
+             */
+            function createAsyncReadonlyStore(moduleName, key, version, initializer) {
+                return new Promise(function (resolve) {
+                    var creatorsOfModules = asyncReadonlyStoreCreators[moduleName] = asyncReadonlyStoreCreators[moduleName] || {};
+                    var storeCreators = creatorsOfModules[key] = creatorsOfModules[key] || [];
+                    storeCreators.push({ version: version, resolve: resolve, initializer: initializer });
+                });
+            }
+            /**
+             * Initializes the stores for `createAsyncStore()`.
+             */
+            function initializeAsyncReadonlyStore(moduleName, key) {
+                var creatorsOfModules = asyncReadonlyStoreCreators[moduleName];
+                if (!creatorsOfModules)
+                    return;
+                if (key) {
+                    var storeCreators = creatorsOfModules[key];
+                    resolveCreators(moduleName, key, storeCreators, createReadonlyStore);
+                }
+                else {
+                    Object.keys(creatorsOfModules).forEach(function (k) {
+                        var storeCreators = creatorsOfModules[k];
+                        resolveCreators(moduleName, k, storeCreators, createReadonlyStore);
+                    });
+                }
+            }
+
+            var stores = {};
+            /**
+             * Creates a store of type T.
+             * @param moduleName Name of your module. This will be used during reporting.
+             * @param key Specific key of the store scoped to your module. This will not appear in reporting.
+             * You can use `Symbol.for(<some key>)` to make the store accessible accross service workers and iframes.
+             *
+             * It is recommend that the key contains the purpose as well as a random value such as GUID.
+             * e.g. `some-purpose:c0574313-5f6c-4c02-a875-ad793d47b695`
+             * This key should not change across versions.
+             * @param initializer Initializing function for the store
+             */
+            function createStore(moduleName, key, version, initializer) {
+                initStoreValue(stores, { moduleName: moduleName, key: key }, version, initializer);
+                return {
+                    get: function () { return getStoreValue(stores, { moduleName: moduleName, key: key }); },
+                    reset: function () { return resetStoreValue(stores, { moduleName: moduleName, key: key }); }
+                };
+            }
+
+            var asyncStoreCreators = {};
+            /**
+             * Creates a store of type T asychronously.
+             * @param moduleName Name of your module. This will be used during reporting.
+             * @param key Specific key of the store scoped to your module. This will not appear in reporting.
+             * You can use `Symbol.for(<some key>)` to make the store accessible accross service workers and iframes.
+             *
+             * It is recommend that the key contains the purpose as well as a random value such as GUID.
+             * e.g. `some-purpose:c0574313-5f6c-4c02-a875-ad793d47b695`
+             * This key should not change across versions.
+             * @param version Version of the store. It can be numeric or string in the format of "major.minor.patch".
+             * No other string format is accepted.
+             * When it is numeric, it is compare to the patch number of the string version,
+             * if there is a mix of number and string versions.
+             * @param initializer Initializing function for the store
+             */
+            function createAsyncStore(moduleName, key, version, initializer) {
+                return __awaiter(this, void 0, Promise, function () {
+                    return __generator(this, function (_a) {
+                        return [2 /*return*/, new Promise(function (resolve) {
+                                var creatorsOfModules = asyncStoreCreators[moduleName] = asyncStoreCreators[moduleName] || {};
+                                var storeCreators = creatorsOfModules[key] = creatorsOfModules[key] || [];
+                                storeCreators.push({ version: version, resolve: resolve, initializer: initializer });
+                            })];
+                    });
+                });
+            }
+            /**
+             * Initializes the stores for `createAsyncStore()`.
+             */
+            function initializeAsyncStore(moduleName, key) {
+                var creatorsOfModules = asyncStoreCreators[moduleName];
+                if (!creatorsOfModules)
+                    return;
+                if (key) {
+                    var storeCreators = creatorsOfModules[key];
+                    resolveCreators(moduleName, key, storeCreators, createStore);
+                }
+                else {
+                    Object.keys(creatorsOfModules).forEach(function (k) {
+                        var storeCreators = creatorsOfModules[k];
+                        resolveCreators(moduleName, k, storeCreators, createStore);
+                    });
                 }
             }
 
