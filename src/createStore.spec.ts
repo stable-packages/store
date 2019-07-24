@@ -22,6 +22,21 @@ test('initializer receives empty object the first time', () => {
   expect(actual).toEqual({})
 })
 
+test('initialize receives the versions processed', () => {
+  createStore(moduleName, 'init-receive-versions', 0, (_, versions) => {
+    expect(versions).toEqual([])
+    return {}
+  })
+  createStore(moduleName, 'init-receive-versions', 1, (_, versions) => {
+    expect(versions).toEqual([0])
+    return {}
+  })
+  createStore(moduleName, 'init-receive-versions', 2, (_, versions) => {
+    expect(versions).toEqual([0, 1])
+    return {}
+  })
+})
+
 test('store is typed by the initializer', () => {
   const store1 = createStore(moduleName, 'typed-by-initializer', 0, () => ({ a: 1 }))
   const store2 = createStore(moduleName, 'typed-by-initializer', 0, prev => ({ ...prev, b: 1 }))

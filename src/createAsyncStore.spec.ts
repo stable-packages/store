@@ -93,12 +93,12 @@ test('init stores with different string versions is ordered by version', async (
   const key = '9fda28d3-8478-417f-b27d-f28b7c5fc93f'
 
   const promises = [
+    createAsyncStore(moduleName, key, '1.0.0', () => { o.once(5); return { a: 1 } }),
+    createAsyncStore(moduleName, key, '1.1.0', () => { o.once(6); return { a: 1 } }),
     createAsyncStore(moduleName, key, '0.0.0', () => { o.once(1); return { a: 1 } }),
     createAsyncStore(moduleName, key, '0.0.1', () => { o.once(2); return { a: 1 } }),
     createAsyncStore(moduleName, key, '0.1.0', () => { o.once(3); return { a: 1 } }),
     createAsyncStore(moduleName, key, '0.1.1', () => { o.once(4); return { a: 1 } }),
-    createAsyncStore(moduleName, key, '1.0.0', () => { o.once(5); return { a: 1 } }),
-    createAsyncStore(moduleName, key, '1.1.0', () => { o.once(6); return { a: 1 } }),
     createAsyncStore(moduleName, key, '1.1.1', () => { o.once(7); return { a: 1 } }),
     createAsyncStore(moduleName, key, '2.0.0', () => { o.once(8); return { a: 1 } })
   ]

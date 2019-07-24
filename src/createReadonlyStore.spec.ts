@@ -51,6 +51,21 @@ test('initializer receives the previous initial value', () => {
   expect(actual).toEqual({ a: 1 })
 })
 
+test('initialize receives the versions processed', () => {
+  createReadonlyStore(moduleName, 'init-receive-versions', 0, (_, versions) => {
+    expect(versions).toEqual([])
+    return {}
+  })
+  createReadonlyStore(moduleName, 'init-receive-versions', 1, (_, versions) => {
+    expect(versions).toEqual([0])
+    return {}
+  })
+  createReadonlyStore(moduleName, 'init-receive-versions', 2, (_, versions) => {
+    expect(versions).toEqual([0, 1])
+    return {}
+  })
+})
+
 test('call reset() on 1st store gets latest initial value', () => {
   const store1 = createReadonlyStore(moduleName, '2nd-reset-get-1st', 0, () => ({ a: 1 }))
   createReadonlyStore(moduleName, '2nd-reset-get-1st', 0, () => ({ a: 2, b: true }))

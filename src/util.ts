@@ -10,8 +10,8 @@ export function initStoreValue<T extends StoreValue>(stores: Stores, id: StoreId
   const moduleStore = getModuleStore(stores, id.moduleName)
   const store: StoreValue = moduleStore[id.key as any] || { versions: [], init: {} }
   const versions = store.versions
-  versions.push(version)
   const init = initializer(store.init, versions)
+  versions.push(version)
   moduleStore[id.key as any] = { versions, init, value: createStoreValue(init) }
 }
 
