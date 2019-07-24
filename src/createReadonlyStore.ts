@@ -1,8 +1,8 @@
 import { Store } from './createStore';
 import { AccessedBeforeLock, Prohibited } from './errors';
-import { StoreInitializer, StoreValue } from './types';
+import { StoreInitializer, StoreValue, StoreVersion, StoreKey } from './types';
+import { StoreId, Stores } from './typesInternal';
 import { getModuleStore, getStoreValue, initStoreValue, resetStoreValue } from './util';
-import { Stores, StoreId } from './typesInternal';
 
 const readonlyStores: Stores = {}
 
@@ -45,8 +45,8 @@ export type ReadonlyStore<T extends StoreValue> = Store<T> & {
  */
 export function createReadonlyStore<
   T extends StoreValue
->(moduleName: string, key: string | symbol, initializer: StoreInitializer<T>): ReadonlyStore<T> {
-  initStoreValue(readonlyStores, { moduleName, key }, initializer)
+>(moduleName: string, key: StoreKey, version: StoreVersion, initializer: StoreInitializer<T>): ReadonlyStore<T> {
+  initStoreValue(readonlyStores, { moduleName, key }, version, initializer)
   let isLocked = false
   let testing = false
   return {
@@ -93,6 +93,7 @@ function freezeStoreValue(stores: Stores, id: StoreId) {
   const store = moduleStore[id.key as any]
 
   moduleStore[id.key as any] = {
+    versions: store.versions,
     init: store.init,
     value: freezeValue(store.value)
   }

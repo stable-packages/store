@@ -154,7 +154,7 @@ When the store is created,
 calling `get()` would result in error if `lock()` is not called.
 This avoids the store to be used accidentially without protection.
 
-#### Readonly#lock()
+#### ReadonlyStore#lock()
 
 Lock the store, making it read only.
 

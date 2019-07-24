@@ -1,11 +1,11 @@
-import { createStore, Store } from './createStore';
+import { createReadonlyStore, ReadonlyStore } from './createReadonlyStore';
 import { StoreInitializer, StoreKey, StoreValue, StoreVersion } from './types';
 import { resolveCreators, StoreCreator } from './util';
 
-const asyncStoreCreators: Record<string, Record<StoreKey, Array<StoreCreator<Store<any>>>>> = {}
+const asyncReadonlyStoreCreators: Record<string, Record<StoreKey, Array<StoreCreator<ReadonlyStore<any>>>>> = {}
 
 /**
- * Creates a store of type T asychronously.
+ * Creates a readonly store of type T.
  * @param moduleName Name of your module. This will be used during reporting.
  * @param key Specific key of the store scoped to your module. This will not appear in reporting.
  * You can use `Symbol.for(<some key>)` to make the store accessible accross service workers and iframes.
@@ -17,14 +17,16 @@ const asyncStoreCreators: Record<string, Record<StoreKey, Array<StoreCreator<Sto
  * No other string format is accepted.
  * When it is numeric, it is compare to the patch number of the string version,
  * if there is a mix of number and string versions.
- * @param initializer Initializing function for the store
+ * @param initializer Initializing function for the store.
  */
-export async function createAsyncStore<
-  T extends StoreValue,
-  V extends StoreVersion
->(moduleName: string, key: StoreKey, version: V, initializer: StoreInitializer<T>): Promise<Store<T>> {
+export function createAsyncReadonlyStore<T extends StoreValue>(
+  moduleName: string,
+  key: StoreKey,
+  version: StoreVersion,
+  initializer: StoreInitializer<T>
+): Promise<ReadonlyStore<T>> {
   return new Promise(resolve => {
-    const creatorsOfModules = asyncStoreCreators[moduleName] = asyncStoreCreators[moduleName] || {}
+    const creatorsOfModules = asyncReadonlyStoreCreators[moduleName] = asyncReadonlyStoreCreators[moduleName] || {}
     const storeCreators = creatorsOfModules[key as any] = creatorsOfModules[key as any] || []
     storeCreators.push({ version, resolve, initializer })
   })
@@ -33,18 +35,18 @@ export async function createAsyncStore<
 /**
  * Initializes the stores for `createAsyncStore()`.
  */
-export function initializeAsyncStore(moduleName: string, key?: StoreKey) {
-  const creatorsOfModules = asyncStoreCreators[moduleName]
+export function initializeAsyncReadonlyStore(moduleName: string, key?: StoreKey) {
+  const creatorsOfModules = asyncReadonlyStoreCreators[moduleName]
   if (!creatorsOfModules) return
 
   if (key) {
     const storeCreators = creatorsOfModules[key as any]
-    resolveCreators(moduleName, key, storeCreators, createStore)
+    resolveCreators(moduleName, key, storeCreators, createReadonlyStore)
   }
   else {
     Object.keys(creatorsOfModules).forEach(k => {
       const storeCreators = creatorsOfModules[k]
-      resolveCreators(moduleName, k, storeCreators, createStore)
+      resolveCreators(moduleName, k, storeCreators, createReadonlyStore)
     })
   }
 }

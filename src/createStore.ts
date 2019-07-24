@@ -1,4 +1,4 @@
-import { StoreInitializer, StoreValue } from './types';
+import { StoreInitializer, StoreValue, StoreVersion, StoreKey } from './types';
 import { Stores } from './typesInternal';
 import { getStoreValue, initStoreValue, resetStoreValue } from './util';
 
@@ -29,8 +29,8 @@ const stores: Stores = {}
  */
 export function createStore<
   T extends StoreValue
->(moduleName: string, key: string | symbol, initializer: StoreInitializer<T>): Store<T> {
-  initStoreValue(stores, { moduleName, key }, initializer)
+>(moduleName: string, key: StoreKey, version: StoreVersion, initializer: StoreInitializer<T>): Store<T> {
+  initStoreValue(stores, { moduleName, key }, version, initializer)
 
   return {
     get: () => getStoreValue(stores, { moduleName, key }),
