@@ -2,32 +2,29 @@ import { StoreInitializer, StoreValue, StoreVersion, StoreKey } from './types';
 import { StoreId, Stores } from './typesInternal';
 
 export function getStoreValue(stores: Stores, id: StoreId): any {
-  const moduleStore = getModuleStore(stores, id.moduleName)
-  return moduleStore[id.key as any].value
+  return getStore(stores, id).value
 }
 
 export function initStoreValue<T extends StoreValue>(stores: Stores, id: StoreId, version: StoreVersion, initializer: StoreInitializer<T>) {
-  const moduleStore = getModuleStore(stores, id.moduleName)
-  const store: StoreValue = moduleStore[id.key as any] || { versions: [], init: {} }
-  const versions = store.versions
-  const init = initializer(store.init, versions)
-  versions.push(version)
-  moduleStore[id.key as any] = { versions, init, value: createStoreValue(init) }
+  const store = getStore(stores, id)
+  store.init = initializer(store.init, store.versions)
+  store.versions.push(version)
+  store.value = createStoreValue(store.init)
 }
 
 export function resetStoreValue(stores: Stores, id: StoreId) {
-  const moduleStore = getModuleStore(stores, id.moduleName)
-  moduleStore[id.key as any].value = createStoreValue(moduleStore[id.key as any].init)
+  const store = getStore(stores, id)
+  store.value = createStoreValue(store.init)
 }
 
-export function getModuleStore(stores: Stores, moduleName: string) {
-  return stores[moduleName] = stores[moduleName] || {}
+export function getStore(stores: Stores, id: StoreId) {
+  const moduleStore = stores[id.moduleName] = stores[id.moduleName] || {}
+  return moduleStore[id.key as any] = moduleStore[id.key as any] || { versions: [], init: {} }
 }
 
 export function createStoreValue(initialValue: any) {
   return { ...initialValue }
 }
-
 
 export type StoreCreator<S> = {
   version: StoreVersion,
@@ -40,10 +37,12 @@ export function resolveCreators<S>(moduleName: string, key: StoreKey, storeCreat
 }
 
 export function sortByVersion<S>(storeCreators: Array<StoreCreator<S>>) {
-  return storeCreators.sort((a, b) => compareVersion(
-    typeof a.version === 'number' ? `0.0.${a.version}` : a.version,
-    typeof b.version === 'number' ? `0.0.${b.version}` : b.version)
+  return storeCreators.sort((a, b) => compareVersion(toStringVersion(a.version), toStringVersion(b.version))
   )
+}
+
+function toStringVersion(v: string | number) {
+  return typeof v === 'number' ? `0.0.${v}` : v
 }
 
 export function compareVersion(a: string, b: string) {

@@ -1,8 +1,8 @@
 import { Store } from './createStore';
 import { AccessedBeforeLock, Prohibited } from './errors';
-import { StoreInitializer, StoreValue, StoreVersion, StoreKey } from './types';
+import { StoreInitializer, StoreKey, StoreValue, StoreVersion } from './types';
 import { StoreId, Stores } from './typesInternal';
-import { getModuleStore, getStoreValue, initStoreValue, resetStoreValue } from './util';
+import { getStore, getStoreValue, initStoreValue, resetStoreValue } from './util';
 
 const readonlyStores: Stores = {}
 
@@ -82,21 +82,13 @@ export function createReadonlyStore<
 
 
 function updateStoreValue(stores: Stores, id: StoreId, finalizer: any /* Record<any, (value: any) => any> */) {
-  const moduleStore = getModuleStore(stores, id.moduleName)
-  const current = moduleStore[id.key as any].value
-
+  const current = getStoreValue(stores, id)
   Object.keys(finalizer).forEach(k => current[k] = finalizer[k](current[k]))
 }
 
 function freezeStoreValue(stores: Stores, id: StoreId) {
-  const moduleStore = getModuleStore(stores, id.moduleName)
-  const store = moduleStore[id.key as any]
-
-  moduleStore[id.key as any] = {
-    versions: store.versions,
-    init: store.init,
-    value: freezeValue(store.value)
-  }
+  const store = getStore(stores, id)
+  store.value = freezeValue(store.value)
 }
 
 function freezeValue(storeValue: StoreValue) {
