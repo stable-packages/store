@@ -48,33 +48,33 @@ export function createReadonlyStore<
 >(moduleName: string, key: StoreKey, version: StoreVersion, initializer: StoreInitializer<T>): ReadonlyStore<T> {
   initStoreValue(readonlyStores, { moduleName, key }, version, initializer)
   let isLocked = false
-  let testing = false
+  let disabled = false
   return {
     disableProtection() {
-      if (isLocked) throw new Prohibited(moduleName, 'enable testing')
-      testing = true
+      if (isLocked) throw new Prohibited(moduleName, 'ReadonlyStore#disableProtection')
+      disabled = true
     },
     get() {
-      if (!testing && !isLocked) throw new AccessedBeforeLock(moduleName)
+      if (!disabled && !isLocked) throw new AccessedBeforeLock(moduleName)
       return getStoreValue(readonlyStores, { moduleName, key })
     },
     getWritable() {
-      if (!testing && isLocked) throw new Prohibited(moduleName, 'ReadonlyStore#getWritable')
+      if (!disabled && isLocked) throw new Prohibited(moduleName, 'ReadonlyStore#getWritable')
       return getStoreValue(readonlyStores, { moduleName, key })
     },
     lock(finalizer) {
-      if (!testing && !isLocked) {
+      if (!disabled && !isLocked) {
         if (finalizer) {
           updateStoreValue(readonlyStores, { moduleName, key }, finalizer)
         }
         freezeStoreValue(readonlyStores, { moduleName, key })
         isLocked = true
-        testing = false
+        disabled = false
       }
       return this
     },
     reset() {
-      if (!testing && isLocked) throw new Prohibited(moduleName, 'ReadonlyStore#reset')
+      if (!disabled && isLocked) throw new Prohibited(moduleName, 'ReadonlyStore#reset')
       resetStoreValue(readonlyStores, { moduleName, key })
     }
   }
