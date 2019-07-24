@@ -1,3 +1,4 @@
+import { StoreKey, StoreVersion } from './types';
 
 export type StoreId = {
   /**
@@ -12,7 +13,7 @@ export type StoreId = {
    * e.g. `some-purpose:c0574313-5f6c-4c02-a875-ad793d47b695`
    * This key should not change across versions.
    */
-  key: string | symbol
+  key: StoreKey
 }
 
-export type Stores = Record<StoreId['moduleName'], Record<StoreId['key'], { init: any, value: any }>>
+export type Stores = Record<StoreId['moduleName'], Record<StoreId['key'], { versions: StoreVersion[], init: any, value: any }>>
