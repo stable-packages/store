@@ -37,8 +37,7 @@ export function resolveCreators<S>(moduleName: string, key: StoreKey, storeCreat
 }
 
 export function sortByVersion<S>(storeCreators: Array<StoreCreator<S>>) {
-  return storeCreators.sort((a, b) => compareVersion(toStringVersion(a.version), toStringVersion(b.version))
-  )
+  return storeCreators.sort((a, b) => compareVersion(toStringVersion(a.version), toStringVersion(b.version)))
 }
 
 function toStringVersion(v: string | number) {

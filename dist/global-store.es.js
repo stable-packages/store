@@ -100,23 +100,21 @@ var AccessedBeforeLock = /** @class */ (function (_super) {
 }(Error));
 
 function getStoreValue(stores, id) {
-    var moduleStore = getModuleStore(stores, id.moduleName);
-    return moduleStore[id.key].value;
+    return getStore(stores, id).value;
 }
 function initStoreValue(stores, id, version, initializer) {
-    var moduleStore = getModuleStore(stores, id.moduleName);
-    var store = moduleStore[id.key] || { versions: [], init: {} };
-    var versions = store.versions;
-    var init = initializer(store.init, versions);
-    versions.push(version);
-    moduleStore[id.key] = { versions: versions, init: init, value: createStoreValue(init) };
+    var store = getStore(stores, id);
+    store.init = initializer(store.init, store.versions);
+    store.versions.push(version);
+    store.value = createStoreValue(store.init);
 }
 function resetStoreValue(stores, id) {
-    var moduleStore = getModuleStore(stores, id.moduleName);
-    moduleStore[id.key].value = createStoreValue(moduleStore[id.key].init);
+    var store = getStore(stores, id);
+    store.value = createStoreValue(store.init);
 }
-function getModuleStore(stores, moduleName) {
-    return stores[moduleName] = stores[moduleName] || {};
+function getStore(stores, id) {
+    var moduleStore = stores[id.moduleName] = stores[id.moduleName] || {};
+    return moduleStore[id.key] = moduleStore[id.key] || { versions: [], init: {} };
 }
 function createStoreValue(initialValue) {
     return __assign({}, initialValue);
@@ -128,7 +126,10 @@ function resolveCreators(moduleName, key, storeCreators, createStore) {
     });
 }
 function sortByVersion(storeCreators) {
-    return storeCreators.sort(function (a, b) { return compareVersion(typeof a.version === 'number' ? "0.0." + a.version : a.version, typeof b.version === 'number' ? "0.0." + b.version : b.version); });
+    return storeCreators.sort(function (a, b) { return compareVersion(toStringVersion(a.version), toStringVersion(b.version)); });
+}
+function toStringVersion(v) {
+    return typeof v === 'number' ? "0.0." + v : v;
 }
 function compareVersion(a, b) {
     var v1 = a.split('.').map(function (v) { return Number(v); });
@@ -189,18 +190,12 @@ function createReadonlyStore(moduleName, key, version, initializer) {
     };
 }
 function updateStoreValue(stores, id, finalizer /* Record<any, (value: any) => any> */) {
-    var moduleStore = getModuleStore(stores, id.moduleName);
-    var current = moduleStore[id.key].value;
+    var current = getStoreValue(stores, id);
     Object.keys(finalizer).forEach(function (k) { return current[k] = finalizer[k](current[k]); });
 }
 function freezeStoreValue(stores, id) {
-    var moduleStore = getModuleStore(stores, id.moduleName);
-    var store = moduleStore[id.key];
-    moduleStore[id.key] = {
-        versions: store.versions,
-        init: store.init,
-        value: freezeValue(store.value)
-    };
+    var store = getStore(stores, id);
+    store.value = freezeValue(store.value);
 }
 function freezeValue(storeValue) {
     Object.keys(storeValue).forEach(function (k) { return freezeArray(storeValue, k); });
