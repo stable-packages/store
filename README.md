@@ -217,8 +217,8 @@ You also should mark [global-store] as a peer dependency and tell people who use
 
 Any application that eventually uses your library should do the same, install [global-store] as their own dependency.
 
-[badge-size-es5-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es5.js.svg?label=es5_size
-[badge-size-esnext-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es.js.svg?label=esnext_size
+[badge-size-es5-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es5.js.svg?label=es5_size&compression=gzip
+[badge-size-esnext-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es.js.svg?label=esnext_size&compression=gzip
 [circleci-image]: https://circleci.com/gh/unional/global-store/tree/master.svg?style=shield
 [circleci-url]: https://circleci.com/gh/unional/global-store/tree/master
 [codecov-image]: https://codecov.io/gh/unional/global-store/branch/master/graph/badge.svg
