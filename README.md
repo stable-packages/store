@@ -88,7 +88,8 @@ import { createStore } from 'global-store'
 const store = createStore(
   'your-module',
   'unique-string',
-  previous => ({ ...previous, prop1: false, prop2: [] as string[] })
+  '1.0.0',
+  (prev, versions) => ({ ...prev, prop1: false, prop2: [] as string[] })
 )
 
 console.log(store.get().prop1) // false
@@ -104,7 +105,8 @@ console.log(store.get()) // { prop1: true, prop2: ['a'] }
   You can use some random string such as UUID.
   You can also use `symbol`, but not that you need to use the `Symbol.for('key')` variant as `Symbol()` does not work for this purpose.
   Together with `moduleName`, `key` + `moduleName` forms an unique id to the store.
-- `initializer: (previous) => initValue`: initializer to initialize the store.
+- `version: string | number`: Version number of the store.
+- `initializer: (previous, versions) => initValue`: initializer to initialize the store.
   Since there may be multiple copies of your library loaded,
   multiple calls to [`createStore()`](#createStore) may occur.
   For the first call, the `previous` argument will be an empty object.
@@ -114,7 +116,7 @@ console.log(store.get()) // { prop1: true, prop2: ['a'] }
   That means your `initializer` needs to be future proof.
   To do that, you should carry over what the previous call have created,
   and fill in the pieces your specific version needs.
-  In addition, you can use a property such as `revisions` or `versions` to help this process.
+  The `versions` argument contains all the versions the have been processed so far.
 
 #### Store#get()
 
@@ -127,6 +129,7 @@ import { createStore } from 'global-store'
 const store = createStore(
   'your-module',
   'general:300c47d7-b3a8-43ee-9dea-1e05a7b34240',
+  1,
   p => ({ ...p, a: 1 })
 )
 
@@ -182,6 +185,7 @@ import { createReadonlyStore } from 'global-store'
 const store = createStore(
   'your-module',
   'general:ea305f50-c48c-4d18-97ef-4c8e8f130446',
+  2
   p => ({ ...p, a: 1, b: [], c: {} })
 )
 
