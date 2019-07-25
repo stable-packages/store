@@ -1,8 +1,9 @@
 import { createStore, Store } from './createStore';
 import { StoreOptions, StoreValue } from './types';
-import { resolveCreators, StoreCreator } from './util';
+import { resolveCreators } from './util';
+import { StoreCreators } from './typesInternal';
 
-const asyncStoreCreators: Record<string, Record<string, Array<StoreCreator<Store<any>>>>> = {}
+const asyncStoreCreators: StoreCreators<Store<any>> = {}
 
 /**
  * Creates a store of type T asychronously.

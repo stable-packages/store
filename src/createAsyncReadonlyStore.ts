@@ -1,8 +1,9 @@
 import { createReadonlyStore, ReadonlyStore } from './createReadonlyStore';
 import { StoreOptions, StoreValue } from './types';
-import { resolveCreators, StoreCreator } from './util';
+import { StoreCreators } from './typesInternal';
+import { resolveCreators } from './util';
 
-const asyncReadonlyStoreCreators: Record<string, Record<string, Array<StoreCreator<ReadonlyStore<any>>>>> = {}
+const asyncReadonlyStoreCreators: StoreCreators<ReadonlyStore<any>> = {}
 
 /**
  * Creates a readonly store of type T.
