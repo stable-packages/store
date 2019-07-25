@@ -99,7 +99,7 @@ store.get().prop2.push('a')
 console.log(store.get()) // { prop1: true, prop2: ['a'] }
 ```
 
-#### createStore(moduleName, key, initializer)
+#### createStore(moduleName, key, version, initializer)
 - `moduleName: string`: Name of your module. This is typically your npm package name.
 - `key: string | symbol`: The `key` should be unique for each store you create.
   You can use some random string such as UUID.
@@ -208,9 +208,36 @@ Once the store is locked, calling `getWritable()` results in error.
 
 During testing,
 you need a mechanism to allow the [`get()`](#ReadonlyStoreget) calls to go through without locking the store.
-`disableProtection()` tells the store to turn off all checks so it can be used during test.
+`disableProtection()` tells the store to turn off all checks so it will not complain during test.
 
 Due to its power, you should not have any code calling this method except in your test code.
+
+### createAsyncStore()
+
+An async variant of [`createStore()`](#createStore).
+It will return a promise,
+which will resolve when the [`initializeAsyncStore()`](#initializeAsyncStore) is called.
+
+One benefit of using this over [`createStore()`](#createStore) is that the initializers will be called in the order of `version`.
+
+This makes initialization much easier to handle.
+
+### initializeAsyncStore()
+
+Calling [`initializeAsyncStore()`](#initializeAsyncStore) will start the initialization process of [`createAsyncStore()`](#createAsyncStore).
+
+It takes two arguments:
+- `moduleName: string`: Name of your mdodule.
+- `key: string | symbol`: Optional. Key of the specific store to initialize.
+  If omitted, all stores in the module will be initialized.
+
+### createAsyncReadonlyStore()
+
+An async variant of [`createReadonlyStore()`](#createReadonlyStore).
+
+### initializeAsyncReadonlyStore()
+
+An variant of [`initializeAsyncStore()`](#initializeAsyncStore) for `ReadonlyStore`.
 
 ## Bundling
 
