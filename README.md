@@ -291,6 +291,12 @@ An async variant of [`createReadonlyStore()`](#createReadonlyStore).
 
 An variant of [`initializeAsyncStore()`](#initializeAsyncStore) for `ReadonlyStore`.
 
+### compareVersion()
+
+Type: `(a: StoreVersion, b: StoreVersion) => number`
+
+Helper utility function to compare versions when implementing [`StoreOptions#initializer()`](#StoreOptionsinitializer).
+
 ## Bundling
 
 If your library will be a standalone bundle, make sure to exclude [global-store].

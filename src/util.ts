@@ -1,6 +1,6 @@
 import { compareVersion } from './compareVersion';
 import { StoreInitializer, StoreValue, StoreVersion } from './types';
-import { StoreId, Stores } from './typesInternal';
+import { StoreCreator, StoreId, Stores } from './typesInternal';
 
 export function getStoreValue(stores: Stores, id: StoreId): any {
   return getStore(stores, id).value
@@ -27,12 +27,6 @@ export function getStore(stores: Stores, id: StoreId) {
 
 export function createStoreValue(initialValue: any) {
   return { ...initialValue }
-}
-
-export type StoreCreator<S> = {
-  version: StoreVersion,
-  resolve: (store: S) => void,
-  initializer: StoreInitializer<any>
 }
 
 export function resolveCreators<S>(moduleName: string, key: string, storeCreators: Array<StoreCreator<S>>, createStore: any) {
