@@ -80,17 +80,23 @@ yarn add global-store
 
 ### createStore()
 
+Type: `(options: StoreOptions) => Store`
+
 `createStore()` creates a version stable store.
 
 ```ts
 import { createStore } from 'global-store'
 
-const store = createStore(
-  'your-module',
-  'unique-string',
-  '1.0.0',
-  (prev, versions) => ({ ...prev, prop1: false, prop2: [] as string[] })
-)
+const store = createStore({
+  moduleName: 'your-module',
+  key: 'some-unique-string',
+  version: '1.0.0',
+  initializer: (prev, versions) =>({
+    ...prev,
+    prop1: false,
+    prop2: [] as string[]
+  })
+})
 
 console.log(store.get().prop1) // false
 
@@ -99,50 +105,101 @@ store.get().prop2.push('a')
 console.log(store.get()) // { prop1: true, prop2: ['a'] }
 ```
 
-#### createStore(moduleName, key, version, initializer)
-- `moduleName: string`: Name of your module. This is typically your npm package name.
-- `key: string | symbol`: The `key` should be unique for each store you create.
-  You can use some random string such as UUID.
-  You can also use `symbol`, but not that you need to use the `Symbol.for('key')` variant as `Symbol()` does not work for this purpose.
-  Together with `moduleName`, `key` + `moduleName` forms an unique id to the store.
-- `version: string | number`: Version number of the store.
-- `initializer: (previous, versions) => initValue`: initializer to initialize the store.
-  Since there may be multiple copies of your library loaded,
-  multiple calls to [`createStore()`](#createStore) may occur.
-  For the first call, the `previous` argument will be an empty object.
-  For subsequence calls, it will be the value returned by the last call.
-  Since there is no way to control the load order,
-  [`createStore()`](#createStore) can be called by a newer version of your libary before an older version.
-  That means your `initializer` needs to be future proof.
-  To do that, you should carry over what the previous call have created,
-  and fill in the pieces your specific version needs.
-  The `versions` argument contains all the versions the have been processed so far.
+#### StoreOptions#moduleName
+
+Type: `string`
+
+Name of your module.
+
+This is typically your npm package name.
+This will be shown if something goes wrong.
+
+#### StoreOptions#key
+
+Type: `string`
+
+Specific key for each store in your module.
+
+You can create multiple stores in your module for different purposes.
+The key for each store needs to be unique.
+And the key has to be remain the same across versions.
+
+For example, you can use a format like this to make it unique: `<some-purpose>:<UUID>`
+
+e.g. `config:d15427a4-75cf-4999-9065-1dc325839a59`
+
+`key` + `moduleName` forms an unique id to the store.
+
+`key` not be shown if something goes wrong.
+
+#### StoreOptions#version
+
+Type: `StoreVersion = string | number`
+
+Version of the store.
+
+This is used during initialization to determine should the [`StoreOptions#initializer`](#StoreOptionsinitializer) be called (and in what order for [`createAsyncStore()`](#createAsyncStore) and [`createAsyncReadonlyStore()`](#createAsyncReadonlyStore)).
+
+It will be added to the `processedVersions` argument of the [`StoreOptions#initializer()`](#StoreOptionsinitializer) after it is being called.
+
+When specifing as string (recommended), it must be in this format: `major.minor.patch`.
+
+When there is a mix of string and numeric verions across different versions of your library,
+the numeric value is compared to the patch number of the string version.
+
+#### StoreOptions#initializer()
+
+Type: `<T extends StoreValue>(previousInitValue: StoreValue, processedVersions: StoreVersion[]) => T`
+
+Function to initialize the store.
+
+Since there may be multiple copies of your library loaded,
+multiple calls to the store creation function (e.g. [`createStore()`](#createStore)) may occur.
+For the first call, the `previousInitValue` argument will be an empty object.
+For subsequence calls, it will be the value returned by the last call.
+
+The `processedVersions` contains all the versions the have been processed so far.
+You can use it to help determine what do you need to do.
+
+For asynchronous store creation functions ([`createAsyncStore()`](#createAsyncStore) and [`createAsyncReadonlyStore()`](#createAsyncReadonlyStore)),
+the `initializer` function will be called in the order of `version`.
+
+For synchronous store creation functions ([`createStore()`](#createStore) and [`createReadonlyStore()`](#createReadonlyStore)),
+since there is no way to control the load order,
+they can be called by a newer version of your libary before an older version.
+This means your `initializer` needs to be future proof.
+To do that, you should carry over what the previous call have created,
+and fill in the pieces your specific version needs.
+
+#### StoreValue
+
+Type: `Record<string | symbol, any>`
+
+Shape of the value stored in the stores.
+
+Note that the key must be string or `Symbol.for()` because `Symbol()` cannot be shared across versions.
 
 #### Store#get()
 
 Gets the store value.
+
 Also use this to update the store.
 
 ```ts
 import { createStore } from 'global-store'
 
-const store = createStore(
-  'your-module',
-  'general:300c47d7-b3a8-43ee-9dea-1e05a7b34240',
-  1,
-  p => ({ ...p, a: 1 })
-)
+const store = createStore(...)
 
-store.get().a = 2
+store.get().someValue = 2
 
-console.log(store.get().a) // 2
+console.log(store.get().someValue) // 2
 ```
 
 #### Store#reset()
 
 Reset the store to its initial value.
 
-This is used mostly in your test, so that the tests would not interferred each other.
+This is mostly used in tests, so that the tests would not interferred each other.
 
 ### createReadonlyStore()
 
@@ -177,17 +234,12 @@ where each one is a transform function for that property.
 
 It allows you to process the store before it is locked.
 
-The typical use cases are to validate, clean up, transform, and freeze the values.
+The typical use cases are to validate, clean up, transform, or freeze the values.
 
 ```ts
 import { createReadonlyStore } from 'global-store'
 
-const store = createStore(
-  'your-module',
-  'general:ea305f50-c48c-4d18-97ef-4c8e8f130446',
-  2
-  p => ({ ...p, a: 1, b: [], c: {} })
-)
+const store = createStore<{ a: number, b: Foo[], c: Boo }>(...)
 
 store.lock({
   b: values => values.map(v => Object.freeze(v)),
@@ -199,7 +251,7 @@ store.lock({
 #### ReadonlyStore#getWritable()
 
 Before the store is locked,
-you need a mechanism to access the store and configure it.
+you need a mechanism to access the store to configure it.
 `getWritable()` by pass the check and allow you to do that.
 
 Once the store is locked, calling `getWritable()` results in error.
@@ -228,7 +280,7 @@ Calling [`initializeAsyncStore()`](#initializeAsyncStore) will start the initial
 
 It takes two arguments:
 - `moduleName: string`: Name of your mdodule.
-- `key: string | symbol`: Optional. Key of the specific store to initialize.
+- `key: string`: Optional. Key of the specific store to initialize.
   If omitted, all stores in the module will be initialized.
 
 ### createAsyncReadonlyStore()
