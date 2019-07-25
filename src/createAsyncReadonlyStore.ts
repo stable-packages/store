@@ -33,7 +33,7 @@ export function createAsyncReadonlyStore<T extends StoreValue>(
 }
 
 /**
- * Initializes the stores for `createAsyncStore()`.
+ * Initializes the stores for `createAsyncReadonlyStore()`.
  */
 export function initializeAsyncReadonlyStore(moduleName: string, key?: StoreKey) {
   const creatorsOfModules = asyncReadonlyStoreCreators[moduleName]

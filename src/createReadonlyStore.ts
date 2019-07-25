@@ -81,7 +81,7 @@ export function createReadonlyStore<
 }
 
 
-function updateStoreValue(stores: Stores, id: StoreId, finalizer: any /* Record<any, (value: any) => any> */) {
+function updateStoreValue(stores: Stores, id: StoreId, finalizer: Record<keyof any, (prev: any) => any>) {
   const current = getStoreValue(stores, id)
   Object.keys(finalizer).forEach(k => current[k] = finalizer[k](current[k]))
 }
