@@ -1,3 +1,4 @@
+export * from './compareVersion';
 export * from './createAsyncReadonlyStore';
 export * from './createAsyncStore';
 export * from './createReadonlyStore';

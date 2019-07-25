@@ -1,3 +1,15 @@
+function compareVersion(a, b) {
+    const v1 = toVersionArray(a);
+    const v2 = toVersionArray(b);
+    return v1[0] !== v2[0] ? v1[0] - v2[0] :
+        v1[1] !== v2[1] ? v1[1] - v2[1] :
+            v1[2] - v2[2];
+}
+function toVersionArray(v) {
+    return typeof v === 'number' ? [0, 0, v] :
+        v.split('.').map(v => Number.parseInt(v, 10));
+}
+
 class Prohibited extends Error {
     constructor(moduleName, action) {
         super(`Unable to perform '${action}' on a locked store from module '${moduleName}'`);
@@ -19,8 +31,10 @@ function getStoreValue(stores, id) {
 }
 function initStoreValue(stores, id, version, initializer) {
     const store = getStore(stores, id);
-    store.init = initializer(store.init, store.versions);
-    store.versions.push(version);
+    if (!~store.versions.indexOf(version)) {
+        store.init = initializer(store.init, store.versions);
+        store.versions.push(version);
+    }
     store.value = createStoreValue(store.init);
 }
 function resetStoreValue(stores, id) {
@@ -35,35 +49,18 @@ function createStoreValue(initialValue) {
     return { ...initialValue };
 }
 function resolveCreators(moduleName, key, storeCreators, createStore) {
-    sortByVersion(storeCreators).forEach(({ version, resolve, initializer }) => resolve(createStore(moduleName, key, version, initializer)));
+    sortByVersion(storeCreators).forEach(({ version, resolve, initializer }) => resolve(createStore({ moduleName, key, version, initializer })));
 }
 function sortByVersion(storeCreators) {
-    return storeCreators.sort((a, b) => compareVersion(toStringVersion(a.version), toStringVersion(b.version)));
-}
-function toStringVersion(v) {
-    return typeof v === 'number' ? `0.0.${v}` : v;
-}
-function compareVersion(a, b) {
-    const v1 = a.split('.').map(v => Number(v));
-    const v2 = b.split('.').map(v => Number(v));
-    return v1[0] !== v2[0] ? v1[0] - v2[0] :
-        v1[1] !== v2[1] ? v1[1] - v2[1] :
-            v1[2] - v2[2];
+    return storeCreators.sort((a, b) => compareVersion(a.version, b.version));
 }
 
 const readonlyStores = {};
 /**
  * Creates a readonly store of type T.
- * @param moduleName Name of your module. This will be used during reporting.
- * @param key Specific key of the store scoped to your module. This will not appear in reporting.
- * You can use `Symbol.for(<some key>)` to make the store accessible accross service workers and iframes.
- *
- * It is recommend that the key contains the purpose as well as a random value such as GUID.
- * e.g. `some-purpose:c0574313-5f6c-4c02-a875-ad793d47b695`
- * This key should not change across versions.
- * @param initializer Initializing function for the store.
+ * https://github.com/unional/global-store#createreadonlystore
  */
-function createReadonlyStore(moduleName, key, version, initializer) {
+function createReadonlyStore({ moduleName, key, version, initializer }) {
     initStoreValue(readonlyStores, { moduleName, key }, version, initializer);
     let isLocked = false;
     let disabled = false;
@@ -101,7 +98,7 @@ function createReadonlyStore(moduleName, key, version, initializer) {
         }
     };
 }
-function updateStoreValue(stores, id, finalizer /* Record<any, (value: any) => any> */) {
+function updateStoreValue(stores, id, finalizer) {
     const current = getStoreValue(stores, id);
     Object.keys(finalizer).forEach(k => current[k] = finalizer[k](current[k]));
 }
@@ -127,20 +124,9 @@ function freezeArray(storeValue, k) {
 const asyncReadonlyStoreCreators = {};
 /**
  * Creates a readonly store of type T.
- * @param moduleName Name of your module. This will be used during reporting.
- * @param key Specific key of the store scoped to your module. This will not appear in reporting.
- * You can use `Symbol.for(<some key>)` to make the store accessible accross service workers and iframes.
- *
- * It is recommend that the key contains the purpose as well as a random value such as GUID.
- * e.g. `some-purpose:c0574313-5f6c-4c02-a875-ad793d47b695`
- * This key should not change across versions.
- * @param version Version of the store. It can be numeric or string in the format of "major.minor.patch".
- * No other string format is accepted.
- * When it is numeric, it is compare to the patch number of the string version,
- * if there is a mix of number and string versions.
- * @param initializer Initializing function for the store.
+ * https://github.com/unional/global-store#createAsyncReadonlyStore
  */
-function createAsyncReadonlyStore(moduleName, key, version, initializer) {
+function createAsyncReadonlyStore({ moduleName, key, version, initializer }) {
     return new Promise(resolve => {
         const creatorsOfModules = asyncReadonlyStoreCreators[moduleName] = asyncReadonlyStoreCreators[moduleName] || {};
         const storeCreators = creatorsOfModules[key] = creatorsOfModules[key] || [];
@@ -148,7 +134,8 @@ function createAsyncReadonlyStore(moduleName, key, version, initializer) {
     });
 }
 /**
- * Initializes the stores for `createAsyncStore()`.
+ * Initializes the stores for `createAsyncReadonlyStore()`.
+ * https://github.com/unional/global-store#initializeAsyncReadonlyStore
  */
 function initializeAsyncReadonlyStore(moduleName, key) {
     const creatorsOfModules = asyncReadonlyStoreCreators[moduleName];
@@ -169,16 +156,9 @@ function initializeAsyncReadonlyStore(moduleName, key) {
 const stores = {};
 /**
  * Creates a store of type T.
- * @param moduleName Name of your module. This will be used during reporting.
- * @param key Specific key of the store scoped to your module. This will not appear in reporting.
- * You can use `Symbol.for(<some key>)` to make the store accessible accross service workers and iframes.
- *
- * It is recommend that the key contains the purpose as well as a random value such as GUID.
- * e.g. `some-purpose:c0574313-5f6c-4c02-a875-ad793d47b695`
- * This key should not change across versions.
- * @param initializer Initializing function for the store
+ * https://github.com/unional/global-store#createstore
  */
-function createStore(moduleName, key, version, initializer) {
+function createStore({ moduleName, key, version, initializer }) {
     initStoreValue(stores, { moduleName, key }, version, initializer);
     return {
         get: () => getStoreValue(stores, { moduleName, key }),
@@ -189,20 +169,9 @@ function createStore(moduleName, key, version, initializer) {
 const asyncStoreCreators = {};
 /**
  * Creates a store of type T asychronously.
- * @param moduleName Name of your module. This will be used during reporting.
- * @param key Specific key of the store scoped to your module. This will not appear in reporting.
- * You can use `Symbol.for(<some key>)` to make the store accessible accross service workers and iframes.
- *
- * It is recommend that the key contains the purpose as well as a random value such as GUID.
- * e.g. `some-purpose:c0574313-5f6c-4c02-a875-ad793d47b695`
- * This key should not change across versions.
- * @param version Version of the store. It can be numeric or string in the format of "major.minor.patch".
- * No other string format is accepted.
- * When it is numeric, it is compare to the patch number of the string version,
- * if there is a mix of number and string versions.
- * @param initializer Initializing function for the store
+ * https://github.com/unional/global-store#createAsyncStore
  */
-async function createAsyncStore(moduleName, key, version, initializer) {
+async function createAsyncStore({ moduleName, key, version, initializer }) {
     return new Promise(resolve => {
         const creatorsOfModules = asyncStoreCreators[moduleName] = asyncStoreCreators[moduleName] || {};
         const storeCreators = creatorsOfModules[key] = creatorsOfModules[key] || [];
@@ -211,6 +180,7 @@ async function createAsyncStore(moduleName, key, version, initializer) {
 }
 /**
  * Initializes the stores for `createAsyncStore()`.
+ * https://github.com/unional/global-store#initializeAsyncStore
  */
 function initializeAsyncStore(moduleName, key) {
     const creatorsOfModules = asyncStoreCreators[moduleName];
@@ -229,5 +199,5 @@ function initializeAsyncStore(moduleName, key) {
 }
 
 export default createStore;
-export { AccessedBeforeLock, Prohibited, createAsyncReadonlyStore, createAsyncStore, createReadonlyStore, createStore, initializeAsyncReadonlyStore, initializeAsyncStore };
+export { AccessedBeforeLock, Prohibited, compareVersion, createAsyncReadonlyStore, createAsyncStore, createReadonlyStore, createStore, initializeAsyncReadonlyStore, initializeAsyncStore };
 //# sourceMappingURL=global-store.es.js.map
