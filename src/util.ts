@@ -9,24 +9,26 @@ export function getStoreValue(stores: Stores, id: StoreId): any {
 export function initStoreValue<T extends StoreValue>(stores: Stores, id: StoreId, version: StoreVersion, initializer: StoreInitializer<T>) {
   const store = getStore(stores, id)
   if (!~store.versions.indexOf(version)) {
-    store.init = initializer(store.init, store.versions)
+    store.initializers.push(initializer)
+    store.value = initializer(store.value, store.versions)
     store.versions.push(version)
   }
-  store.value = createStoreValue(store.init)
 }
 
 export function resetStoreValue(stores: Stores, id: StoreId) {
   const store = getStore(stores, id)
-  store.value = createStoreValue(store.init)
+  const versions = store.versions
+  store.versions = []
+  store.value = store.initializers.reduce((value, initializer, i) => {
+    value = initializer(value, store.versions)
+    store.versions.push(versions[i])
+    return value
+  }, {})
 }
 
 export function getStore(stores: Stores, id: StoreId) {
   const moduleStore = stores[id.moduleName] = stores[id.moduleName] || {}
-  return moduleStore[id.key as any] = moduleStore[id.key as any] || { versions: [], init: {} }
-}
-
-export function createStoreValue(initialValue: any) {
-  return { ...initialValue }
+  return moduleStore[id.key as any] = moduleStore[id.key as any] || { versions: [], value: {}, initializers: [] }
 }
 
 export function resolveCreators<S>(moduleName: string, key: string, storeCreators: Array<StoreCreator<S>>, createStore: any) {

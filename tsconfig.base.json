@@ -2,12 +2,9 @@
   "compilerOptions": {
     "declaration": true,
     "esModuleInterop": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "lib": [
       "es2015"
     ],
-    "module": "commonjs",
     "moduleResolution": "node",
     "newLine": "LF",
     "noUnusedLocals": true,
@@ -16,9 +13,6 @@
     "sourceMap": true,
     "strict": true
   },
-  "exclude": [
-    "*.js.flow"
-  ],
   "include": [
     "typings"
   ],
