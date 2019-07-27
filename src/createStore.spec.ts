@@ -9,9 +9,9 @@ test('create with same id will get existing store', () => {
   const initializer = () => ({ a: 1 })
   const store1 = createStore({ moduleName, key, version, initializer })
   const store2 = createStore({ moduleName, key, version, initializer })
-  store1.get().a = 2
+  store1.value.a = 2
 
-  expect(store2.get()).toEqual({ a: 2 })
+  expect(store2.value).toEqual({ a: 2 })
 })
 
 test('initializer of the same version is skipped', () => {
@@ -57,15 +57,15 @@ test('store is typed by the initializer', () => {
   const store2 = createStore({
     moduleName, key, version: 1, initializer: prev => ({ ...prev, b: 1 })
   })
-  assertType.isNumber(store1.get().a)
-  assertType.isNumber(store2.get().b)
+  assertType.isNumber(store1.value.a)
+  assertType.isNumber(store2.value.b)
 })
 
 test('store type can be overridden', () => {
   const store = createStore<{ a: number | undefined }>({
     moduleName, key: 'override-type', version: 0, initializer: () => ({ a: undefined })
   })
-  typeAssertion<number | undefined>()(store.get().a)
+  typeAssertion<number | undefined>()(store.value.a)
 })
 
 test('initializer receives the previous initial value', () => {
@@ -81,10 +81,10 @@ test('initializer receives the previous initial value', () => {
 test('reset() will reset object values', () => {
   const key = 'reset-obj'
   const store = createStore({ moduleName, key, version: 0, initializer: () => ({ a: { b: 2 } }) })
-  store.get().a.b = 3
+  store.value.a.b = 3
   store.reset()
 
-  expect(store.get().a.b).toBe(2)
+  expect(store.value.a.b).toBe(2)
 })
 
 test('call reset() on 1st store gets latest initial value', () => {
@@ -92,19 +92,19 @@ test('call reset() on 1st store gets latest initial value', () => {
   const store1 = createStore({ moduleName, key, version: 0, initializer: () => ({ a: 1 }) })
   createStore({ moduleName, key, version: 1, initializer: () => ({ a: 2, b: true }) })
   store1.reset()
-  expect(store1.get()).toEqual({ a: 2, b: true })
+  expect(store1.value).toEqual({ a: 2, b: true })
 })
 // test and get between create
 
 test('gets initial value', () => {
   const store = createStore({ moduleName, key: 'get-all', version: 0, initializer: () => ({ a: 1, b: 'b' }) })
-  expect(store.get()).toEqual({ a: 1, b: 'b' })
+  expect(store.value).toEqual({ a: 1, b: 'b' })
 })
 
 test('property reference are persisted', () => {
   const store = createStore({ moduleName, key: 'prop-ref', version: 0, initializer: () => ({ a: { b: 1 } }) })
-  const orig = store.get()
+  const orig = store.value
   orig.a = { b: 3 }
-  const actual = store.get()
+  const actual = store.value
   expect(actual.a).toEqual(orig.a)
 })

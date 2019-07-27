@@ -18,7 +18,7 @@
 [global-store] provides version stable stores for library.
 
 Once this library reaches `1.0`, it will forever be backward compatible.
-Meaning there will never be a breaking change and `2.0` version of this library.
+Meaning there will never be a breaking change or `2.0` version of this library.
 
 PLEASE NOTE: This document describes the new `1.0.0-beta` version (finally!! :tada:).
 
@@ -98,11 +98,11 @@ const store = createStore({
   })
 })
 
-console.log(store.get().prop1) // false
+console.log(store.value.prop1) // false
 
-store.get().prop1 = true
-store.get().prop2.push('a')
-console.log(store.get()) // { prop1: true, prop2: ['a'] }
+store.value.prop1 = true
+store.value.prop2.push('a')
+console.log(store.value) // { prop1: true, prop2: ['a'] }
 ```
 
 #### StoreOptions#moduleName
@@ -142,20 +142,21 @@ This is used during initialization to determine should the [`StoreOptions#initia
 
 It will be added to the `processedVersions` argument of the [`StoreOptions#initializer()`](#StoreOptionsinitializer) after it is being called.
 
-When specifing as string (recommended), it must be in this format: `major.minor.patch`.
+When specifing as string (recommended),
+it must be in this format: `major.minor.patch`.
 
 When there is a mix of string and numeric verions across different versions of your library,
 the numeric value is compared to the patch number of the string version.
 
 #### StoreOptions#initializer()
 
-Type: `<T extends StoreValue>(previousInitValue: StoreValue, processedVersions: StoreVersion[]) => T`
+Type: `<T extends StoreValue>(current: StoreValue, processedVersions: StoreVersion[]) => T`
 
 Function to initialize the store.
 
 Since there may be multiple copies of your library loaded,
 multiple calls to the store creation function (e.g. [`createStore()`](#createStore)) may occur.
-For the first call, the `previousInitValue` argument will be an empty object.
+For the first call, the `current` argument will be an empty object.
 For subsequence calls, it will be the value returned by the last call.
 
 The `processedVersions` contains all the versions the have been processed so far.
@@ -168,8 +169,12 @@ For synchronous store creation functions ([`createStore()`](#createStore) and [`
 since there is no way to control the load order,
 they can be called by a newer version of your libary before an older version.
 This means your `initializer` needs to be future proof.
-To do that, you should carry over what the previous call have created,
-and fill in the pieces your specific version needs.
+
+To do that, you should fill in the pieces your specific version needs,
+and carry over whatever currently available.
+
+This is only a general guideline,
+the actual implementation will depend on how you use your store.
 
 #### StoreValue
 
@@ -179,20 +184,17 @@ Shape of the value stored in the stores.
 
 Note that the key must be string or `Symbol.for()` because `Symbol()` cannot be shared across versions.
 
-#### Store#get()
+#### Store#value
 
-Gets the store value.
-
-Also use this to update the store.
+Access to the value in the store.
 
 ```ts
 import { createStore } from 'global-store'
 
-const store = createStore(...)
+const store = createStore({ ..., initializer: () => ({ x: 1 })}
 
-store.get().someValue = 2
-
-console.log(store.get().someValue) // 2
+console.info(store.value.x) // 1
+store.value.x = 2
 ```
 
 #### Store#reset()
@@ -208,10 +210,10 @@ This is mostly used in tests, so that the tests would not interferred each other
 Its signature is the same as [`createStore()`](#createStore).
 The returned `ReadonlyStore` has the following additional features:
 
-#### ReadonlyStore#get()
+#### ReadonlyStore#value
 
 When the store is created,
-calling `get()` would result in error if `lock()` is not called.
+try accessing `value` would result in error if `lock()` is not called.
 This avoids the store to be used accidentially without protection.
 
 #### ReadonlyStore#lock()
@@ -223,7 +225,7 @@ When the store is locked, the following happens:
 - the value is frozen, making each property read only.
 - if the property is an array, it is also frozen,
   making it unable to add or remove entry.
-- [`get()`](#ReadonlyStoreget) is open to be used.
+- [`value`](#ReadonlyStorevalue) is open to be used.
 - [`reset()`](#ReadonlyStorereset) results in error.
 - [`getWritable()`](#ReadonlyStoregetWritable) results in error.
 - [`disableProtection()`](#ReadonlyStoredisableProtection) results in error.
