@@ -48,21 +48,24 @@ System.register([], function (exports) {
       function initStoreValue(stores, id, version, initializer) {
           const store = getStore(stores, id);
           if (!~store.versions.indexOf(version)) {
-              store.init = initializer(store.init, store.versions);
+              store.initializers.push(initializer);
+              store.value = initializer(store.value, store.versions);
               store.versions.push(version);
           }
-          store.value = createStoreValue(store.init);
       }
       function resetStoreValue(stores, id) {
           const store = getStore(stores, id);
-          store.value = createStoreValue(store.init);
+          const versions = store.versions;
+          store.versions = [];
+          store.value = store.initializers.reduce((value, initializer, i) => {
+              value = initializer(value, store.versions);
+              store.versions.push(versions[i]);
+              return value;
+          }, {});
       }
       function getStore(stores, id) {
           const moduleStore = stores[id.moduleName] = stores[id.moduleName] || {};
-          return moduleStore[id.key] = moduleStore[id.key] || { versions: [], init: {} };
-      }
-      function createStoreValue(initialValue) {
-          return { ...initialValue };
+          return moduleStore[id.key] = moduleStore[id.key] || { versions: [], value: {}, initializers: [] };
       }
       function resolveCreators(moduleName, key, storeCreators, createStore) {
           sortByVersion(storeCreators).forEach(({ version, resolve, initializer }) => resolve(createStore({ moduleName, key, version, initializer })));
@@ -86,12 +89,12 @@ System.register([], function (exports) {
                       throw new Prohibited(moduleName, 'ReadonlyStore#disableProtection');
                   disabled = true;
               },
-              get() {
+              get value() {
                   if (!disabled && !isLocked)
                       throw new AccessedBeforeLock(moduleName);
                   return getStoreValue(readonlyStores, { moduleName, key });
               },
-              getWritable() {
+              get writeable() {
                   if (!disabled && isLocked)
                       throw new Prohibited(moduleName, 'ReadonlyStore#getWritable');
                   return getStoreValue(readonlyStores, { moduleName, key });
@@ -177,7 +180,7 @@ System.register([], function (exports) {
       function createStore({ moduleName, key, version, initializer }) {
           initStoreValue(stores, { moduleName, key }, version, initializer);
           return {
-              get: () => getStoreValue(stores, { moduleName, key }),
+              get value() { return getStoreValue(stores, { moduleName, key }); },
               reset: () => resetStoreValue(stores, { moduleName, key })
           };
       }

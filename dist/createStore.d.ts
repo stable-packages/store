@@ -1,9 +1,9 @@
 import { StoreOptions, StoreValue } from './types';
 export declare type Store<T extends StoreValue> = {
     /**
-     * Gets value from the store.
+     * Value from the store.
      */
-    get(): T;
+    readonly value: T;
     /**
      * Resets the store to its initial value.
      * You should only use this during testing.

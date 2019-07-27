@@ -8,7 +8,7 @@ export declare type ReadonlyStore<T extends StoreValue> = Store<T> & {
      * When configuration is completed,
      * you should `lock()` the store and use the `get()` method.
      */
-    getWritable(): T;
+    readonly writeable: T;
     /**
      * Disable the readonly feature of the store.
      * Calling this function will make the store not readonly.
