@@ -14,7 +14,7 @@ export type ReadonlyStore<T extends StoreValue> = Store<T> & {
    * When configuration is completed,
    * you should `lock()` the store and use the `get()` method.
    */
-  getWritable(): T
+  readonly writeable: T
   /**
    * Disable the readonly feature of the store.
    * Calling this function will make the store not readonly.
@@ -51,7 +51,7 @@ export function createReadonlyStore<
       if (!disabled && !isLocked) throw new AccessedBeforeLock(moduleName)
       return getStoreValue(readonlyStores, { moduleName, key })
     },
-    getWritable() {
+    get writeable() {
       if (!disabled && isLocked) throw new Prohibited(moduleName, 'ReadonlyStore#getWritable')
       return getStoreValue(readonlyStores, { moduleName, key })
     },

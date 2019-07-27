@@ -227,7 +227,7 @@ When the store is locked, the following happens:
   making it unable to add or remove entry.
 - [`value`](#ReadonlyStorevalue) is open to be used.
 - [`reset()`](#ReadonlyStorereset) results in error.
-- [`getWritable()`](#ReadonlyStoregetWritable) results in error.
+- [`writable`](#ReadonlyStorewritable) results in error.
 - [`disableProtection()`](#ReadonlyStoredisableProtection) results in error.
 
 `lock()` takes an optional `finalizer` argument.
@@ -250,18 +250,18 @@ store.lock({
 })
 ```
 
-#### ReadonlyStore#getWritable()
+#### ReadonlyStore#writable
 
 Before the store is locked,
 you need a mechanism to access the store to configure it.
-`getWritable()` by pass the check and allow you to do that.
+`writable` by pass the check and allow you to do that.
 
-Once the store is locked, calling `getWritable()` results in error.
+Once the store is locked, accessing `writable` results in error.
 
 #### ReadonlyStore#disableProtection()
 
 During testing,
-you need a mechanism to allow the [`get()`](#ReadonlyStoreget) calls to go through without locking the store.
+you need a mechanism to allow the [`value`](#ReadonlyStorevalue) calls to go through without locking the store.
 `disableProtection()` tells the store to turn off all checks so it will not complain during test.
 
 Due to its power, you should not have any code calling this method except in your test code.

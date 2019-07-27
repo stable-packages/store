@@ -114,12 +114,12 @@ test('call lock() on locked store is no-op', () => {
 describe('getWritable()', () => {
   test('throws if the store is locked', () => {
     const store = createReadonlyStore({ moduleName, key: 'getwritable-on-locked', version: 0, initializer: () => ({}) }).lock()
-    a.throws(() => store.getWritable(), Prohibited)
+    a.throws(() => store.writeable, Prohibited)
   })
 
   test('can be used during config to get and update the store value before the store is locked', () => {
     const store = createReadonlyStore({ moduleName, key: 'getwritable-before-locked', version: 0, initializer: () => ({ a: 1 }) })
-    store.getWritable().a = 2
+    store.writeable.a = 2
     store.lock()
     expect(store.value).toEqual({ a: 2 })
   })

@@ -14,7 +14,7 @@ test('init single store with key', async () => {
 
   const store = await p
 
-  expect(store.getWritable().a).toBe(1)
+  expect(store.writeable.a).toBe(1)
 })
 
 test('init single store without key', async () => {
@@ -26,7 +26,7 @@ test('init single store without key', async () => {
 
   const store = await p
 
-  expect(store.getWritable().a).toBe(1)
+  expect(store.writeable.a).toBe(1)
 })
 
 test('init multiple createAsynStore calls with key', async () => {
@@ -40,11 +40,11 @@ test('init multiple createAsynStore calls with key', async () => {
   const store1 = await p1
   const store2 = await p2
 
-  expect(store1.getWritable().a).toBe(1)
-  expect(store2.getWritable().a).toBe(1)
+  expect(store1.writeable.a).toBe(1)
+  expect(store2.writeable.a).toBe(1)
 
-  store1.getWritable().a = 2
-  expect(store2.getWritable().a).toBe(2)
+  store1.writeable.a = 2
+  expect(store2.writeable.a).toBe(2)
 })
 
 test('init multiple stores in the same module without key', async () => {
@@ -57,8 +57,8 @@ test('init multiple stores in the same module without key', async () => {
   const store1 = await p1
   const store2 = await p2
 
-  expect(store1.getWritable().a).toBe(1)
-  expect(store2.getWritable().b).toBe(2)
+  expect(store1.writeable.a).toBe(1)
+  expect(store2.writeable.b).toBe(2)
 })
 
 test('init stores with different numeric versions is ordered by version', async () => {
@@ -85,8 +85,8 @@ test('init stores with different numeric versions is ordered by version', async 
   const store2 = await p2
   const store1 = await p1
 
-  expect(store1.getWritable().a).toBe(1)
-  expect(store2.getWritable().b).toBe(2)
+  expect(store1.writeable.a).toBe(1)
+  expect(store2.writeable.b).toBe(2)
 
   o.end()
 })
