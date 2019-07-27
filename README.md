@@ -261,7 +261,7 @@ Once the store is locked, accessing `writable` results in error.
 #### ReadonlyStore#disableProtection()
 
 During testing,
-you need a mechanism to allow the [`value`](#ReadonlyStorevalue) calls to go through without locking the store.
+you need a mechanism to allow the access [`value`](#ReadonlyStorevalue) to go through without locking the store.
 `disableProtection()` tells the store to turn off all checks so it will not complain during test.
 
 Due to its power, you should not have any code calling this method except in your test code.
