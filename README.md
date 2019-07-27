@@ -252,6 +252,8 @@ store.lock({
 
 #### ReadonlyStore#writable
 
+Access to a the value in the store before lock.
+
 Before the store is locked,
 you need a mechanism to access the store to configure it.
 `writable` by pass the check and allow you to do that.
