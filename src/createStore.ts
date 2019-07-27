@@ -4,9 +4,9 @@ import { getStoreValue, initStoreValue, resetStoreValue } from './util';
 
 export type Store<T extends StoreValue> = {
   /**
-   * Gets value from the store.
+   * Value from the store.
    */
-  get(): T
+  readonly value: T
   /**
    * Resets the store to its initial value.
    * You should only use this during testing.
@@ -26,7 +26,7 @@ export function createStore<
   initStoreValue(stores, { moduleName, key }, version, initializer)
 
   return {
-    get: () => getStoreValue(stores, { moduleName, key }),
+    get value() { return getStoreValue(stores, { moduleName, key }) },
     reset: () => resetStoreValue(stores, { moduleName, key })
   }
 }

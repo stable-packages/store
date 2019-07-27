@@ -12,9 +12,9 @@ test('create with same id will get existing store', () => {
   store1.disableProtection()
   store2.disableProtection()
 
-  store1.get().a = 2
+  store1.value.a = 2
 
-  expect(store2.get()).toEqual({ a: 2 })
+  expect(store2.value).toEqual({ a: 2 })
 })
 
 test('initializer receives empty object the first time', () => {
@@ -30,13 +30,13 @@ test('store is typed by the initializer', () => {
   store1.disableProtection()
   store2.disableProtection()
 
-  assertType.isNumber(store1.get().a)
-  assertType.isNumber(store2.get().b)
+  assertType.isNumber(store1.value.a)
+  assertType.isNumber(store2.value.b)
 })
 
 test('store type can be overridden', () => {
   const store = createReadonlyStore<{ a: number | undefined }>({ moduleName, key: 'override-type', version: 0, initializer: () => ({ a: undefined }) }).lock()
-  typeAssertion<number | undefined>()(store.get().a)
+  typeAssertion<number | undefined>()(store.value.a)
 })
 
 test('initializer receives the previous initial value', () => {
@@ -75,12 +75,12 @@ test('call reset() on 1st store gets latest initial value', () => {
   store1.disableProtection()
 
   store1.reset()
-  expect(store1.get()).toEqual({ a: 2, b: true })
+  expect(store1.value).toEqual({ a: 2, b: true })
 })
 
 test('call get() on not locked store throws', () => {
   const store = createReadonlyStore({ moduleName, key: 'get-throws', version: 0, initializer: () => ({ a: 1 }) })
-  a.throws(() => store.get(), AccessedBeforeLock)
+  a.throws(() => store.value, AccessedBeforeLock)
 })
 
 test('call openForTesting() when the store is locked will throw', () => {
@@ -98,7 +98,7 @@ test('call lock() after openForTesting() will not lock the store', () => {
 
 test('can call get() after the store is locked', () => {
   const store = createReadonlyStore({ moduleName, key: 'locked-get', version: 0, initializer: () => ({ a: 1 }) }).lock()
-  expect(store.get()).toEqual({ a: 1 })
+  expect(store.value).toEqual({ a: 1 })
 })
 
 test('call reset() on locked store throws', () => {
@@ -121,18 +121,18 @@ describe('getWritable()', () => {
     const store = createReadonlyStore({ moduleName, key: 'getwritable-before-locked', version: 0, initializer: () => ({ a: 1 }) })
     store.getWritable().a = 2
     store.lock()
-    expect(store.get()).toEqual({ a: 2 })
+    expect(store.value).toEqual({ a: 2 })
   })
 });
 
 test('property values are frozen in a locked store', () => {
   const store = createReadonlyStore({ moduleName, key: 'prop-freeze', version: 0, initializer: () => ({ a: 1, b: true, c: 'str', d: {}, e: [] as any[] }) }).lock()
 
-  a.throws(() => store.get().a = 2, TypeError)
-  a.throws(() => store.get().b = false, TypeError)
-  a.throws(() => store.get().c = 'abc', TypeError)
-  a.throws(() => store.get().d = { z: 1 }, TypeError)
-  a.throws(() => store.get().e = ['a'], TypeError)
+  a.throws(() => store.value.a = 2, TypeError)
+  a.throws(() => store.value.b = false, TypeError)
+  a.throws(() => store.value.c = 'abc', TypeError)
+  a.throws(() => store.value.d = { z: 1 }, TypeError)
+  a.throws(() => store.value.e = ['a'], TypeError)
 })
 
 test('property value can be undefined', () => {
@@ -142,7 +142,7 @@ test('property value can be undefined', () => {
 test('array property is frozen in a locked store', () => {
   const store = createReadonlyStore({ moduleName, key: 'prop-array-freeze', version: 0, initializer: () => ({ arr: [] as any[], und: undefined }) }).lock()
 
-  a.throws(() => store.get().arr.push('a'), TypeError)
+  a.throws(() => store.value.arr.push('a'), TypeError)
 })
 
 test('property can be symbol', () => {
@@ -150,7 +150,7 @@ test('property can be symbol', () => {
   const sym2 = Symbol()
   const store = createReadonlyStore({ moduleName, key: 'prop-array-freeze', version: 0, initializer: () => ({ [sym1]: undefined, [sym2]: [] as any[] }) }).lock()
 
-  a.throws(() => store.get()[sym2].push('a'), TypeError)
+  a.throws(() => store.value[sym2].push('a'), TypeError)
 })
 
 test('can specify finalizer during lock() to process the values', () => {
@@ -165,9 +165,9 @@ test('can specify finalizer during lock() to process the values', () => {
     }
   })
 
-  expect(store.get().a).toBe(2)
-  expect(Object.isFrozen(store.get().b)).toBeTruthy()
-  expect(store.get().c).toEqual(['a', 'b'])
+  expect(store.value.a).toBe(2)
+  expect(Object.isFrozen(store.value.b)).toBeTruthy()
+  expect(store.value.c).toEqual(['a', 'b'])
 })
 
 test('finalizer can contain properties out of the store type so it can process older version store values', () => {

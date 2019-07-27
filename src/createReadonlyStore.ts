@@ -47,7 +47,7 @@ export function createReadonlyStore<
       if (isLocked) throw new Prohibited(moduleName, 'ReadonlyStore#disableProtection')
       disabled = true
     },
-    get() {
+    get value() {
       if (!disabled && !isLocked) throw new AccessedBeforeLock(moduleName)
       return getStoreValue(readonlyStores, { moduleName, key })
     },
