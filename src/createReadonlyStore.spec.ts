@@ -118,7 +118,7 @@ describe('getWritable()', () => {
   })
 
   test('can be used during config to get and update the store value before the store is locked', () => {
-    const store = createReadonlyStore({ moduleName, key: 'getwritable-on-locked', version: 0, initializer: () => ({ a: 1 }) })
+    const store = createReadonlyStore({ moduleName, key: 'getwritable-before-locked', version: 0, initializer: () => ({ a: 1 }) })
     store.getWritable().a = 2
     store.lock()
     expect(store.get()).toEqual({ a: 2 })

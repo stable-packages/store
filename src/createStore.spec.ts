@@ -78,6 +78,15 @@ test('initializer receives the previous initial value', () => {
   expect(actual).toEqual({ a: 1 })
 })
 
+test('reset() will reset object values', () => {
+  const key = 'reset-obj'
+  const store = createStore({ moduleName, key, version: 0, initializer: () => ({ a: { b: 2 } }) })
+  store.get().a.b = 3
+  store.reset()
+
+  expect(store.get().a.b).toBe(2)
+})
+
 test('call reset() on 1st store gets latest initial value', () => {
   const key = '2nd-reset-get-1st'
   const store1 = createStore({ moduleName, key, version: 0, initializer: () => ({ a: 1 }) })

@@ -60,8 +60,8 @@ app
 Since the versions are not compatible,
 both versions of your library are loaded thus two instances of the `registry` variable exist and contain different values.
 
-Solution to this problem is to use some form of global storage such as `process.env` in NodeJS,
-and `localStorage` or global variable in browser.
+Solution to this problem is to use some form of global storage such as `global` in NodeJS,
+or global variable in browser.
 
 The problem is that these mechanisms are shared by everything else in the application,
 completely exposed to everyone,
@@ -91,10 +91,10 @@ const store = createStore({
   moduleName: 'your-module',
   key: 'some-unique-string',
   version: '1.0.0',
-  initializer: (prev, versions) =>({
-    ...prev,
+  initializer: (current, versions) =>({
     prop1: false,
-    prop2: [] as string[]
+    prop2: [] as string[],
+    ...current
   })
 })
 
