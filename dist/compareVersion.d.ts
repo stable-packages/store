@@ -1,2 +1,7 @@
 import { StoreVersion } from './types';
-export declare function compareVersion(a: StoreVersion, b: StoreVersion): number;
+/**
+ * Compare version.
+ * Positive when processed > current
+ * Negative when processed < current
+ */
+export declare function compareVersion(processed: StoreVersion, current: StoreVersion): number;

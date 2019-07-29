@@ -3,10 +3,10 @@ import { StoreOptions, StoreValue } from './types';
 export declare type ReadonlyStore<T extends StoreValue> = Store<T> & {
     /**
      * Gets a writable value from the store.
-     * This can be used for configure the store value before it is locked.
+     * This can be used to set the store value before it is locked.
      * This is useful if your configuration is distributed in nature.
      * When configuration is completed,
-     * you should `lock()` the store and use the `get()` method.
+     * you should `lock()` the store and access through `value`.
      */
     readonly writeable: T;
     /**
