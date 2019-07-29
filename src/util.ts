@@ -10,7 +10,7 @@ export function initStoreValue<T extends StoreValue>(stores: Stores, id: StoreId
   const store = getStore(stores, id)
   if (!~store.versions.indexOf(version)) {
     store.initializers.push(initializer)
-    store.value = initializer(store.value, store.versions)
+    store.value = initializer(store.value as T, store.versions)
     store.versions.push(version)
   }
 }
