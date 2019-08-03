@@ -1,12 +1,18 @@
 import { StoreOptions, StoreValue } from './types';
 import { Stores } from './typesInternal';
-import { getStoreValue, initStoreValue, resetStoreValue } from './util';
+import { getStoreValue, initStoreValue, resetStoreValue, freezeStoreValue } from './util';
 
 export type Store<T extends StoreValue> = {
   /**
-   * Value from the store.
+   * The store value.
    */
   readonly value: T
+  /**
+   * Freezes the store value.
+   * @param value Optional new store value.
+   * You can use this update the store value and freeze part of it.
+   */
+  freeze(value?: T): void
   /**
    * Resets the store to its initial value.
    * You should only use this during testing.
@@ -18,15 +24,17 @@ const stores: Stores = {}
 
 /**
  * Creates a store of type T.
- * https://github.com/unional/global-store#createstore
+ * https://www.npmjs.com/package/global-store
  */
 export function createStore<
   T extends StoreValue
 >({ moduleName, key, version, initializer }: StoreOptions<T>): Store<T> {
-  initStoreValue(stores, { moduleName, key }, version, initializer)
+  const id = { moduleName, key }
+  initStoreValue(stores, id, version, initializer)
 
   return {
-    get value() { return getStoreValue(stores, { moduleName, key }) },
-    reset: () => resetStoreValue(stores, { moduleName, key })
+    get value() { return getStoreValue(stores, id) },
+    freeze: (value) => freezeStoreValue(stores, id, value),
+    reset: () => resetStoreValue(stores, id)
   }
 }

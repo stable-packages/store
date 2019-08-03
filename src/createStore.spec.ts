@@ -1,3 +1,4 @@
+import a from 'assertron';
 import { assertType, typeAssertion } from 'type-plus';
 import { createStore } from '.';
 
@@ -94,7 +95,6 @@ test('call reset() on 1st store gets latest initial value', () => {
   store1.reset()
   expect(store1.value).toEqual({ a: 2, b: true })
 })
-// test and get between create
 
 test('gets initial value', () => {
   const store = createStore({ moduleName, key: 'get-all', version: 0, initializer: () => ({ a: 1, b: 'b' }) })
@@ -107,4 +107,57 @@ test('property reference are persisted', () => {
   orig.a = { b: 3 }
   const actual = store.value
   expect(actual.a).toEqual(orig.a)
+})
+
+describe('freeze store', () => {
+  test('cannot add new property', () => {
+    const store = createStore<any>({ moduleName, key: 'freeze-no-add', version: 0, initializer: () => ({ a: 1 }) })
+    store.freeze()
+
+    a.throws(() => store.value.b = 2, TypeError)
+  })
+
+  test('cannot be freezed again', () => {
+    const store = createStore<any>({ moduleName, key: 'freeze-no-freeze', version: 0, initializer: () => ({ a: 1 }) })
+    store.freeze()
+
+    a.throws(() => store.freeze(), TypeError)
+  })
+
+
+  test('property values are frozen', () => {
+    const store = createStore({ moduleName, key: 'prop-freeze', version: 0, initializer: () => ({ a: 1, b: true, c: 'str', d: {}, e: [] as any[] }) })
+    store.freeze()
+
+    a.throws(() => store.value.a = 2, TypeError)
+    a.throws(() => store.value.b = false, TypeError)
+    a.throws(() => store.value.c = 'abc', TypeError)
+    a.throws(() => store.value.d = { z: 1 }, TypeError)
+    a.throws(() => store.value.e = ['a'], TypeError)
+  })
+
+  test('object property is not frozen', () => {
+    const store = createStore({ moduleName, key: 'obj-not-frozen', version: 0, initializer: () => ({ a: { b: 1, c: {} } }) })
+    store.freeze()
+    store.value.a.b = 2
+    store.value.a.c = { p: 'power' }
+  })
+
+  test('array property is frozen', () => {
+    const store = createStore({ moduleName, key: 'prop-array-freeze', version: 0, initializer: () => ({ arr: [] as any[], und: undefined }) })
+    store.freeze()
+
+    a.throws(() => store.value.arr.push('a'), TypeError)
+  })
+
+  test('object in array property is not frozen', () => {
+    const store = createStore({
+      moduleName,
+      key: 'obj-in-array-not-frozen',
+      version: 0,
+      initializer: () => ({ a: [{ x: 'x' }] })
+    })
+    store.freeze()
+    store.value.a[0].x = 'y'
+  })
 })

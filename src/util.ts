@@ -38,3 +38,27 @@ export function resolveCreators<S>(moduleName: string, key: string, storeCreator
 export function sortByVersion<S>(storeCreators: Array<StoreCreator<S>>) {
   return storeCreators.sort((a, b) => compareVersion(a.version, b.version))
 }
+
+export function freezeStoreValue(stores: Stores, id: StoreId, value?: any) {
+  const store = getStore(stores, id)
+  store.value = freezeValue(value || store.value)
+}
+
+function freezeValue(storeValue: StoreValue) {
+  if (Object.isFrozen(storeValue)) throw TypeError('Frozen value cannot be freezed again')
+
+  Object.keys(storeValue).forEach(k => freezeIfIsArray(storeValue, k))
+  // istanbul ignore next
+  if (Object.getOwnPropertySymbols) {
+    Object.getOwnPropertySymbols(storeValue).forEach(k => freezeIfIsArray(storeValue, k))
+  }
+
+  return Object.freeze(storeValue)
+}
+
+function freezeIfIsArray(storeValue: StoreValue, k: any) {
+  const value = storeValue[k]
+  if (Array.isArray(value)) {
+    storeValue[k] = Object.freeze(value)
+  }
+}

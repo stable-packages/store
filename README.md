@@ -80,9 +80,11 @@ yarn add global-store
 
 ### createStore()
 
-Type: `(options: StoreOptions) => Store`
+Type: `<T>(options: StoreOptions<T>) => Store<T>`
 
-`createStore()` creates a version stable store.
+Creates a store of type `T`.
+
+`T` is inferred by [`initializer`](#StoreOptionsInitializer).
 
 ```ts
 import { createStore } from 'global-store'
@@ -203,71 +205,6 @@ Reset the store to its initial value.
 
 This is mostly used in tests, so that the tests would not interferred each other.
 
-### createReadonlyStore()
-
-`createReadonlyStore()` creates a version stable store that prevents modification.
-
-Its signature is the same as [`createStore()`](#createStore).
-The returned `ReadonlyStore` has the following additional features:
-
-#### ReadonlyStore#value
-
-When the store is created,
-try accessing `value` would result in error if `lock()` is not called.
-This avoids the store to be used accidentially without protection.
-
-#### ReadonlyStore#lock()
-
-Lock the store, making it read only.
-
-When the store is locked, the following happens:
-
-- the value is frozen, making each property read only.
-- if the property is an array, it is also frozen,
-  making it unable to add or remove entry.
-- [`value`](#ReadonlyStorevalue) is open to be used.
-- [`reset()`](#ReadonlyStorereset) results in error.
-- [`writable`](#ReadonlyStorewritable) results in error.
-- [`disableProtection()`](#ReadonlyStoredisableProtection) results in error.
-
-`lock()` takes an optional `finalizer` argument.
-It can contains properties matching the property names of the store,
-where each one is a transform function for that property.
-
-It allows you to process the store before it is locked.
-
-The typical use cases are to validate, clean up, transform, or freeze the values.
-
-```ts
-import { createReadonlyStore } from 'global-store'
-
-const store = createStore<{ a: number, b: Foo[], c: Boo }>(...)
-
-store.lock({
-  b: values => values.map(v => Object.freeze(v)),
-  c: value => Object.freeze(value),
-  prev: value => undefined // make the older version property disappear.
-})
-```
-
-#### ReadonlyStore#writable
-
-Access to a the value in the store before lock.
-
-Before the store is locked,
-you need a mechanism to access the store to configure it.
-`writable` by pass the check and allow you to do that.
-
-Once the store is locked, accessing `writable` results in error.
-
-#### ReadonlyStore#disableProtection()
-
-During testing,
-you need a mechanism to allow the access [`value`](#ReadonlyStorevalue) to go through without locking the store.
-`disableProtection()` tells the store to turn off all checks so it will not complain during test.
-
-Due to its power, you should not have any code calling this method except in your test code.
-
 ### createAsyncStore()
 
 An async variant of [`createStore()`](#createStore).
@@ -286,14 +223,6 @@ It takes two arguments:
 - `moduleName: string`: Name of your mdodule.
 - `key: string`: Optional. Key of the specific store to initialize.
   If omitted, all stores in the module will be initialized.
-
-### createAsyncReadonlyStore()
-
-An async variant of [`createReadonlyStore()`](#createReadonlyStore).
-
-### initializeAsyncReadonlyStore()
-
-An variant of [`initializeAsyncStore()`](#initializeAsyncStore) for `ReadonlyStore`.
 
 ### compareVersion()
 
