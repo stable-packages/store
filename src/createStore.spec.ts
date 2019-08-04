@@ -182,6 +182,19 @@ describe('freeze store', () => {
     })
 
     store.freeze(Object.freeze(store.value))
-
   })
+})
+
+
+test('reset on freezed store will get new unfreezed value', () => {
+  const store = createStore({
+    moduleName,
+    key: 'reset on freeze',
+    version: 0,
+    initializer: () => ({ a: { b: 1 } })
+  })
+
+  store.freeze()
+  store.reset()
+  store.value.a = { b: 2 }
 })

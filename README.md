@@ -132,7 +132,7 @@ e.g. `config:d15427a4-75cf-4999-9065-1dc325839a59`
 
 `key` + `moduleName` forms an unique id to the store.
 
-`key` not be shown if something goes wrong.
+`key` will not be shown if something goes wrong.
 
 #### StoreOptions#version
 
@@ -140,7 +140,7 @@ Type: `StoreVersion = string | number`
 
 Version of the store.
 
-This is used during initialization to determine should the [`StoreOptions#initializer`](#StoreOptionsinitializer) be called (and in what order for [`createAsyncStore()`](#createAsyncStore).
+This is used during initialization to determine should the [`StoreOptions#initializer`](#StoreOptionsinitializer) be called (and in what order for [`createAsyncStore()`](#createAsyncStore)).
 
 It will be added to the `processedVersions` argument of the [`StoreOptions#initializer()`](#StoreOptionsinitializer) after it is being called.
 
@@ -164,10 +164,10 @@ For subsequence calls, it will be the value returned by the last call.
 The `processedVersions` contains all the versions the have been processed so far.
 You can use it to help determine what do you need to do.
 
-For ([`createAsyncStore()`](#createAsyncStore),
+For [`createAsyncStore`](#createAsyncStore),
 the `initializer` function will be called in the order of `version`.
 
-For ([`createStore()`](#createStore)),
+For [`createStore`](#createStore),
 since there is no way to control the load order,
 they can be called by a newer version of your libary before an older version.
 This means your `initializer` needs to be future proof.
