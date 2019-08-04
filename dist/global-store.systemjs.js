@@ -4,15 +4,16 @@ System.register([], function (exports) {
     execute: function () {
 
       exports({
-        compareVersion: compareVersion,
-        createAsyncReadonlyStore: createAsyncReadonlyStore,
         createAsyncStore: createAsyncStore,
-        createReadonlyStore: createReadonlyStore,
         createStore: createStore,
         default: createStore,
-        initializeAsyncReadonlyStore: initializeAsyncReadonlyStore,
         initializeAsyncStore: initializeAsyncStore
       });
+
+      function toVersionArray(v) {
+          return typeof v === 'number' ? [0, 0, v] :
+              v.split('.').map(v => Number.parseInt(v, 10));
+      }
 
       /**
        * Compare version.
@@ -26,33 +27,25 @@ System.register([], function (exports) {
               v1[1] !== v2[1] ? v1[1] - v2[1] :
                   v1[2] - v2[2];
       }
-      function toVersionArray(v) {
-          return typeof v === 'number' ? [0, 0, v] :
-              v.split('.').map(v => Number.parseInt(v, 10));
-      }
 
-      class Prohibited extends Error {
-          constructor(moduleName, action) {
-              super(`Unable to perform '${action}' on a locked store from module '${moduleName}'`);
-              this.moduleName = moduleName;
-              this.action = action;
-              Object.setPrototypeOf(this, new.target.prototype);
-          }
-      } exports('Prohibited', Prohibited);
-      class AccessedBeforeLock extends Error {
-          constructor(moduleName) {
-              super(`A readonly store from '${moduleName}' is being accessed before it is locked. Please call the approprate function in '${moduleName}' to lock the store.`);
-              this.moduleName = moduleName;
-              Object.setPrototypeOf(this, new.target.prototype);
-          }
-      } exports('AccessedBeforeLock', AccessedBeforeLock);
+      function shouldInvokeInitializer(versions, version) {
+          const vs = versions.map(toVersionArray);
+          const v = toVersionArray(version);
+          return noMatchMajor(vs, v) || hasNewVersion(vs, v);
+      }
+      function noMatchMajor(versions, version) {
+          return !versions.some(v => v[0] === version[0]);
+      }
+      function hasNewVersion(versions, version) {
+          return versions.filter(v => v[0] === version[0]).some(v => version[1] > v[1] || (version[1] === v[1] && version[2] > v[2]));
+      }
 
       function getStoreValue(stores, id) {
           return getStore(stores, id).value;
       }
       function initStoreValue(stores, id, version, initializer) {
           const store = getStore(stores, id);
-          if (!~store.versions.indexOf(version)) {
+          if (shouldInvokeInitializer(store.versions, version)) {
               store.initializers.push(initializer);
               store.value = initializer(store.value, store.versions);
               store.versions.push(version);
@@ -78,115 +71,39 @@ System.register([], function (exports) {
       function sortByVersion(storeCreators) {
           return storeCreators.sort((a, b) => compareVersion(a.version, b.version));
       }
-
-      const readonlyStores = {};
-      /**
-       * Creates a readonly store of type T.
-       * https://github.com/unional/global-store#createreadonlystore
-       */
-      function createReadonlyStore({ moduleName, key, version, initializer }) {
-          initStoreValue(readonlyStores, { moduleName, key }, version, initializer);
-          let isLocked = false;
-          let disabled = false;
-          return {
-              disableProtection() {
-                  if (isLocked)
-                      throw new Prohibited(moduleName, 'ReadonlyStore#disableProtection');
-                  disabled = true;
-              },
-              get value() {
-                  if (!disabled && !isLocked)
-                      throw new AccessedBeforeLock(moduleName);
-                  return getStoreValue(readonlyStores, { moduleName, key });
-              },
-              get writeable() {
-                  if (!disabled && isLocked)
-                      throw new Prohibited(moduleName, 'ReadonlyStore#getWritable');
-                  return getStoreValue(readonlyStores, { moduleName, key });
-              },
-              lock(finalizer) {
-                  if (!disabled && !isLocked) {
-                      if (finalizer) {
-                          updateStoreValue(readonlyStores, { moduleName, key }, finalizer);
-                      }
-                      freezeStoreValue(readonlyStores, { moduleName, key });
-                      isLocked = true;
-                      disabled = false;
-                  }
-                  return this;
-              },
-              reset() {
-                  if (!disabled && isLocked)
-                      throw new Prohibited(moduleName, 'ReadonlyStore#reset');
-                  resetStoreValue(readonlyStores, { moduleName, key });
-              }
-          };
-      }
-      function updateStoreValue(stores, id, finalizer) {
-          const current = getStoreValue(stores, id);
-          Object.keys(finalizer).forEach(k => current[k] = finalizer[k](current[k]));
-      }
-      function freezeStoreValue(stores, id) {
+      function freezeStoreValue(stores, id, value) {
           const store = getStore(stores, id);
-          store.value = freezeValue(store.value);
+          store.value = freezeValue(value || store.value);
       }
       function freezeValue(storeValue) {
-          Object.keys(storeValue).forEach(k => freezeArray(storeValue, k));
+          if (Object.isFrozen(storeValue))
+              throw TypeError('Frozen value cannot be freezed again');
+          Object.keys(storeValue).forEach(k => freezeIfIsArray(storeValue, k));
           // istanbul ignore next
           if (Object.getOwnPropertySymbols) {
-              Object.getOwnPropertySymbols(storeValue).forEach(k => freezeArray(storeValue, k));
+              Object.getOwnPropertySymbols(storeValue).forEach(k => freezeIfIsArray(storeValue, k));
           }
           return Object.freeze(storeValue);
       }
-      function freezeArray(storeValue, k) {
+      function freezeIfIsArray(storeValue, k) {
           const value = storeValue[k];
           if (Array.isArray(value)) {
               storeValue[k] = Object.freeze(value);
           }
       }
 
-      const asyncReadonlyStoreCreators = {};
-      /**
-       * Creates a readonly store of type T.
-       * https://github.com/unional/global-store#createAsyncReadonlyStore
-       */
-      function createAsyncReadonlyStore({ moduleName, key, version, initializer }) {
-          return new Promise(resolve => {
-              const creatorsOfModules = asyncReadonlyStoreCreators[moduleName] = asyncReadonlyStoreCreators[moduleName] || {};
-              const storeCreators = creatorsOfModules[key] = creatorsOfModules[key] || [];
-              storeCreators.push({ version, resolve, initializer });
-          });
-      }
-      /**
-       * Initializes the stores for `createAsyncReadonlyStore()`.
-       * https://github.com/unional/global-store#initializeAsyncReadonlyStore
-       */
-      function initializeAsyncReadonlyStore(moduleName, key) {
-          const creatorsOfModules = asyncReadonlyStoreCreators[moduleName];
-          if (!creatorsOfModules)
-              return;
-          if (key) {
-              const storeCreators = creatorsOfModules[key];
-              resolveCreators(moduleName, key, storeCreators, createReadonlyStore);
-          }
-          else {
-              Object.keys(creatorsOfModules).forEach(k => {
-                  const storeCreators = creatorsOfModules[k];
-                  resolveCreators(moduleName, k, storeCreators, createReadonlyStore);
-              });
-          }
-      }
-
       const stores = {};
       /**
        * Creates a store of type T.
-       * https://github.com/unional/global-store#createstore
+       * https://www.npmjs.com/package/global-store
        */
       function createStore({ moduleName, key, version, initializer }) {
-          initStoreValue(stores, { moduleName, key }, version, initializer);
+          const id = { moduleName, key };
+          initStoreValue(stores, id, version, initializer);
           return {
-              get value() { return getStoreValue(stores, { moduleName, key }); },
-              reset: () => resetStoreValue(stores, { moduleName, key })
+              get value() { return getStoreValue(stores, id); },
+              freeze: (value) => freezeStoreValue(stores, id, value),
+              reset: () => resetStoreValue(stores, id)
           };
       }
 
