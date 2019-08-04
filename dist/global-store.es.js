@@ -61,7 +61,9 @@ function sortByVersion(storeCreators) {
 }
 function freezeStoreValue(stores, id, value) {
     const store = getStore(stores, id);
-    store.value = freezeValue(value || store.value);
+    store.value = value ?
+        Object.isFrozen(value) ? value : Object.freeze(value) :
+        freezeValue(store.value);
 }
 function freezeValue(storeValue) {
     if (Object.isFrozen(storeValue))
