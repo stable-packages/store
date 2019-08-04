@@ -42,7 +42,9 @@ export function sortByVersion<S>(storeCreators: Array<StoreCreator<S>>) {
 
 export function freezeStoreValue(stores: Stores, id: StoreId, value?: any) {
   const store = getStore(stores, id)
-  store.value = freezeValue(value || store.value)
+  store.value = value ?
+    Object.isFrozen(value) ? value : Object.freeze(value) :
+    freezeValue(store.value)
 }
 
 function freezeValue(storeValue: StoreValue) {

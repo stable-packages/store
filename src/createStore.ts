@@ -10,9 +10,12 @@ export type Store<T extends StoreValue> = {
   /**
    * Freezes the store value.
    * @param value Optional new store value.
+   * If supplied, this value will be freezed and used as the store value.
    * You can use this update the store value and freeze part of it.
+   * If not supplied,
+   * the original value will be freezed and its array property will also be freezed.
    */
-  freeze(value?: T): void
+  freeze(value?: { [k in keyof T]: Readonly<T[k]> }): void
   /**
    * Resets the store to its initial value.
    * You should only use this during testing.

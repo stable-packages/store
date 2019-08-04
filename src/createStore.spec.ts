@@ -160,4 +160,28 @@ describe('freeze store', () => {
     store.freeze()
     store.value.a[0].x = 'y'
   })
+
+  test('freeze provided value but not array property', () => {
+    const store = createStore({
+      moduleName,
+      key: 'not freeze array value',
+      version: 0,
+      initializer: () => ({ a: { b: 1 }, c: [{ x: 1 }] })
+    })
+
+    store.freeze(store.value)
+    a.throws(() => store.value.a = { b: 2 }, TypeError)
+    store.value.c.push({ x: 2 })
+  })
+  test('user can pre-freeze value', () => {
+    const store = createStore({
+      moduleName,
+      key: 'self freeze',
+      version: 0,
+      initializer: () => ({ a: { b: 1 } })
+    })
+
+    store.freeze(Object.freeze(store.value))
+
+  })
 })
