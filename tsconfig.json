@@ -1,8 +1,5 @@
 {
   "extends": "./tsconfig.esnext.json",
-  "compilerOptions": {
-    "noEmit": true
-  },
   "include": [
     "src",
     "typings"

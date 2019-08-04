@@ -140,7 +140,7 @@ Type: `StoreVersion = string | number`
 
 Version of the store.
 
-This is used during initialization to determine should the [`StoreOptions#initializer`](#StoreOptionsinitializer) be called (and in what order for [`createAsyncStore()`](#createAsyncStore) and [`createAsyncReadonlyStore()`](#createAsyncReadonlyStore)).
+This is used during initialization to determine should the [`StoreOptions#initializer`](#StoreOptionsinitializer) be called (and in what order for [`createAsyncStore()`](#createAsyncStore).
 
 It will be added to the `processedVersions` argument of the [`StoreOptions#initializer()`](#StoreOptionsinitializer) after it is being called.
 
@@ -164,10 +164,10 @@ For subsequence calls, it will be the value returned by the last call.
 The `processedVersions` contains all the versions the have been processed so far.
 You can use it to help determine what do you need to do.
 
-For asynchronous store creation functions ([`createAsyncStore()`](#createAsyncStore) and [`createAsyncReadonlyStore()`](#createAsyncReadonlyStore)),
+For ([`createAsyncStore()`](#createAsyncStore),
 the `initializer` function will be called in the order of `version`.
 
-For synchronous store creation functions ([`createStore()`](#createStore) and [`createReadonlyStore()`](#createReadonlyStore)),
+For ([`createStore()`](#createStore)),
 since there is no way to control the load order,
 they can be called by a newer version of your libary before an older version.
 This means your `initializer` needs to be future proof.
@@ -223,12 +223,6 @@ It takes two arguments:
 - `moduleName: string`: Name of your mdodule.
 - `key: string`: Optional. Key of the specific store to initialize.
   If omitted, all stores in the module will be initialized.
-
-### compareVersion()
-
-Type: `(a: StoreVersion, b: StoreVersion) => number`
-
-Helper utility function to compare versions when implementing [`StoreOptions#initializer()`](#StoreOptionsinitializer).
 
 ## Bundling
 
