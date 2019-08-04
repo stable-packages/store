@@ -1,6 +1,7 @@
 import { compareVersion } from './compareVersion';
 import { StoreInitializer, StoreValue, StoreVersion } from './types';
 import { StoreCreator, StoreId, Stores } from './typesInternal';
+import { shouldInvokeInitializer } from './shouldInvokeInitializer';
 
 export function getStoreValue(stores: Stores, id: StoreId): any {
   return getStore(stores, id).value
@@ -8,7 +9,7 @@ export function getStoreValue(stores: Stores, id: StoreId): any {
 
 export function initStoreValue<T extends StoreValue>(stores: Stores, id: StoreId, version: StoreVersion, initializer: StoreInitializer<T>) {
   const store = getStore(stores, id)
-  if (!~store.versions.indexOf(version)) {
+  if (shouldInvokeInitializer(store.versions, version)) {
     store.initializers.push(initializer)
     store.value = initializer(store.value as T, store.versions)
     store.versions.push(version)
