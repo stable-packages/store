@@ -65,7 +65,7 @@ or global variable in browser.
 
 The problem is that these mechanisms are shared by everything else in the application,
 completely exposed to everyone,
-and there is no mechanism to consolidate your state when they are populated by each version of your library being loaded.
+and there is no mechanism to consolidate or protect your state when they are populated by each version of your library being loaded.
 
 These are the problems addressed by [global-store].
 
