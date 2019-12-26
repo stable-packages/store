@@ -1,7 +1,7 @@
-import { createStore, Store } from './createStore';
-import { StoreOptions, StoreValue } from './types';
-import { resolveCreators } from './util';
-import { StoreCreators } from './typesInternal';
+import { createStore, Store } from './createStore'
+import { StoreOptions, StoreValue } from './types'
+import { StoreCreators } from './typesInternal'
+import { resolveCreators } from './util'
 
 const asyncStoreCreators: StoreCreators<Store<any>> = {}
 

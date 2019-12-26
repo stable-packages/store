@@ -1,4 +1,4 @@
-import { StoreInitializer, StoreVersion, StoreValue } from './types';
+import { StoreInitializer, StoreVersion, StoreValue } from './types'
 
 export type StoreId = { moduleName: string, key: string }
 

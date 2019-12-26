@@ -1,6 +1,6 @@
-import a from 'assertron';
-import { assertType, typeAssertion } from 'type-plus';
-import { createStore } from '.';
+import a from 'assertron'
+import { assertType, typeAssertion } from 'type-plus'
+import { createStore } from '.'
 
 const moduleName = 'your-module'
 

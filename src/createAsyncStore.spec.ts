@@ -1,5 +1,5 @@
-import { AssertOrder } from 'assertron';
-import { createAsyncStore, initializeAsyncStore } from '.';
+import { AssertOrder } from 'assertron'
+import { createAsyncStore, initializeAsyncStore } from '.'
 
 test('calling initializeAsyncStore() with no createAsyncStore() call does nothing', () => {
   initializeAsyncStore('unknown-module')

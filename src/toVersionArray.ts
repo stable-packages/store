@@ -1,4 +1,4 @@
-import { StoreVersion } from './types';
+import { StoreVersion } from './types'
 
 export type ParsedVersion = [number, number, number]
 

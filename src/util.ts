@@ -1,7 +1,7 @@
-import { compareVersion } from './compareVersion';
-import { StoreInitializer, StoreValue, StoreVersion } from './types';
-import { StoreCreator, StoreId, Stores } from './typesInternal';
-import { shouldInvokeInitializer } from './shouldInvokeInitializer';
+import { compareVersion } from './compareVersion'
+import { shouldInvokeInitializer } from './shouldInvokeInitializer'
+import { StoreInitializer, StoreValue, StoreVersion } from './types'
+import { StoreCreator, StoreId, Stores } from './typesInternal'
 
 export function getStoreValue(stores: Stores, id: StoreId): any {
   return getStore(stores, id).value

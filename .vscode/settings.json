@@ -8,5 +8,6 @@
       "url": "http://json.schemastore.org/tsconfig"
     }
   ],
-  "javascript.validate.enable": false
+  "javascript.validate.enable": false,
+  "eslint.enable": true
 }

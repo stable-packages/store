@@ -182,7 +182,7 @@ the actual implementation will depend on how you use your store.
 
 Type: `Record<string | symbol, any>`
 
-Shape of the value stored in the stores.
+Shape of the value stored in the stores.****
 
 Note that the key must be string or `Symbol.for()` because `Symbol()` cannot be shared across versions.
 
@@ -220,6 +220,7 @@ This makes initialization much easier to handle.
 Calling [`initializeAsyncStore()`](#initializeAsyncStore) will start the initialization process of [`createAsyncStore()`](#createAsyncStore).
 
 It takes two arguments:
+
 - `moduleName: string`: Name of your mdodule.
 - `key: string`: Optional. Key of the specific store to initialize.
   If omitted, all stores in the module will be initialized.
