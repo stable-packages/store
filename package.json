@@ -64,7 +64,7 @@
     "rollup-plugin-typescript2": "^0.25.3",
     "systemjs": "^6.1.7",
     "ts-loader": "^6.2.1",
-    "type-plus": "^1.29.0",
+    "type-plus": "^1.30.1",
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10"
   }
