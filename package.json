@@ -50,7 +50,7 @@
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
-    "@unional/devpkg-node": "^1.4.2",
+    "@unional/devpkg-node": "^1.5.0",
     "assertron": "^7.1.2",
     "babel-eslint": "^10.0.3",
     "eslint-plugin-flowtype": "^4.5.2",
