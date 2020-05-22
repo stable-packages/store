@@ -60,7 +60,7 @@
     "param-case": "^3.0.3",
     "pascal-case": "^3.1.1",
     "rimraf": "^3.0.0",
-    "rollup": "^2.4.0",
+    "rollup": "^2.10.7",
     "rollup-plugin-typescript2": "^0.25.3",
     "systemjs": "^6.1.7",
     "ts-loader": "^6.2.1",
