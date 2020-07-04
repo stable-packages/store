@@ -9,4 +9,4 @@ export type StoreValue = Record<string | symbol, any>
 
 export type StoreVersion = string | number
 
-export type StoreInitializer<T extends StoreValue = any> = (current: T, processedVersions: StoreVersion[]) => T
+export type StoreInitializer<T extends StoreValue = any> = (current: Partial<T>, processedVersions: StoreVersion[]) => T
