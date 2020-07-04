@@ -62,6 +62,17 @@ test('store is typed by the initializer', () => {
   assertType.isNumber(store2.value.b)
 })
 
+test('initialize input is partial T because previous version may not have the same data structure', () => {
+  const key = 'initializer-receive-partial'
+  createStore<{ a: string }>({
+    moduleName, key, version: 1,
+    initializer: prev => ({
+      a: 'abc',
+      ...prev
+    })
+  })
+})
+
 test('store type can be overridden', () => {
   const store = createStore<{ a: number | undefined }>({
     moduleName, key: 'override-type', version: 0, initializer: () => ({ a: undefined })
@@ -184,7 +195,6 @@ describe('freeze store', () => {
     store.freeze(Object.freeze(store.value))
   })
 })
-
 
 test('reset on freezed store will get new unfreezed value', () => {
   const store = createStore({
