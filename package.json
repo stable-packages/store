@@ -59,7 +59,7 @@
     "@types/jest": "^27.0.3",
     "assertron": "^7.1.2",
     "dependency-check": "^4.1.0",
-    "eslint": "^7.28.0",
+    "eslint": "^8.4.0",
     "eslint-plugin-flowtype": "^8.0.3",
     "eslint-plugin-harmony": "^6.0.0",
     "flowgen": "^1.16.0",

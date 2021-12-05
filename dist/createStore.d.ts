@@ -23,6 +23,6 @@ export declare type Store<T extends StoreValue> = {
 };
 /**
  * Creates a store of type T.
- * https://www.npmjs.com/package/global-store
+ * @see https://www.npmjs.com/package/global-store
  */
 export declare function createStore<T extends StoreValue>({ moduleName, key, version, initializer }: StoreOptions<T>): Store<T>;

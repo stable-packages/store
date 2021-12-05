@@ -11,11 +11,14 @@
   ],
   "overrides": [
     {
-      "extends": "plugin:harmony/ts-recommended",
+      "extends": "plugin:harmony/ts-recommended-type-check",
       "files": [
         "*.ts",
         "*.tsx"
-      ]
+      ],
+      "parserOptions": {
+        "project": "tsconfig.json"
+      }
     }
   ]
 }

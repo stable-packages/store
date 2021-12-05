@@ -1,6 +1,6 @@
 import a from 'assertron'
 import { assertType } from 'type-plus'
-import { createStore } from '.'
+import { createStore, StoreValue } from '.'
 
 const moduleName = 'your-module'
 
@@ -64,13 +64,15 @@ test('store is typed by the initializer', () => {
 
 test('initialize input is partial T because previous version may not have the same data structure', () => {
   const key = 'initializer-receive-partial'
-  createStore<{ a: string }>({
+  const store = createStore<{ a: string }>({
     moduleName, key, version: 1,
     initializer: prev => ({
       a: 'abc',
       ...prev
     })
   })
+
+  store.value.a = '123'
 })
 
 test('store type can be overridden', () => {
@@ -122,9 +124,9 @@ test('property reference are persisted', () => {
 
 describe('freeze store', () => {
   test('cannot add new property', () => {
-    const store = createStore<any>({ moduleName, key: 'freeze-no-add', version: 0, initializer: () => ({ a: 1 }) })
+    const store = createStore<{ a: number} & StoreValue>({ moduleName, key: 'freeze-no-add', version: 0, initializer: () => ({ a: 1 }) })
     store.freeze()
-
+    store.value
     a.throws(() => store.value.b = 2, TypeError)
   })
 

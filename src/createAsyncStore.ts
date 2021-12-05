@@ -6,33 +6,25 @@ import { resolveCreators } from './util'
 const asyncStoreCreators: StoreCreators<Store<any>> = {}
 
 /**
- * Creates a store of type T asychronously.
- * https://github.com/unional/global-store#createAsyncStore
+ * Creates a store of type T asynchronously.
+ * @see https://github.com/unional/global-store#createAsyncStore
  */
 export async function createAsyncStore<T extends StoreValue>({ moduleName, key, version, initializer }: StoreOptions<T>): Promise<Store<T>> {
   return new Promise(resolve => {
     const creatorsOfModules = asyncStoreCreators[moduleName] = asyncStoreCreators[moduleName] || {}
-    const storeCreators = creatorsOfModules[key as any] = creatorsOfModules[key as any] || []
+    const storeCreators = creatorsOfModules[key] = creatorsOfModules[key] || []
     storeCreators.push({ version, resolve, initializer })
   })
 }
 
 /**
  * Initializes the stores for `createAsyncStore()`.
- * https://github.com/unional/global-store#initializeAsyncStore
+ * @see https://github.com/unional/global-store#initializeAsyncStore
  */
 export function initializeAsyncStore(moduleName: string, key?: string) {
   const creatorsOfModules = asyncStoreCreators[moduleName]
   if (!creatorsOfModules) return
 
-  if (key) {
-    const storeCreators = creatorsOfModules[key as any]
-    resolveCreators(moduleName, key, storeCreators, createStore)
-  }
-  else {
-    Object.keys(creatorsOfModules).forEach(k => {
-      const storeCreators = creatorsOfModules[k]
-      resolveCreators(moduleName, k, storeCreators, createStore)
-    })
-  }
+  const keys = key ? [key] : Object.keys(creatorsOfModules)
+  keys.forEach(key => resolveCreators(moduleName, key, creatorsOfModules[key], createStore))
 }
