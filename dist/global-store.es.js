@@ -129,6 +129,5 @@ function initializeAsyncStore(moduleName, key) {
     }
 }
 
-export default createStore;
-export { createAsyncStore, createStore, initializeAsyncStore };
+export { createAsyncStore, createStore, createStore as default, initializeAsyncStore };
 //# sourceMappingURL=global-store.es.js.map
