@@ -1,7 +1,7 @@
-System.register([], function (exports) {
+System.register([], (function (exports) {
   'use strict';
   return {
-    execute: function () {
+    execute: (function () {
 
       exports({
         createAsyncStore: createAsyncStore,
@@ -141,7 +141,7 @@ System.register([], function (exports) {
           }
       }
 
-    }
+    })
   };
-});
+}));
 //# sourceMappingURL=global-store.systemjs.js.map

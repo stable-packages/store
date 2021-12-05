@@ -1,5 +1,5 @@
 import a from 'assertron'
-import { assertType, typeAssertion } from 'type-plus'
+import { assertType } from 'type-plus'
 import { createStore } from '.'
 
 const moduleName = 'your-module'
@@ -77,7 +77,7 @@ test('store type can be overridden', () => {
   const store = createStore<{ a: number | undefined }>({
     moduleName, key: 'override-type', version: 0, initializer: () => ({ a: undefined })
   })
-  typeAssertion<number | undefined>()(store.value.a)
+  assertType<number | undefined>(store.value.a)
 })
 
 test('initializer receives the previous initial value', () => {
