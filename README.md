@@ -15,7 +15,7 @@
 [![Visual Studio Code][vscode-image]][vscode-url]
 [![Wallaby.js][wallaby-image]][wallaby-url]
 
-[global-store] provides version stable stores for library.
+[global-store] provides version stable stores for libraries.
 
 Once this library reaches `1.0`, it will forever be backward compatible.
 Meaning there will never be a breaking change or `2.0` version of this library.
@@ -24,7 +24,7 @@ PLEASE NOTE: This document describes the new `1.0.0-beta` version (finally!! :ta
 
 For the current stable version, please check out [here](https://github.com/unional/global-store/blob/v0.8.2/README.md).
 
-## Who need this
+## Who needs this
 
 - library can be used by other libraries, and
 - library with state, and/or
@@ -32,9 +32,9 @@ For the current stable version, please check out [here](https://github.com/union
 
 ## Why do you need this
 
-If you use a file level variable to store some states,
+If you use a file-level variable to store some states,
 and your library can be used by other libraries,
-the state it stores could scatter around the memory and you will get inconsistent result.
+the state it stores could scatter around the memory and you will get inconsistent results.
 
 For example, you have this:
 
@@ -50,7 +50,7 @@ When your library is used by other libraries,
 they may use different versions.
 For example:
 
-```
+```sh
 app
 - some-library@1.5
   - your-library@1.0
@@ -60,8 +60,8 @@ app
 Since the versions are not compatible,
 both versions of your library are loaded thus two instances of the `registry` variable exist and contain different values.
 
-Solution to this problem is to use some form of global storage such as `global` in NodeJS,
-or global variable in browser.
+The solution to this problem is to use some form of global storage such as `global` in NodeJS,
+or global variable in the browser.
 
 The problem is that these mechanisms are shared by everything else in the application,
 completely exposed to everyone,
@@ -120,17 +120,17 @@ This will be shown if something goes wrong.
 
 Type: `string`
 
-Specific key for each store in your module.
+A specific key for each store in your module.
 
 You can create multiple stores in your module for different purposes.
 The key for each store needs to be unique.
-And the key has to be remain the same across versions.
+And the key has to remain the same across versions.
 
 For example, you can use a format like this to make it unique: `<some-purpose>:<UUID>`
 
 e.g. `config:d15427a4-75cf-4999-9065-1dc325839a59`
 
-`key` + `moduleName` forms an unique id to the store.
+`key` + `moduleName` forms a unique id to the store.
 
 `key` will not be shown if something goes wrong.
 
@@ -138,23 +138,23 @@ e.g. `config:d15427a4-75cf-4999-9065-1dc325839a59`
 
 Type: `StoreVersion = string | number`
 
-Version of the store.
+The version of the store.
 
 This is used during initialization to determine should the [`StoreOptions#initializer`](#StoreOptionsinitializer) be called (and in what order for [`createAsyncStore()`](#createAsyncStore)).
 
 It will be added to the `processedVersions` argument of the [`StoreOptions#initializer()`](#StoreOptionsinitializer) after it is being called.
 
-When specifing as string (recommended),
+When specifying as a string (recommended),
 it must be in this format: `major.minor.patch`.
 
-When there is a mix of string and numeric verions across different versions of your library,
+When there is a mix of string and numeric versions across different versions of your library,
 the numeric value is compared to the patch number of the string version.
 
 #### StoreOptions#initializer()
 
 Type: `<T extends StoreValue>(current: StoreValue, processedVersions: StoreVersion[]) => T`
 
-Function to initialize the store.
+The function to initialize the store.
 
 Since there may be multiple copies of your library loaded,
 multiple calls to the store creation function (e.g. [`createStore()`](#createStore)) may occur.
@@ -169,11 +169,11 @@ the `initializer` function will be called in the order of `version`.
 
 For [`createStore`](#createStore),
 since there is no way to control the load order,
-they can be called by a newer version of your libary before an older version.
-This means your `initializer` needs to be future proof.
+they can be called by a newer version of your library before an older version.
+This means your `initializer` needs to be future-proof.
 
 To do that, you should fill in the pieces your specific version needs,
-and carry over whatever currently available.
+and carry over whatever is currently available.
 
 This is only a general guideline,
 the actual implementation will depend on how you use your store.
@@ -182,7 +182,7 @@ the actual implementation will depend on how you use your store.
 
 Type: `Record<string | symbol, any>`
 
-Shape of the value stored in the stores.****
+The type of value stored in the stores.
 
 Note that the key must be string or `Symbol.for()` because `Symbol()` cannot be shared across versions.
 
@@ -203,7 +203,7 @@ store.value.x = 2
 
 Reset the store to its initial value.
 
-This is mostly used in tests, so that the tests would not interferred each other.
+This is mostly used in tests so that the tests would not interfere each other.
 
 ### createAsyncStore()
 
@@ -221,7 +221,7 @@ Calling [`initializeAsyncStore()`](#initializeAsyncStore) will start the initial
 
 It takes two arguments:
 
-- `moduleName: string`: Name of your mdodule.
+- `moduleName: string`: Name of your module.
 - `key: string`: Optional. Key of the specific store to initialize.
   If omitted, all stores in the module will be initialized.
 
@@ -232,7 +232,7 @@ If not, there will be multiple copies of [global-store] loaded and will complete
 
 You also should mark [global-store] as a peer dependency and tell people who use your library to include [global-store] as their dependency.
 
-Any application that eventually uses your library should do the same, install [global-store] as their own dependency.
+Any application that eventually uses your library should do the same, install [global-store] as their dependency.
 
 [badge-size-es5-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es5.js.svg?label=es5_size&compression=gzip
 [badge-size-esnext-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es.js.svg?label=esnext_size&compression=gzip
