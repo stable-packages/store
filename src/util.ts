@@ -30,7 +30,8 @@ export function resetStoreValue(stores: Stores, id: StoreId) {
 
 export function getStore(stores: Stores, id: StoreId) {
   const moduleStore = stores[id.moduleName] = stores[id.moduleName] || {}
-  return moduleStore[id.key] = moduleStore[id.key] || { versions: [], value: {}, initializers: [] }
+  const key = id.key ?? 'default'
+  return moduleStore[key] = moduleStore[key] || { versions: [], value: {}, initializers: [] }
 }
 
 export function resolveCreators(moduleName: string, key: string, storeCreators: Array<StoreCreator<any>>, cs: typeof createStore) {

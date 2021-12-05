@@ -12,7 +12,8 @@ const asyncStoreCreators: StoreCreators<Store<any>> = {}
 export async function createAsyncStore<T extends StoreValue>({ moduleName, key, version, initializer }: StoreOptions<T>): Promise<Store<T>> {
   return new Promise(resolve => {
     const creatorsOfModules = asyncStoreCreators[moduleName] = asyncStoreCreators[moduleName] || {}
-    const storeCreators = creatorsOfModules[key] = creatorsOfModules[key] || []
+    const k = key ?? 'default'
+    const storeCreators = creatorsOfModules[k] = creatorsOfModules[k] || []
     storeCreators.push({ version, resolve, initializer })
   })
 }

@@ -124,7 +124,7 @@ test('property reference are persisted', () => {
 
 describe('freeze store', () => {
   test('cannot add new property', () => {
-    const store = createStore<{ a: number} & StoreValue>({ moduleName, key: 'freeze-no-add', version: 0, initializer: () => ({ a: 1 }) })
+    const store = createStore<{ a: number } & StoreValue>({ moduleName, key: 'freeze-no-add', version: 0, initializer: () => ({ a: 1 }) })
     store.freeze()
     store.value
     a.throws(() => store.value.b = 2, TypeError)
@@ -209,4 +209,9 @@ test('reset on freezed store will get new unfreezed value', () => {
   store.freeze()
   store.reset()
   store.value.a = { b: 2 }
+})
+
+test('key is optional', () => {
+  const store = createStore({ moduleName, version: '1.0.0', initializer: () => ({ a: 1 }) })
+  expect(store.value.a).toBe(1)
 })

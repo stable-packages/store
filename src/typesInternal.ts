@@ -1,11 +1,11 @@
 import { StoreInitializer, StoreVersion, StoreValue } from './types'
 
-export type StoreId = { moduleName: string, key: string }
+export type StoreId = { moduleName: string, key?: string }
 
 export type Stores = Record<
   StoreId['moduleName'],
   Record<
-    StoreId['key'],
+    string,
     { versions: StoreVersion[], initializers: StoreInitializer<StoreValue>[], value: StoreValue }
   >
 >
@@ -16,4 +16,6 @@ export type StoreCreator<S> = {
   initializer: StoreInitializer<StoreValue>
 }
 
-export type StoreCreators<Store> = Record<StoreId['moduleName'], Record<StoreId['key'], Array<StoreCreator<Store>>>>
+export type StoreCreators<Store> = Record<
+  StoreId['moduleName'],
+  Record<string, Array<StoreCreator<Store>>>>

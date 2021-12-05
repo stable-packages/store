@@ -132,3 +132,11 @@ test('number version is compared to the patch value of string version', async ()
 
   o.end()
 })
+
+test('key is optional', async () => {
+  const moduleName = 'async-key-optional'
+  const p = createAsyncStore({ moduleName, version: '1.0.0', initializer: () => ({ a: 1 }) })
+  initializeAsyncStore(moduleName)
+  const store = await p
+  expect(store.value.a).toBe(1)
+})

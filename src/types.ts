@@ -6,7 +6,7 @@ export type StoreInitializer<T extends StoreValue> = (current: StoreValue, proce
 
 export type StoreOptions<T extends StoreValue> = {
   moduleName: string,
-  key: string,
+  key?: string,
   version: StoreVersion,
   initializer: StoreInitializer<T>
 }

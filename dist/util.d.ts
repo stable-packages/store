@@ -6,7 +6,7 @@ export declare function initStoreValue<T extends StoreValue>(stores: Stores, id:
 export declare function resetStoreValue(stores: Stores, id: StoreId): void;
 export declare function getStore(stores: Stores, id: StoreId): {
     versions: StoreVersion[];
-    initializers: StoreInitializer<StoreValue, StoreValue>[];
+    initializers: StoreInitializer<StoreValue>[];
     value: StoreValue;
 };
 export declare function resolveCreators(moduleName: string, key: string, storeCreators: Array<StoreCreator<any>>, cs: typeof createStore): void;

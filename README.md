@@ -93,7 +93,7 @@ const store = createStore({
   moduleName: 'your-module',
   key: 'some-unique-string',
   version: '1.0.0',
-  initializer: (current, versions) =>({
+  initializer: (current, versions) => ({
     prop1: false,
     prop2: [] as string[],
     ...current
@@ -118,7 +118,7 @@ This will be shown if something goes wrong.
 
 #### StoreOptions#key
 
-Type: `string`
+Type: optional `string`
 
 A specific key for each store in your module.
 
@@ -134,6 +134,8 @@ e.g. `config:d15427a4-75cf-4999-9065-1dc325839a59`
 
 `key` will not be shown if something goes wrong.
 
+If `key` is not specified, it is defaults to the string `default`.
+
 #### StoreOptions#version
 
 Type: `StoreVersion = string | number`
@@ -144,7 +146,7 @@ This is used during initialization to determine should the [`StoreOptions#initia
 
 It will be added to the `processedVersions` argument of the [`StoreOptions#initializer()`](#StoreOptionsinitializer) after it is being called.
 
-When specifying as a string (recommended),
+When specified as a string (recommended),
 it must be in this format: `major.minor.patch`.
 
 When there is a mix of string and numeric versions across different versions of your library,
