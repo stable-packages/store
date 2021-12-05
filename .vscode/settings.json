@@ -12,5 +12,13 @@
   "eslint.enable": true,
   "cSpell.words": [
     "systemjs"
-  ]
+  ],
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "**/dist": true,
+    "**/lib": true,
+    "**/libm": true
+  }
 }

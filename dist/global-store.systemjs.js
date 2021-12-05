@@ -65,8 +65,8 @@ System.register([], (function (exports) {
           const moduleStore = stores[id.moduleName] = stores[id.moduleName] || {};
           return moduleStore[id.key] = moduleStore[id.key] || { versions: [], value: {}, initializers: [] };
       }
-      function resolveCreators(moduleName, key, storeCreators, createStore) {
-          sortByVersion(storeCreators).forEach(({ version, resolve, initializer }) => resolve(createStore({ moduleName, key, version, initializer })));
+      function resolveCreators(moduleName, key, storeCreators, cs) {
+          sortByVersion(storeCreators).forEach(({ version, resolve, initializer }) => resolve(cs({ moduleName, key, version, initializer })));
       }
       function sortByVersion(storeCreators) {
           return storeCreators.sort((a, b) => compareVersion(a.version, b.version));
@@ -97,7 +97,7 @@ System.register([], (function (exports) {
       const stores = {};
       /**
        * Creates a store of type T.
-       * https://www.npmjs.com/package/global-store
+       * @see https://www.npmjs.com/package/global-store
        */
       function createStore({ moduleName, key, version, initializer }) {
           const id = { moduleName, key };
@@ -111,7 +111,7 @@ System.register([], (function (exports) {
 
       const asyncStoreCreators = {};
       /**
-       * Creates a store of type T asychronously.
+       * Creates a store of type T asynchronously.
        * https://github.com/unional/global-store#createAsyncStore
        */
       async function createAsyncStore({ moduleName, key, version, initializer }) {

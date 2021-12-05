@@ -12,6 +12,6 @@ function noMatchMajor(versions: ParsedVersion[], version: ParsedVersion) {
 }
 
 function hasNewVersion(versions: ParsedVersion[], version: ParsedVersion) {
-  return versions.filter(v => v[0] === version[0]).some(
-    v => version[1] > v[1] || (version[1] === v[1] && version[2] > v[2]))
+  return versions.filter(v => v[0] === version[0])
+    .some(v => version[1] > v[1] || (version[1] === v[1] && version[2] > v[2]))
 }

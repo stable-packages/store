@@ -27,7 +27,7 @@ const stores: Stores = {}
 
 /**
  * Creates a store of type T.
- * https://www.npmjs.com/package/global-store
+ * @see https://www.npmjs.com/package/global-store
  */
 export function createStore<
   T extends StoreValue
@@ -36,8 +36,8 @@ export function createStore<
   initStoreValue(stores, id, version, initializer)
 
   return {
-    get value() { return getStoreValue(stores, id) },
-    freeze: (value) => freezeStoreValue(stores, id, value),
-    reset: () => resetStoreValue(stores, id)
+    get value() { return getStoreValue<T>(stores, id) },
+    freeze(value) { return freezeStoreValue(stores, id, value) },
+    reset() { return resetStoreValue(stores, id) }
   }
 }
