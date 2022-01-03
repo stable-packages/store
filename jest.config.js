@@ -1,14 +1,14 @@
 const isCI = require('is-ci')
-module.exports = isCI ? {
+module.exports = {
   'collectCoverageFrom': [
-    '<rootDir>/src/**/*.[jt]s',
-    '!<rootDir>/src/bin.[jt]s',
-    '!<rootDir>/src/type-checker/*'
+    '<rootDir>/ts/**/*.[jt]s',
+    '!<rootDir>/ts/bin.[jt]s',
+    '!<rootDir>/ts/type-checker/*'
   ],
   'roots': [
-    '<rootDir>/src',
+    '<rootDir>/ts',
   ],
-  'reporters': [
+  'reporters': isCI ? [
     'default',
     [
       'jest-junit',
@@ -16,33 +16,21 @@ module.exports = isCI ? {
         'output': '.reports/junit/js-test-results.xml',
       },
     ],
+  ] : [
+    'default',
+    'jest-progress-tracker'
   ],
   'testEnvironment': 'node',
   'testMatch': ['**/?(*.)+(spec|test|integrate|accept|system|unit).[jt]s?(x)'],
-} : {
-    'collectCoverageFrom': [
-      '<rootDir>/src/**/*.[jt]s',
-      '!<rootDir>/src/bin.[jt]s',
-      '!<rootDir>/src/type-checker/*'
+  'watchPlugins': [
+    'jest-watch-suspend',
+    'jest-watch-typeahead/filename',
+    'jest-watch-typeahead/testname',
+    [
+      'jest-watch-toggle-config', { 'setting': 'verbose' },
     ],
-    'reporters': [
-      'default',
-      'jest-progress-tracker'
+    [
+      'jest-watch-toggle-config', { 'setting': 'collectCoverage' },
     ],
-    'roots': [
-      '<rootDir>/src',
-    ],
-    'testEnvironment': 'node',
-    'testMatch': ['**/?(*.)+(spec|test|integrate|accept|system|unit).[jt]s?(x)'],
-    'watchPlugins': [
-      'jest-watch-suspend',
-      'jest-watch-typeahead/filename',
-      'jest-watch-typeahead/testname',
-      [
-        'jest-watch-toggle-config', { 'setting': 'verbose' },
-      ],
-      [
-        'jest-watch-toggle-config', { 'setting': 'collectCoverage' },
-      ],
-    ],
-  }
+  ],
+}

@@ -1,7 +1,7 @@
 import typescript from 'rollup-plugin-typescript2'
 
 export default {
-  input: ['src/index.ts'],
+  input: ['ts/index.ts'],
   output: [
     // ES module version, for modern browsers
     {
