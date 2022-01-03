@@ -1,5 +1,5 @@
-import createStore from '.'
 import { compareVersion } from './compareVersion'
+import { createStore } from './createStore'
 import { shouldInvokeInitializer } from './shouldInvokeInitializer'
 import { StoreInitializer, StoreValue, StoreVersion } from './types'
 import { StoreCreator, StoreId, Stores } from './typesInternal'

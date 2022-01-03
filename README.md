@@ -4,14 +4,10 @@
 [![NPM beta version][npm-beta-image]][npm-url]
 [![NPM downloads][downloads-image]][downloads-url]
 ![badge-size-es5-url]
-![badge-size-esnext-url]
 
-[![Circle CI][circleci-image]][circleci-url]
-[![Travis CI][travis-image]][travis-url]
+[![Github NodeJS][github-nodejs]][github-action-url]
 [![Codecov][codecov-image]][codecov-url]
-[![Coveralls Status][coveralls-image]][coveralls-url]
 
-[![Greenkeeper][greenkeeper-image]][greenkeeper-url]
 [![Visual Studio Code][vscode-image]][vscode-url]
 [![Wallaby.js][wallaby-image]][wallaby-url]
 
@@ -26,9 +22,9 @@ For the current stable version, please check out [here](https://github.com/union
 
 ## Who needs this
 
-- library can be used by other libraries, and
-- library with state, and/or
-- library wants to protect its state from modification.
+- A library used by other libraries, and
+- A library with state, and/or
+- A library wants to protect its state from modification.
 
 ## Why do you need this
 
@@ -134,7 +130,7 @@ e.g. `config:d15427a4-75cf-4999-9065-1dc325839a59`
 
 `key` will not be shown if something goes wrong.
 
-If `key` is not specified, it is defaults to the string `default`.
+If `key` is not specified, it defaults to the string `default`.
 
 #### StoreOptions#version
 
@@ -186,7 +182,7 @@ Type: `Record<string | symbol, any>`
 
 The type of value stored in the stores.
 
-Note that the key must be string or `Symbol.for()` because `Symbol()` cannot be shared across versions.
+Note that the key must be a string or `Symbol.for()` because `Symbol()` cannot be shared across versions.
 
 #### Store#value
 
@@ -205,7 +201,7 @@ store.value.x = 2
 
 Reset the store to its initial value.
 
-This is mostly used in tests so that the tests would not interfere each other.
+This is mostly used in tests so that the tests would not interfere with each other.
 
 ### createAsyncStore()
 
@@ -237,15 +233,12 @@ You also should mark [global-store] as a peer dependency and tell people who use
 Any application that eventually uses your library should do the same, install [global-store] as their dependency.
 
 [badge-size-es5-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es5.js.svg?label=es5_size&compression=gzip
-[badge-size-esnext-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es.js.svg?label=esnext_size&compression=gzip
-[circleci-image]: https://circleci.com/gh/unional/global-store/tree/master.svg?style=shield
-[circleci-url]: https://circleci.com/gh/unional/global-store/tree/master
 [codecov-image]: https://codecov.io/gh/unional/global-store/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/unional/global-store
-[coveralls-image]: https://coveralls.io/repos/github/unional/global-store/badge.svg
-[coveralls-url]: https://coveralls.io/github/unional/global-store
 [downloads-image]: https://img.shields.io/npm/dm/global-store.svg?style=flat
 [downloads-url]: https://npmjs.org/package/global-store
+[github-nodejs]: https://github.com/unional/global-store/workflows/nodejs/badge.svg
+[github-action-url]: https://github.com/unional/global-store/actions
 [global-store]: https://github.com/unional/global-store
 [greenkeeper-image]: https://badges.greenkeeper.io/unional/global-store.svg
 [greenkeeper-url]: https://greenkeeper.io/
@@ -254,8 +247,6 @@ Any application that eventually uses your library should do the same, install [g
 [npm-url]: https://npmjs.org/package/global-store
 [downloads-image]: https://img.shields.io/npm/dm/global-store.svg?style=flat
 [downloads-url]: https://npmjs.org/package/global-store
-[travis-image]: https://img.shields.io/travis/unional/global-store/master.svg?style=flat
-[travis-url]: https://travis-ci.org/unional/global-store?branch=master
 [vscode-image]: https://img.shields.io/badge/vscode-ready-green.svg
 [vscode-url]: https://code.visualstudio.com/
 [wallaby-image]: https://img.shields.io/badge/wallaby.js-configured-green.svg

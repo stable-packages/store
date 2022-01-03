@@ -1,4 +1,4 @@
-import createStore from '.';
+import { createStore } from './createStore';
 import { StoreInitializer, StoreValue, StoreVersion } from './types';
 import { StoreCreator, StoreId, Stores } from './typesInternal';
 export declare function getStoreValue<T extends StoreValue>(stores: Stores, id: StoreId): T;
