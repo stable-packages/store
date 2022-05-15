@@ -1,15 +1,13 @@
 # global-store
 
 [![NPM version][npm-image]][npm-url]
-[![NPM beta version][npm-beta-image]][npm-url]
 [![NPM downloads][downloads-image]][downloads-url]
 ![badge-size-es5-url]
 
-[![Github NodeJS][github-nodejs]][github-action-url]
+[![GitHub NodeJS][github-nodejs]][github-action-url]
 [![Codecov][codecov-image]][codecov-url]
 
 [![Visual Studio Code][vscode-image]][vscode-url]
-[![Wallaby.js][wallaby-image]][wallaby-url]
 
 [global-store] provides version stable stores for libraries.
 
@@ -30,7 +28,8 @@ For the current stable version, please check out [here](https://github.com/union
 
 If you use a file-level variable to store some states,
 and your library can be used by other libraries,
-the state it stores could scatter around the memory and you will get inconsistent results.
+the state it stores could scatter around the memory,
+and you will get inconsistent results.
 
 For example, you have this:
 
@@ -109,7 +108,7 @@ Type: `string`
 
 Name of your module.
 
-This is typically your npm package name.
+This is typically your NPM package name.
 This will be shown if something goes wrong.
 
 #### StoreOptions#key
@@ -126,7 +125,7 @@ For example, you can use a format like this to make it unique: `<some-purpose>:<
 
 e.g. `config:d15427a4-75cf-4999-9065-1dc325839a59`
 
-`key` + `moduleName` forms a unique id to the store.
+`key` + `moduleName` forms a unique ID to the store.
 
 `key` will not be shown if something goes wrong.
 
@@ -205,7 +204,7 @@ This is mostly used in tests so that the tests would not interfere with each oth
 
 ### createAsyncStore()
 
-An async variant of [`createStore()`](#createStore).
+A `async` variant of [`createStore()`](#createStore).
 It will return a promise,
 which will resolve when the [`initializeAsyncStore()`](#initializeAsyncStore) is called.
 
@@ -237,17 +236,12 @@ Any application that eventually uses your library should do the same, install [g
 [codecov-url]: https://codecov.io/gh/unional/global-store
 [downloads-image]: https://img.shields.io/npm/dm/global-store.svg?style=flat
 [downloads-url]: https://npmjs.org/package/global-store
-[github-nodejs]: https://github.com/unional/global-store/workflows/nodejs/badge.svg
+[github-nodejs]: https://github.com/unional/global-store/workflows/release/badge.svg
 [github-action-url]: https://github.com/unional/global-store/actions
 [global-store]: https://github.com/unional/global-store
-[greenkeeper-image]: https://badges.greenkeeper.io/unional/global-store.svg
-[greenkeeper-url]: https://greenkeeper.io/
-[npm-beta-image]: https://img.shields.io/npm/v/global-store/beta.svg?style=flat
 [npm-image]: https://img.shields.io/npm/v/global-store.svg?style=flat
 [npm-url]: https://npmjs.org/package/global-store
 [downloads-image]: https://img.shields.io/npm/dm/global-store.svg?style=flat
 [downloads-url]: https://npmjs.org/package/global-store
 [vscode-image]: https://img.shields.io/badge/vscode-ready-green.svg
 [vscode-url]: https://code.visualstudio.com/
-[wallaby-image]: https://img.shields.io/badge/wallaby.js-configured-green.svg
-[wallaby-url]: https://wallabyjs.com

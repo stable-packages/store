@@ -1,0 +1,7 @@
+Codecov
+createStore
+StoreOptions
+moduleName
+StoreValue
+createAsyncStore
+initializeAsyncStore
