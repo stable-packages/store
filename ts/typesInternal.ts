@@ -1,6 +1,6 @@
 import { StoreInitializer, StoreVersion, StoreValue } from './types'
 
-export type StoreId = { moduleName: string, key?: string }
+export interface StoreId { moduleName: string, key?: string }
 
 export type Stores = Record<
   StoreId['moduleName'],
@@ -10,7 +10,7 @@ export type Stores = Record<
   >
 >
 
-export type StoreCreator<S> = {
+export interface StoreCreator<S> {
   version: StoreVersion,
   resolve: (store: S) => void,
   initializer: StoreInitializer<StoreValue>
