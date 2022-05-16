@@ -3,7 +3,7 @@ import { StoreOptions, StoreValue } from './types'
 import { StoreCreators } from './typesInternal'
 import { resolveCreators } from './util'
 
-const asyncStoreCreators: StoreCreators<Store<any>> = {}
+const asyncStoreCreators = Object.create(null) as StoreCreators<Store<any>>
 
 /**
  * Creates a store of type T asynchronously.
