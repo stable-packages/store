@@ -2,6 +2,9 @@
   "compilerOptions": {
     "declaration": true,
     "esModuleInterop": true,
+    "lib": [
+      "ES2015"
+    ],
     "moduleResolution": "node",
     "newLine": "LF",
     "noUnusedLocals": true,

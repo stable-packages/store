@@ -88,5 +88,5 @@
       "limit": "3 KB"
     }
   ],
-  "packageManager": "yarn@1.22.18"
+  "packageManager": "yarn@3.2.1"
 }
