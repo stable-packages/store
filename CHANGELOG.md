@@ -1,5 +1,14 @@
 # global-store
 
+## 1.0.0
+
+### Patch Changes
+
+- 4e20bf5: Fix prototype polluting for `createAsyncStore()`.
+
+  Same issue as the `createStore()`,
+  just fixing it to clear code analysis.
+
 ## 1.0.0-beta.20
 
 ### Patch Changes
