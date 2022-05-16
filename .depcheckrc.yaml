@@ -1,0 +1,7 @@
+ignores:
+  - '@commitlint/*'
+  - '@size-limit/preset-small-lib'
+  - '@types/jest'
+  - jest-junit
+  - rollup*
+  - webpack-cli

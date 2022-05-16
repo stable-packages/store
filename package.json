@@ -28,22 +28,20 @@
   ],
   "scripts": {
     "build": "run-p build:es5 build:esnext bundle",
-    "build:es5": "tsc -p tsconfig.es5.json && tsc -p tsconfig.esnext.json",
+    "build:es5": "tsc -p tsconfig.es5.json",
     "build:esnext": "tsc -p tsconfig.esnext.json",
-    "build:verify": "run-s build dependency-check size-limit",
-    "bundle": "webpack && rollup -c rollup.config.mjs",
+    "bundle": "run-p bundle:webpack bundle:rollup",
+    "bundle:webpack": "webpack",
+    "bundle:rollup": "rollup -c rollup.config.mjs",
     "clean": "rimraf dist lib libm",
     "coverage": "jest --coverage",
     "cs": "changeset",
-    "dependency-check": "run-p dependency-check:unused dependency-check:missing",
-    "dependency-check:missing": "dependency-check . --missing --no-dev",
-    "dependency-check:unused": "dependency-check . --unused --no-dev",
+    "depcheck": "depcheck",
     "lint": "eslint --ext=js,ts .",
-    "size-limit": "size-limit",
+    "size": "size-limit",
     "test": "jest",
     "test:watch": "jest --watch",
-    "verify": "run-p build:verify lint coverage",
-    "preversion": "yarn verify && git add .",
+    "verify": "npm-run-all clean -p build:es5 build:esnext -p size bundle lint depcheck coverage",
     "watch": "yarn test:watch"
   },
   "husky": {
@@ -53,9 +51,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
-    "@babel/plugin-proposal-class-properties": "^7.16.7",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.16.7",
-    "@babel/plugin-proposal-optional-chaining": "^7.16.7",
     "@babel/preset-env": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
     "@changesets/cli": "^2.22.0",
@@ -65,11 +60,11 @@
     "@types/jest": "^27.4.0",
     "@typescript-eslint/eslint-plugin": "^5.23.0",
     "assertron": "^9.0.0",
-    "dependency-check": "^4.1.0",
+    "depcheck": "^1.4.3",
     "eslint": "^8.6.0",
     "eslint-plugin-flowtype": "^8.0.3",
     "eslint-plugin-harmony": "^7.0.2",
-    "husky": "^8.0.0",
+    "husky": "^4.3.8",
     "is-ci": "^3.0.1",
     "jest": "^28.0.0",
     "jest-junit": "^13.0.0",
@@ -85,7 +80,6 @@
     "rollup": "^2.60.2",
     "rollup-plugin-typescript2": "^0.31.1",
     "size-limit": "^7.0.5",
-    "systemjs": "^6.11.0",
     "ts-loader": "^9.2.6",
     "type-plus": "^4.0.0",
     "typescript": "^4.5.4",
@@ -97,5 +91,5 @@
       "limit": "3 KB"
     }
   ],
-  "packageManager": "yarn@3.2.1"
+  "packageManager": "yarn@1.22.18"
 }
