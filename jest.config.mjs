@@ -5,6 +5,9 @@ export default {
       useESM: true,
     },
   },
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
+  },
   'collectCoverageFrom': [
     '<rootDir>/ts/**/*.[jt]s'
   ],

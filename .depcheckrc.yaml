@@ -1,7 +1,9 @@
 ignores:
   - '@commitlint/*'
+  - '@rollup/plugin-typescript'
   - '@size-limit/preset-small-lib'
   - '@types/jest'
-  - jest-junit
+  - jest*
   - rollup*
-  - webpack-cli
+  - ts-jest
+  - tslib
