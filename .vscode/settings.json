@@ -27,7 +27,11 @@
     "**/dist": true,
     "**/lib": true,
     "**/libm": true,
-    "**/node_modules": true
+    "**/node_modules": true,
+    "**/.yarn": true,
+    "**/.pnp.*": true
   },
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "eslint.nodePath": ".yarn/sdks",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
