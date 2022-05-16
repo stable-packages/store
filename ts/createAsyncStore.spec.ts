@@ -29,7 +29,7 @@ test('init single store without key', async () => {
   expect(store.value.a).toBe(1)
 })
 
-test('init multiple createAsynStore calls with key', async () => {
+test('init multiple createAsyncStore calls with key', async () => {
   const moduleName = 'module-multi-stores-init-with-key'
   const key = '4f9a6b0c-8756-4c5b-9e98-030b1f973dbd'
   const p1 = createAsyncStore({ moduleName, key, version: 0, initializer: () => ({ a: 1 }) })
