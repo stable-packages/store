@@ -1,5 +1,5 @@
-import { toVersionArray } from './toVersionArray'
-import { StoreVersion } from './types'
+import { toVersionArray } from './toVersionArray.js'
+import { StoreVersion } from './types.js'
 
 /**
  * Compare version.

@@ -1,24 +1,22 @@
-import typescript from 'rollup-plugin-typescript2'
+import typescript from '@rollup/plugin-typescript'
 
-export default {
-  input: ['ts/index.ts'],
+/**
+ * @type {import('rollup').RollupOptions}
+ */
+const config = {
+  input: './ts/index.ts',
   output: [
-    // ES module version, for modern browsers
     {
+      format: 'iife',
+      file: 'dist/global-store.js',
+      name: 'GlobalStore',
       exports: 'named',
-      file: 'dist/global-store.es.js',
-      format: 'es',
-      sourcemap: true
-    },
-    // SystemJS version, for older browsers
-    {
-      exports: 'named',
-      file: 'dist/global-store.systemjs.js',
-      format: 'system',
       sourcemap: true
     }
   ],
-  plugins: [
-    typescript({ tsconfig: 'tsconfig.esnext.json' })
-  ]
-};
+  plugins: [typescript({
+    tsconfig: './tsconfig.rollup.json'
+  })]
+}
+
+export default config

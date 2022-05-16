@@ -1,5 +1,5 @@
-export * from './createAsyncStore'
-export * from './createStore'
-export { createStore as default } from './createStore'
-export * from './types'
+export * from './createAsyncStore.js'
+export * from './createStore.js'
+export { createStore as default } from './createStore.js'
+export * from './types.js'
 

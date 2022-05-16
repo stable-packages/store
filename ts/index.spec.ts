@@ -1,4 +1,4 @@
-import defaultCreate, { createStore } from '.'
+import defaultCreate, { createStore } from './index.js'
 
 describe('package', () => {
   test('default export is `createStore`', () => {
