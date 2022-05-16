@@ -225,11 +225,11 @@ It takes two arguments:
 ## Bundling
 
 If your library will be a standalone bundle, make sure to exclude [global-store].
+
 If not, there will be multiple copies of [global-store] loaded and will completely defeat the purpose.
 
-You also should mark [global-store] as a peer dependency and tell people who use your library to include [global-store] as their dependency.
-
-Any application that eventually uses your library should do the same, install [global-store] as their dependency.
+Except the consuming application, which will declare [global-store] as a regular dependency,
+all libraries should declare [global-store] as a peer dependency.
 
 [badge-size-es5-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es5.js.svg?label=es5_size&compression=gzip
 [codecov-image]: https://codecov.io/gh/unional/global-store/branch/master/graph/badge.svg
