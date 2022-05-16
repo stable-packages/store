@@ -2,7 +2,7 @@
 
 [![NPM version][npm-image]][npm-url]
 [![NPM downloads][downloads-image]][downloads-url]
-![badge-size-es5-url]
+![badge-size-es6-url]
 
 [![GitHub NodeJS][github-nodejs]][github-action-url]
 [![Codecov][codecov-image]][codecov-url]
@@ -231,8 +231,8 @@ If not, there will be multiple copies of [global-store] loaded and will complete
 Except the consuming application, which will declare [global-store] as a regular dependency,
 all libraries should declare [global-store] as a peer dependency.
 
-[badge-size-es5-url]: http://img.badgesize.io/unional/global-store/master/dist/global-store.es5.js.svg?label=es5_size&compression=gzip
-[codecov-image]: https://codecov.io/gh/unional/global-store/branch/master/graph/badge.svg
+[badge-size-es6-url]: http://img.badgesize.io/unional/global-store/main/dist/global-store.js.svg?label=bundled&compression=gzip
+[codecov-image]: https://codecov.io/gh/unional/global-store/branch/main/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/unional/global-store
 [downloads-image]: https://img.shields.io/npm/dm/global-store.svg?style=flat
 [downloads-url]: https://npmjs.org/package/global-store

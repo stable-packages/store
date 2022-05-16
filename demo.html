@@ -3,21 +3,12 @@
 
 <head>
   <meta charset="utf-8">
-  <title>global-store demo</title>
+  <title>Global Store demo</title>
 </head>
 
 <body>
-  <!--Scripts are added inside body to ensoure sequential loading-->
-  <!--TODO add additional scripts needed to run the code-->
-  <!-- <script src="dist/global-store.es5js"></script> -->
-  <!-- <script src="dist/global-store.es.js"></script> -->
-  <script src="node_modules/systemjs/dist/system.js"></script>
-  <script>
-    System.import('/dist/global-store.systemjs.js')
-      .then(g => {
-        console.log(g)
-      })
-  </script>
+  <script src="dist/global-store.js"></script>
+  <!-- <script src="dist/global-store.es5.js"></script> -->
 </body>
   Open developer tool and check out console
 </html>

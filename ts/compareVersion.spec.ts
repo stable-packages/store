@@ -1,4 +1,4 @@
-import { compareVersion } from './compareVersion'
+import { compareVersion } from './compareVersion.js'
 
 test('processed > current returns positive', () => {
   expect(compareVersion('1.0.0', '0.2.3') > 0).toBeTruthy()

@@ -1,6 +1,6 @@
-import { StoreOptions, StoreValue } from './types'
-import { Stores } from './typesInternal'
-import { freezeStoreValue, getStoreValue, initStoreValue, resetStoreValue } from './util'
+import { StoreOptions, StoreValue } from './types.js'
+import { Stores } from './typesInternal.js'
+import { freezeStoreValue, getStoreValue, initStoreValue, resetStoreValue } from './util.js'
 
 export type Store<T extends StoreValue> = {
   /**

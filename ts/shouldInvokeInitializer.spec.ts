@@ -1,4 +1,4 @@
-import { shouldInvokeInitializer } from './shouldInvokeInitializer'
+import { shouldInvokeInitializer } from './shouldInvokeInitializer.js'
 
 describe('numeric version', () => {
   test('true if no versions', () => {

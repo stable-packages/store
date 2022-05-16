@@ -1,6 +1,6 @@
 import a from 'assertron'
 import { assertType } from 'type-plus'
-import { createStore, StoreValue } from '.'
+import { createStore, StoreValue } from './index.js'
 
 const moduleName = 'your-module'
 
