@@ -23,7 +23,7 @@ export type Store<T extends StoreValue> = {
   reset(): void,
 }
 
-const stores: Stores = {}
+const stores: Stores = Object.create(null) as Stores
 
 /**
  * Creates a store of type T.

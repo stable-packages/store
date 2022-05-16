@@ -29,7 +29,7 @@ export function resetStoreValue(stores: Stores, id: StoreId) {
 }
 
 export function getStore(stores: Stores, id: StoreId) {
-  const moduleStore = stores[id.moduleName] = stores[id.moduleName] || {}
+  const moduleStore = stores[id.moduleName] = stores[id.moduleName] || Object.create(null)
   const key = id.key ?? 'default'
   return moduleStore[key] = moduleStore[key] || { versions: [], value: {}, initializers: [] }
 }
