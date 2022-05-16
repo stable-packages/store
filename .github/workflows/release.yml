@@ -5,7 +5,7 @@ on:
 
 jobs:
   code:
-    uses: unional/.github/.github/workflows/yarn2-library-verify-linux.yml@main
+    uses: unional/.github/.github/workflows/yarn2-library-verify-cross-platform.yml@main
 
   release:
     uses: unional/.github/.github/workflows/yarn2-library-release.yml@main
