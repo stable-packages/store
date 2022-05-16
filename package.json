@@ -1,6 +1,6 @@
 {
   "name": "global-store",
-  "version": "1.0.0-beta.20",
+  "version": "1.0.0",
   "description": "A library provides version stable stores for libraries.",
   "homepage": "https://github.com/unional/global-store",
   "bugs": {
