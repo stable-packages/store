@@ -4742,7 +4742,7 @@ __metadata:
     ts-jest: ^28.0.2
     tslib: ^2.4.0
     type-plus: ^4.9.1
-    typescript: 4.7.1-rc
+    typescript: 4.7.3
   languageName: unknown
   linkType: soft
 
@@ -8229,13 +8229,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.7.1-rc":
-  version: 4.7.1-rc
-  resolution: "typescript@npm:4.7.1-rc"
+"typescript@npm:4.7.3":
+  version: 4.7.3
+  resolution: "typescript@npm:4.7.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: c340f341cb974310b20c49ff52419cd0041e9591d0e25c127d1f8796300b72cf89484448128dfac13f49346b8b56ce257f4e75165b9f941b43d11936849de15c
+  checksum: fd13a1ce53790a36bb8350e1f5e5e384b5f6cb9b0635114a6d01d49cb99916abdcfbc13c7521cdae2f2d3f6d8bc4a8ae7625edf645a04ee940588cd5e7597b2f
   languageName: node
   linkType: hard
 
@@ -8249,13 +8249,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.7.1-rc#~builtin<compat/typescript>":
-  version: 4.7.1-rc
-  resolution: "typescript@patch:typescript@npm%3A4.7.1-rc#~builtin<compat/typescript>::version=4.7.1-rc&hash=7ad353"
+"typescript@patch:typescript@4.7.3#~builtin<compat/typescript>":
+  version: 4.7.3
+  resolution: "typescript@patch:typescript@npm%3A4.7.3#~builtin<compat/typescript>::version=4.7.3&hash=7ad353"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: bcc8b7e8f4aba281a808c00fdc3ca24752dc1d464cc3e0be263dcee7e709803a0f557b2f5456aed85bc6fe29529bada5084dc88aabaebe19b79ca9e8192b4ab5
+  checksum: 137d18a77f52254a284960b16ab53d0619f57b69b5d585804b8413f798a1175ce3e774fb95e6a101868577aafe357d8fcfc9171f0dc9fc0c210e9ae59d107cc0
   languageName: node
   linkType: hard
 
