@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
     "declaration": true,
+    "declarationMap": true,
     "esModuleInterop": true,
     "inlineSources": true,
     "lib": [
-      "ES2015"
+      "ES2015",
+      "ES2021.Promise"
     ],
-    "module": "Node16",
-    "moduleResolution": "Node16",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "newLine": "LF",
     "noUnusedLocals": true,
     "noUnusedParameters": true,

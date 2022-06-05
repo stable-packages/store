@@ -8,14 +8,14 @@ export default {
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
-  'collectCoverageFrom': [
+  collectCoverageFrom: [
     '<rootDir>/ts/**/*.[jt]s'
   ],
-  'roots': [
+  roots: [
     '<rootDir>/ts',
   ],
-  'testMatch': ['**/?(*.)+(spec|test|integrate|accept|system|unit).[jt]s?(x)'],
-  'watchPlugins': [
+  testMatch: ['**/?(*.)+(spec|test|integrate|accept|system|unit).[jt]s?(x)'],
+  watchPlugins: [
     'jest-watch-suspend',
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname',
