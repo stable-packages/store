@@ -14,7 +14,7 @@
 Once this library reaches `1.0`, it will forever be backward compatible.
 Meaning there will never be a breaking change or `2.0` version of this library.
 
-PLEASE NOTE: This document describes the new `1.0.0-beta` version (finally!! :tada:).
+PLEASE NOTE: This document describes the new `1.0.0-beta` version (finally!! 🎉).
 
 For the current stable version, please check out [here](https://github.com/unional/global-store/blob/v0.8.2/README.md).
 
