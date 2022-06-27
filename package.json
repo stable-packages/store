@@ -46,6 +46,7 @@
     "test": "jest",
     "test:types": "tsc",
     "test:watch": "jest --watch",
+    "version": "changeset version",
     "verify": "npm-run-all clean -p build:ts bundle lint depcheck coverage test:types -p size",
     "watch": "yarn test:watch"
   },
