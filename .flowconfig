@@ -1,0 +1,7 @@
+[include]
+<PROJECT_ROOT>/index.js.flow
+
+[ignore]
+<PROJECT_ROOT>/node_modules/.*
+<PROJECT_ROOT>/ts/.*
+<PROJECT_ROOT>/lib/.*

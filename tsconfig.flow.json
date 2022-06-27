@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "lib": [
+      "ES2015",
+      "ES2021.Promise"
+    ],
+    "module": "AMD",
+    "moduleResolution": "Node",
+    "newLine": "LF",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outFile": "out/global-store.js",
+    "strict": true,
+    "target": "ES2020"
+  },
+  "include": [
+    "typings"
+  ],
+  "files": [
+    "ts/index.ts"
+  ]
+}

@@ -3,12 +3,20 @@ declare module 'global-store' {
   declare export type StoreVersion = string | Number
   declare export type StoreInitializer<T: StoreValue> = (current: T, processedVersions: StoreVersion[]) => T
 
-  declare export type Store<T: StoreValue> = { value: $ReadOnly<T>, freeze: (value: ?$ReadOnly<T>) => void, reset(): void }
+  declare export type Store<T> = { value: T, freeze: (value: ?$ReadOnly<T>) => void, reset(): void }
   declare export type StoreOptions<T: StoreValue> = { moduleName: string, key: ?string, version: StoreVersion, initializer: StoreInitializer<T> }
+  declare export type StoreOptions2 = { moduleName: string, key: ?string, version: StoreVersion }
 
 
   declare export function createAsyncStore<T: StoreValue>(options: StoreOptions<T>): Promise<Store<T>>
   declare export function initializeAsyncStore(moduleName: String, key: ?string): void
-  declare export function createStore<T: StoreValue>(options: StoreOptions<T>): Store<T>
+  // declare export function createStore<T: StoreValue>(options: { moduleName: string }): Store<T>
+  declare export function createStore<T>(options: {
+    moduleName: string,
+    key: ?string,
+    version: StoreVersion,
+    initializer: (current: T, processedVersions: StoreVersion[]) => T
+  }): { value: $ReadOnly<T>, freeze: (value: ?$ReadOnly<T>) => void, reset(): void }
+  // declare export function createStore<T: StoreValue>(options: StoreOptions<T>): Store<T>
   declare export default createStore
 }
