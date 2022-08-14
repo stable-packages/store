@@ -58,7 +58,7 @@
     "@size-limit/preset-small-lib": "^8.0.0",
     "@types/jest": "^28.1.1",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
-    "assertron": "^9.2.3",
+    "assertron": "^10.0.0",
     "depcheck": "^1.4.3",
     "eslint": "^8.17.0",
     "eslint-plugin-flowtype": "^8.0.3",
