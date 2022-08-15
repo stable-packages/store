@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "module": "es6",
+    "moduleResolution": "Node",
+    "target": "es5",
+    "allowJs": true
+  },
+  "references": [
+    {
+      "path": "../../packages/global-store"
+    }
+  ],
+  "files": [
+    "src/index.ts"
+  ]
+}
