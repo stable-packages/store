@@ -51,6 +51,7 @@ typings
 !.yarn/versions
 
 # project folders
+*.tsbuildinfo
 .rpt2_cache
 dist-es5
 dist-es2015
