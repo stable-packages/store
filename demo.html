@@ -8,6 +8,27 @@
 
 <body>
   <script src="dist/global-store.js"></script>
+  <script>
+    const store = GlobalStore.createStore({
+      moduleName: 'global-store-test',
+      version: '1.0.0',
+      initializer: () => ({ syncValue: 1 })
+    })
+    console.log('sync store value', store.value)
+
+    const getAsyncStore = GlobalStore.createAsyncStore({
+      moduleName: 'global-store-async-test',
+      version: '1.0.0',
+      initializer: () => ({ asyncValue: 2 })
+    })
+    GlobalStore.initializeAsyncStore('global-store-async-test');
+
+    (async () => {
+      const asyncStore = await getAsyncStore
+      console.log('async store value', asyncStore.value)
+    })()
+  </script>
 </body>
-  Open developer tool and check out console
+Open developer tool and check out console
+
 </html>
