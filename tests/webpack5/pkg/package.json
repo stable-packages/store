@@ -1,5 +1,5 @@
 {
-  "name": "test-webpack-5-esm",
+  "name": "test-webpack-5-pkg",
   "version": "1.0.0",
   "private": true,
   "description": "My webpack project",
