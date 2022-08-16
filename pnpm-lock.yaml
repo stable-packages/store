@@ -72,7 +72,7 @@ importers:
       type-plus: 4.11.1
       typescript: 4.7.4
 
-  tests/webpack-lib:
+  tests/webpack5/pkg:
     specifiers:
       '@webpack-cli/generators': ^2.5.0
       global-store: workspace:*
@@ -81,7 +81,7 @@ importers:
       webpack: ^5.74.0
       webpack-cli: ^4.10.0
     dependencies:
-      global-store: link:../../packages/global-store
+      global-store: link:../../../packages/global-store
     devDependencies:
       '@webpack-cli/generators': 2.5.0_webpack@5.74.0
       ts-loader: 9.3.1_xnp4kzegbjokq62cajex2ovgkm

@@ -3,14 +3,13 @@
     "composite": true,
     "esModuleInterop": true,
     "noImplicitAny": true,
-    "module": "es6",
+    "module": "ES2020",
     "moduleResolution": "Node",
-    "target": "es5",
-    "allowJs": true
+    "target": "ES2020"
   },
   "references": [
     {
-      "path": "../../packages/global-store"
+      "path": "../../../packages/global-store"
     }
   ],
   "files": [

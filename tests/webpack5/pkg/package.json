@@ -1,14 +1,12 @@
 {
-  "name": "my-webpack-project",
+  "name": "test-webpack-5-esm",
   "version": "1.0.0",
   "private": true,
   "description": "My webpack project",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode=production --node-env=production",
-    "build:dev": "webpack --mode=development",
-    "build:prod": "webpack --mode=production --node-env=production",
+    "build": "webpack",
     "watch": "webpack --watch"
   },
   "keywords": [],

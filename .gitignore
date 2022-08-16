@@ -55,4 +55,4 @@ typings
 .rpt2_cache
 dist-es5
 dist-es2015
-lib*
+lib
