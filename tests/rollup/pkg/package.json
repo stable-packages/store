@@ -1,0 +1,19 @@
+{
+  "name": "rollup-pkg",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs"
+  },
+  "dependencies": {
+    "global-store": "workspace:*"
+  },
+  "devDependencies": {
+    "rollup": "^2.75.5"
+  }
+}

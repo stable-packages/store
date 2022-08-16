@@ -28,7 +28,10 @@ const config = {
       {
         test: /\.(ts|tsx)$/i,
         loader: "ts-loader",
-        exclude: ["/node_modules/"]
+        exclude: ["/node_modules/"],
+        options: {
+          configFile: 'tsconfig.build.json'
+        }
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
@@ -38,6 +41,9 @@ const config = {
       // Add your rules for custom modules here
       // Learn more about loaders from https://webpack.js.org/loaders/
     ]
+  },
+  optimization: {
+    minimize: false
   },
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", "..."]

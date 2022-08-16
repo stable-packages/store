@@ -5,7 +5,6 @@
     "noImplicitAny": true,
     "module": "ES2015",
     "moduleResolution": "Node",
-    "outDir": "lib",
     "target": "ES5"
   },
   "references": [
