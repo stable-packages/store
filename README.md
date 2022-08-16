@@ -231,7 +231,7 @@ If not, there will be multiple copies of [global-store] loaded and will complete
 Except the consuming application, which will declare [global-store] as a regular dependency,
 all libraries should declare [global-store] as a peer dependency.
 
-[badge-size-es6-url]: http://img.badgesize.io/unional/global-store/main/dist/global-store.js.svg?label=bundled&compression=gzip
+[badge-size-es6-url]: http://img.badgesize.io/unional/global-store/main/packages/global-store/dist/global-store.js.svg?label=bundled&compression=gzip
 [codecov-image]: https://codecov.io/gh/unional/global-store/branch/main/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/unional/global-store
 [downloads-image]: https://img.shields.io/npm/dm/global-store.svg?style=flat
