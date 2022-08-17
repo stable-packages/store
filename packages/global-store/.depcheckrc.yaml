@@ -1,8 +1,10 @@
 ignores:
+  - '@babel/core'
   - '@commitlint/*'
   - '@rollup/plugin-typescript'
   - '@size-limit/preset-small-lib'
   - '@types/jest'
+  - '@typescript-eslint/parser'
   - jest*
   - rollup*
   - ts-jest
