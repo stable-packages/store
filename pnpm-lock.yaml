@@ -37,7 +37,7 @@ importers:
       '@babel/core': ^7.18.10
       '@babel/plugin-syntax-flow': ^7.18.6
       '@babel/plugin-transform-react-jsx': ^7.18.10
-      '@rollup/plugin-typescript': ^8.3.4
+      '@rollup/plugin-typescript': ^9.0.0
       '@size-limit/preset-small-lib': ^8.0.1
       '@types/jest': ^29.0.0
       '@typescript-eslint/eslint-plugin': ^5.33.1
@@ -67,7 +67,7 @@ importers:
       '@babel/core': 7.18.10
       '@babel/plugin-syntax-flow': 7.18.6_@babel+core@7.18.10
       '@babel/plugin-transform-react-jsx': 7.18.10_@babel+core@7.18.10
-      '@rollup/plugin-typescript': 8.3.4_boqy6yxzkfk46scwvxj2kzbc7i
+      '@rollup/plugin-typescript': 9.0.2_boqy6yxzkfk46scwvxj2kzbc7i
       '@size-limit/preset-small-lib': 8.0.1_size-limit@8.0.1
       '@types/jest': 29.2.3
       '@typescript-eslint/eslint-plugin': 5.33.1_bh3svzcf7qkjgauxamg2fddwda
@@ -2369,24 +2369,6 @@ packages:
       rollup: 2.78.0
     dev: true
 
-  /@rollup/plugin-typescript/8.3.4_boqy6yxzkfk46scwvxj2kzbc7i:
-    resolution: {integrity: sha512-wt7JnYE9antX6BOXtsxGoeVSu4dZfw0dU3xykfOQ4hC3EddxRbVG/K0xiY1Wup7QOHJcjLYXWAn0Kx9Z1SBHHg==}
-    engines: {node: '>=8.0.0'}
-    peerDependencies:
-      rollup: ^2.14.0
-      tslib: '*'
-      typescript: '>=3.7.0'
-    peerDependenciesMeta:
-      tslib:
-        optional: true
-    dependencies:
-      '@rollup/pluginutils': 3.1.0_rollup@2.78.0
-      resolve: 1.22.1
-      rollup: 2.78.0
-      tslib: 2.4.0
-      typescript: 4.9.3
-    dev: true
-
   /@rollup/plugin-typescript/8.3.4_nm5mlcuxlwr6samvke7b2fz27i:
     resolution: {integrity: sha512-wt7JnYE9antX6BOXtsxGoeVSu4dZfw0dU3xykfOQ4hC3EddxRbVG/K0xiY1Wup7QOHJcjLYXWAn0Kx9Z1SBHHg==}
     engines: {node: '>=8.0.0'}
@@ -2404,6 +2386,26 @@ packages:
       typescript: 4.7.4
     dev: true
 
+  /@rollup/plugin-typescript/9.0.2_boqy6yxzkfk46scwvxj2kzbc7i:
+    resolution: {integrity: sha512-/sS93vmHUMjzDUsl5scNQr1mUlNE1QjBBvOhmRwJCH8k2RRhDIm3c977B3wdu3t3Ap17W6dDeXP3hj1P1Un1bA==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^2.14.0||^3.0.0
+      tslib: '*'
+      typescript: '>=3.7.0'
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+      tslib:
+        optional: true
+    dependencies:
+      '@rollup/pluginutils': 5.0.2_rollup@2.78.0
+      resolve: 1.22.1
+      rollup: 2.78.0
+      tslib: 2.4.0
+      typescript: 4.9.3
+    dev: true
+
   /@rollup/pluginutils/3.1.0_rollup@2.78.0:
     resolution: {integrity: sha512-GksZ6pr6TpIjHm8h9lSQ8pi8BE9VeubNT0OMJ3B5uZJ8pz73NPiqOtCog/x2/QzM1ENChPKxMDhiQuRHsqc+lg==}
     engines: {node: '>= 8.0.0'}
@@ -2412,6 +2414,21 @@ packages:
     dependencies:
       '@types/estree': 0.0.39
       estree-walker: 1.0.1
+      picomatch: 2.3.1
+      rollup: 2.78.0
+    dev: true
+
+  /@rollup/pluginutils/5.0.2_rollup@2.78.0:
+    resolution: {integrity: sha512-pTd9rIsP92h+B6wWwFbW8RkZv4hiR/xKsqre4SIuAOaOEQRxi0lqLke9k2/7WegC85GgUs9pjmOjCUi3In4vwA==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      '@types/estree': 1.0.0
+      estree-walker: 2.0.2
       picomatch: 2.3.1
       rollup: 2.78.0
     dev: true
@@ -2557,13 +2574,13 @@ packages:
     resolution: {integrity: sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA==}
     dependencies:
       '@types/eslint': 8.4.5
-      '@types/estree': 0.0.51
+      '@types/estree': 1.0.0
     dev: true
 
   /@types/eslint/8.4.5:
     resolution: {integrity: sha512-dhsC09y1gpJWnK+Ff4SGvCuSnk9DaU0BJZSzOwa6GVSg65XtTugLBITDAAzRU5duGBoXBHpdR/9jHGxJjNflJQ==}
     dependencies:
-      '@types/estree': 0.0.51
+      '@types/estree': 1.0.0
       '@types/json-schema': 7.0.11
     dev: true
 
@@ -2573,6 +2590,10 @@ packages:
 
   /@types/estree/0.0.51:
     resolution: {integrity: sha512-CuPgU6f3eT/XgKKPqKd/gLZV1Xmvf1a2R5POBOGQa6uv82xpls89HU5zKeVoyR8XzHd1RGNOlQlvUe3CFkjWNQ==}
+    dev: true
+
+  /@types/estree/1.0.0:
+    resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
     dev: true
 
   /@types/expect/1.20.4:
