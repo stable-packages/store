@@ -49,7 +49,7 @@ importers:
       eslint-plugin-flowtype: ^8.0.3
       eslint-plugin-harmony: ^7.1.0
       jest: ^28.1.3
-      jest-junit: ^14.0.0
+      jest-junit: ^15.0.0
       jest-validate: ^28.1.3
       jest-watch-suspend: ^1.1.2
       jest-watch-toggle-config: ^2.0.1
@@ -79,7 +79,7 @@ importers:
       eslint-plugin-flowtype: 8.0.3_tecjquvmfntaxzsccq5vschudq
       eslint-plugin-harmony: 7.1.0_7adgnplfxijvqorehowvppabbi
       jest: 28.1.3
-      jest-junit: 14.0.0
+      jest-junit: 15.0.0
       jest-validate: 28.1.3
       jest-watch-suspend: 1.1.2_jest@28.1.3
       jest-watch-toggle-config: 2.0.1_tn6adg3s7io5jsxm7sj7uk5x6e
@@ -7112,8 +7112,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /jest-junit/14.0.0:
-    resolution: {integrity: sha512-kALvBDegstTROfDGXH71UGD7k5g7593Y1wuX1wpWT+QTYcBbmtuGOA8UlAt56zo/B2eMIOcaOVEON3j0VXVa4g==}
+  /jest-junit/15.0.0:
+    resolution: {integrity: sha512-Z5sVX0Ag3HZdMUnD5DFlG+1gciIFSy7yIVPhOdGUi8YJaI9iLvvBb530gtQL2CHmv0JJeiwRZenr0VrSR7frvg==}
     engines: {node: '>=10.12.0'}
     dependencies:
       mkdirp: 1.0.4
