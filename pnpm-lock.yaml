@@ -42,7 +42,7 @@ importers:
       '@types/jest': ^29.0.0
       '@typescript-eslint/eslint-plugin': ^5.33.1
       '@typescript-eslint/parser': ^5.33.1
-      assertron: ^10.0.0
+      assertron: ^11.0.0
       depcheck: ^1.4.3
       eslint: ^8.22.0
       eslint-config-prettier: ^8.5.0
@@ -72,7 +72,7 @@ importers:
       '@types/jest': 29.2.3
       '@typescript-eslint/eslint-plugin': 5.33.1_472mq4ra3rzem6afgkvmh7vo7m
       '@typescript-eslint/parser': 5.33.1_sq327paf6wzcma7omk5wjhfcfa
-      assertron: 10.0.0
+      assertron: 11.0.2
       depcheck: 1.4.3
       eslint: 8.22.0
       eslint-config-prettier: 8.5.0_eslint@8.22.0
@@ -3508,8 +3508,8 @@ packages:
     resolution: {integrity: sha512-BSHWgDSAiKs50o2Re8ppvp3seVHXSRM44cdSsT9FfNEUUZLOGWVCsiWaRPWM1Znn+mqZ1OfVZ3z3DWEzSp7hRA==}
     dev: true
 
-  /assertron/10.0.0:
-    resolution: {integrity: sha512-u4bl3Yrj5rEtYr0FoSAyK9CUKxUv/N8dd+kts5FNkXHuFqjwJi4BxN8rMNyrS3FmCKdRv0FBwP/YNDtSNN0AnA==}
+  /assertron/11.0.2:
+    resolution: {integrity: sha512-n+q0F710IBcI6dUq2YJzmJxudjHoJAz4haS/gawZToBaQ8dP8eywjiPGN4Y+Rv2Czd3D/kmELxRgluLt6Hp7Nw==}
     engines: {node: '>= 10'}
     dependencies:
       is-promise: 4.0.0
