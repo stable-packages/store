@@ -61,7 +61,7 @@ importers:
       size-limit: ^8.0.1
       ts-jest: ^29.0.0
       tslib: ^2.4.0
-      type-plus: ^5.0.0
+      type-plus: ^6.0.0
       typescript: 5.0.2
     devDependencies:
       '@babel/core': 7.18.10
@@ -91,7 +91,7 @@ importers:
       size-limit: 8.0.1
       ts-jest: 29.0.3_f7pfasrmicoxzukytvwx5o5t5q
       tslib: 2.4.0
-      type-plus: 5.0.0
+      type-plus: 6.0.0
       typescript: 5.0.2
 
   tests/node/pkg:
@@ -10812,8 +10812,8 @@ packages:
       unpartial: 0.7.5
     dev: true
 
-  /type-plus/5.0.0:
-    resolution: {integrity: sha512-nKp5pOQDldmR9BdEjLplLFwiXTVhOK2kReBSgVJ65URDLXCqENYzVDCONaExADIIc1CAGzvzTkB0TUgMAWR2qQ==}
+  /type-plus/6.0.0:
+    resolution: {integrity: sha512-ezkCTr6LGC87w9LHc83XJnJFfaeEa/nPhr4yzBKv2+Pw0y4FXKHgrJ2GWM4H1nSKzcEPv4q/Sfw4MKmi8NTxbg==}
     dependencies:
       tersify: 3.11.1
       unpartial: 1.0.4
