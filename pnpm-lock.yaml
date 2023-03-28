@@ -110,8 +110,8 @@ importers:
         specifier: ^4.1.5
         version: 4.1.5
       rimraf:
-        specifier: ^3.0.2
-        version: 3.0.2
+        specifier: ^4.0.0
+        version: 4.0.0
       rollup:
         specifier: ^2.78.0
         version: 2.78.0
@@ -9481,6 +9481,13 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.3
+    dev: true
+
+  /rimraf@4.0.0:
+    resolution: {integrity: sha512-1jUYEffrxKEAYJLJvqYLvKQW5oExH8QhBVYKUO1YXPrKTpobYuZ89KbgmpGbeTj+6kUXqGrIT1w+3BI4T6hR1w==}
+    engines: {node: '>=14'}
+    deprecated: Please upgrade to 4.3.1 or higher to fix a potentially damaging issue regarding symbolic link following. See https://github.com/isaacs/rimraf/issues/259 for details.
+    hasBin: true
     dev: true
 
   /rollup-plugin-terser@7.0.2(rollup@2.78.0):
