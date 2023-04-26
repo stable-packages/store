@@ -1,28 +1,6 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "composite": true,
-    "declaration": true,
-    "declarationMap": true,
-    "esModuleInterop": true,
-    "inlineSources": true,
-    "lib": [
-      "ES2015",
-      "ES2021.Promise"
-    ],
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "newLine": "LF",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "outDir": "lib",
-    "removeComments": false,
-    "rootDir": "ts",
-    "sourceMap": true,
-    "strict": true,
-    "target": "ES2020"
-  },
-  "include": [
-    "ts",
-    "typings"
-  ]
+    "outDir": "esm"
+  }
 }

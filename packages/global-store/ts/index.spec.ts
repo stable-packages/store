@@ -1,7 +1,8 @@
+import { describe, expect, it } from '@jest/globals'
 import defaultCreate, { createStore } from './index.js'
 
 describe('package', () => {
-  test('default export is `createStore`', () => {
+  it('default export is `createStore`', () => {
     expect(defaultCreate).toBe(createStore)
   })
 })

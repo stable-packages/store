@@ -1,4 +1,7 @@
-dist
-lib
-libm
-node_modules
+cjs/
+coverage/
+dist/
+esm/
+lib/
+tslib/
+node_modules/

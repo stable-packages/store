@@ -7,10 +7,12 @@
     "Optionsinitializer",
     "pinst",
     "pjson",
+    "repobuddy",
     "rollup",
     "snyk",
     "systemjs",
-    "tada"
+    "tada",
+    "tsbuildinfo"
   ],
   "eslint.enable": true,
   "javascript.validate.enable": false,
@@ -24,13 +26,13 @@
   ],
   "search.exclude": {
     "**/*.code-search": true,
+    "**/.pnp.*": true,
+    "**/.yarn": true,
     "**/bower_components": true,
     "**/dist": true,
     "**/lib": true,
     "**/libm": true,
-    "**/node_modules": true,
-    "**/.yarn": true,
-    "**/.pnp.*": true
+    "**/node_modules": true
   },
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.tsdk": "node_modules/typescript/lib"

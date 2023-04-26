@@ -1,11 +1,15 @@
 ignores:
   - '@babel/core'
   - '@commitlint/*'
+  - '@repobuddy/*'
   - '@rollup/plugin-typescript'
   - '@size-limit/preset-small-lib'
   - '@types/jest'
   - '@typescript-eslint/parser'
+  - cross-env
+  - eslint-*
   - jest*
+  - rimraf
   - rollup*
   - ts-jest
   - tslib

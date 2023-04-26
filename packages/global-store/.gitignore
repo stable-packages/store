@@ -49,6 +49,9 @@ node_modules
 
 # project folders
 .rpt2_cache
+cjs/
 dist-es5
 dist-es2015
-lib*
+esm/
+lib/
+tslib/
