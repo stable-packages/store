@@ -4,7 +4,7 @@ ignores:
   - '@rollup/plugin-typescript'
   - '@size-limit/preset-small-lib'
   - '@types/jest'
-  - '@typescript-eslint/parser'
+  - eslint-*
   - jest*
   - rollup*
   - ts-jest
