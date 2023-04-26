@@ -163,9 +163,6 @@ importers:
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5
-      repobuddy:
-        specifier: ^1.0.1
-        version: 1.0.1
       rimraf:
         specifier: ~5.0.0
         version: 5.0.0
@@ -10687,13 +10684,6 @@ packages:
   /replace-ext@1.0.1:
     resolution: {integrity: sha512-yD5BHCe7quCgBph4rMQ+0KkIRKwWCrHDOX1p1Gp6HwjPM5kVoCdKGNhN7ydqqsX6lJEnQDKZ/tFMiEdQ1dvPEw==}
     engines: {node: '>= 0.10'}
-    dev: true
-
-  /repobuddy@1.0.1:
-    resolution: {integrity: sha512-Jh0TPvIHnQAd7LRcMMOiCIAnNEhD+EToSK3/nS0LvyWUAVUvXKNnTsWR992UfowoHQiFdZrgapIm0JjUeJgIkw==}
-    hasBin: true
-    dependencies:
-      clibuilder: 8.0.16
     dev: true
 
   /require-directory@2.1.1:
