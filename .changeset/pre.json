@@ -8,5 +8,8 @@
     "tests-webpack5-app-es5": "1.0.0",
     "tests-webpack5-pkg": "1.0.0"
   },
-  "changesets": []
+  "changesets": [
+    "thick-pillows-taste",
+    "wicked-paws-fly"
+  ]
 }
