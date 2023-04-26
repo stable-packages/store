@@ -11,7 +11,8 @@
     "rollup",
     "snyk",
     "systemjs",
-    "tada"
+    "tada",
+    "tsbuildinfo"
   ],
   "eslint.enable": true,
   "javascript.validate.enable": false,

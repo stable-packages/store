@@ -7,6 +7,7 @@ ignores:
   - '@types/jest'
   - eslint-*
   - jest*
+  - rimraf # depcheck false negative
   - rollup*
   - ts-jest
   - tslib
