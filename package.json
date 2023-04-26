@@ -19,6 +19,7 @@
     "prepare": "husky install",
     "publish": "changeset publish",
     "size": "turbo run size",
+    "ss": "pnpm --filter=stable-store",
     "test": "turbo run test",
     "verify": "turbo run build lint coverage depcheck size",
     "version": "changeset version"
