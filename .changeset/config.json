@@ -7,5 +7,10 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": []
+  "ignore": [
+    "tests-node-pkg",
+    "tests-rollup-pkg",
+    "tests-webpack5-app-es5",
+    "tests-webpack5-pkg"
+  ]
 }
