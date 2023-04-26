@@ -1,6 +1,6 @@
-import { createStore, Store } from './createStore.js'
-import { StoreOptions, StoreValue } from './types.js'
-import { StoreCreators } from './typesInternal.js'
+import { createStore, type Store } from './createStore.js'
+import type { StoreOptions, StoreValue } from './types.js'
+import type { StoreCreators } from './typesInternal.js'
 import { resolveCreators } from './util.js'
 
 const asyncStoreCreators = Object.create(null) as StoreCreators<Store<any>>

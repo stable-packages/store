@@ -1,5 +1,5 @@
-import { ParsedVersion, toVersionArray } from './toVersionArray.js'
-import { StoreVersion } from './types.js'
+import { toVersionArray, type ParsedVersion } from './toVersionArray.js'
+import type { StoreVersion } from './types.js'
 
 export function shouldInvokeInitializer(versions: StoreVersion[], version: StoreVersion) {
   const vs = versions.map(toVersionArray)

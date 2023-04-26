@@ -1,5 +1,5 @@
-import { StoreOptions, StoreValue } from './types.js'
-import { Stores } from './typesInternal.js'
+import type { StoreOptions, StoreValue } from './types.js'
+import type { Stores } from './typesInternal.js'
 import { freezeStoreValue, getStoreValue, initStoreValue, resetStoreValue } from './util.js'
 
 export type Store<T extends StoreValue> = {

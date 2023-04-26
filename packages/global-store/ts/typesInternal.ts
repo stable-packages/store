@@ -1,4 +1,4 @@
-import { StoreInitializer, StoreVersion, StoreValue } from './types.js'
+import type { StoreInitializer, StoreValue, StoreVersion } from './types.js'
 
 export interface StoreId { moduleName: string, key?: string }
 
