@@ -1,6 +1,7 @@
 ignores:
   - '@babel/core'
   - '@commitlint/*'
+  - '@repobuddy/*'
   - '@rollup/plugin-typescript'
   - '@size-limit/preset-small-lib'
   - '@types/jest'
