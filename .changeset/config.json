@@ -8,6 +8,7 @@
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": [
+    "examples-library",
     "tests-node-pkg",
     "tests-rollup-pkg",
     "tests-webpack5-app-es5",

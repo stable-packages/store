@@ -41,6 +41,8 @@ It achieves this by:
 
 ## Install
 
+For application, install it as a dependency:
+
 ```sh
 # npm
 npm install stable-store
@@ -53,6 +55,22 @@ pnpm install stable-store
 
 #rush
 rush add -p stable-store
+```
+
+For library, install it as a peer dependency:
+
+```sh
+# npm
+npm install stable-store --save-peer
+
+# yarn
+yarn add stable-store --save-peer
+
+# pnpm
+pnpm install stable-store --save-peer
+
+#rush
+rush add -p stable-store --save-peer
 ```
 
 ## Usage

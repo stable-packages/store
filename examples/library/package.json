@@ -1,12 +1,8 @@
 {
-  "name": "stable-versioned-store",
+  "name": "examples-library",
   "private": true,
   "version": "0.0.0",
-  "description": "A single-versioned store to share anything in memory",
-  "keywords": [
-    "store",
-    "module"
-  ],
+  "description": "example library to use the stores",
   "homepage": "https://github.com/unional/global-store",
   "bugs": {
     "url": "https://github.com/unional/global-store/issues"
@@ -14,7 +10,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/unional/global-store.git",
-    "directory": "packages/stable-store"
+    "directory": "examples/library"
   },
   "license": "MIT",
   "author": {
@@ -22,14 +18,11 @@
     "email": "homawong@gmail.com",
     "url": "https://github.com/unional"
   },
-  "sideEffects": true,
   "type": "module",
   "exports": {
-    ".": {
-      "import": {
-        "types": "./esm/index.d.ts",
-        "default": "./esm/index.js"
-      }
+    "import": {
+      "types": "./esm/index.d.ts",
+      "default": "./esm/index.js"
     }
   },
   "files": [
@@ -57,6 +50,7 @@
     "@size-limit/preset-small-lib": "~8.2.4",
     "cross-env": "^7.0.3",
     "depcheck": "~1.4.3",
+    "global-store": "workspace:*",
     "jest": "^29.5.0",
     "jest-watch-suspend": "^1.1.2",
     "jest-watch-toggle-config-2": "^2.1.0",
@@ -64,7 +58,13 @@
     "npm-run-all": "^4.1.5",
     "rimraf": "~5.0.0",
     "size-limit": "~8.2.4",
+    "stable-store": "workspace:*",
     "ts-jest": "^29.1.0",
+    "type-plus": "^6.0.0",
     "typescript": "^5.0.4"
+  },
+  "peerDependencies": {
+    "global-store": "workspace:*",
+    "stable-store": "workspace:*"
   }
 }

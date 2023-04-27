@@ -7,6 +7,8 @@
     "coverage": "turbo run coverage",
     "cs": "changeset",
     "depcheck": "turbo run depcheck",
+    "ea": "pnpm --filter=./examples/astro",
+    "el": "pnpm --filter=./examples/library",
     "gs": "pnpm --filter=global-store",
     "lint": "run-p lint:*",
     "lint:repos": "turbo run lint",
