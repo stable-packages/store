@@ -1,5 +1,6 @@
 {
-  "name": "stable-store",
+  "name": "stable-versioned-store",
+  "private": true,
   "version": "0.0.0",
   "description": "A single-versioned store to share anything in memory",
   "keywords": [
@@ -64,7 +65,6 @@
     "rimraf": "~5.0.0",
     "size-limit": "~8.2.4",
     "ts-jest": "^29.1.0",
-    "type-plus": "^6.0.0",
     "typescript": "^5.0.4"
   }
 }

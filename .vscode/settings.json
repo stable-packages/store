@@ -2,6 +2,7 @@
   "cSpell.words": [
     "codeql",
     "iife",
+    "immer",
     "jsnext",
     "libm",
     "Optionsinitializer",
@@ -12,7 +13,8 @@
     "snyk",
     "systemjs",
     "tada",
-    "tsbuildinfo"
+    "tsbuildinfo",
+    "unsub"
   ],
   "eslint.enable": true,
   "javascript.validate.enable": false,

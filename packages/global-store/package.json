@@ -15,6 +15,7 @@
     "name": "Homa Wong",
     "email": "homawong@gmail.com"
   },
+  "sideEffects": true,
   "type": "module",
   "exports": "./lib/index.js",
   "types": "./lib/index.d.ts",
