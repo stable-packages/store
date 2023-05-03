@@ -1,6 +1,6 @@
 import { expect, it } from '@jest/globals'
 import { testType } from 'type-plus'
-import { Store, store } from './index.js'
+import { store, type Store } from './index.js'
 
 it('can use string key', () => {
 	store('key')
