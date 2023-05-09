@@ -1,6 +1,6 @@
 import { afterEach, expect, it } from '@jest/globals'
 import { idAssertions } from './index.ctx.js'
-import { addIDAssertion, createStore, getStore } from './index.js'
+import { registerIDAssertion, createStore, getStore } from './index.js'
 
 it('throws if store does not exist', () => {
 	expect(() => getStore('does not exist')).toThrow()
@@ -19,7 +19,7 @@ afterEach(() => {
 
 it('can assert against string key', () => {
 	createStore('id')
-	addIDAssertion(_ => {
+	registerIDAssertion(_ => {
 		throw new Error('invalid id')
 	})
 	expect(() => getStore('id')).toThrow()
@@ -28,7 +28,7 @@ it('can assert against string key', () => {
 it('can assert against symbol key with description', () => {
 	createStore(Symbol.for('id'))
 
-	addIDAssertion(_ => {
+	registerIDAssertion(_ => {
 		throw new Error('invalid id')
 	})
 	expect(() => getStore(Symbol.for('id'))).toThrow()
@@ -39,7 +39,7 @@ it('can assert specific set of ids using regex', () => {
 	createStore('match')
 	expect.assertions(2)
 
-	addIDAssertion(id => expect(id).toBe('match'), /^match/)
+	registerIDAssertion(id => expect(id).toBe('match'), /^match/)
 	expect(() => getStore('notmatch')).not.toThrow()
 	getStore('match')
 })
@@ -49,7 +49,7 @@ it('can assert specific set of ids using function', () => {
 	createStore('match')
 	expect.assertions(2)
 
-	addIDAssertion(
+	registerIDAssertion(
 		id => expect(id).toBe('match'),
 		id => id === 'match'
 	)

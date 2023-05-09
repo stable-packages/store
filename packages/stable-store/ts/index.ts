@@ -8,11 +8,14 @@ export const brandedSymbol = Symbol('internal branded symbol')
 export type MissingInit<T> = { [brandedSymbol]: T }
 
 /**
- * Add an assertion for the ID globally.
+ * Register an assertion for the ID globally.
  *
  *
  */
-export function addIDAssertion(assertion: (id: string) => void, filter?: RegExp | ((id: string) => boolean)) {
+export function registerIDAssertion(
+	assertion: (id: string) => void,
+	filter?: RegExp | ((id: string) => boolean)
+) {
 	idAssertions.push([assertion, filter])
 }
 
