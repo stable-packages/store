@@ -12,10 +12,7 @@ export type MissingInit<T> = { [brandedSymbol]: T }
  *
  *
  */
-export function addIDAssertion(
-	assertion: (id: string) => void,
-	filter?: string | RegExp | ((id: string) => boolean)
-) {
+export function addIDAssertion(assertion: (id: string) => void, filter?: RegExp | ((id: string) => boolean)) {
 	idAssertions.push([assertion, filter])
 }
 
@@ -159,7 +156,7 @@ function listenerAdder<V>(listeners: Array<(value: V) => void>) {
 /**
  * Get a store of of type V.
  *
- * @param key A unique key for the store.
+ * @param id A unique key for the store.
  * @param init The optional initial value of the store.
  * @param options The optional store options.
  *
@@ -174,8 +171,9 @@ function listenerAdder<V>(listeners: Array<(value: V) => void>) {
  *
  * @see https://www.npmjs.com/package/stable-store
  */
-export function getStore<V>(key: string): Store<V> {
-	const c = storeMap.get(key)
-	if (!c) throw new Error(`Store ${key} not found`)
+export function getStore<V>(id: string | symbol): Store<V> {
+	assertID(id)
+	const c = storeMap.get(id)
+	if (!c) throw new Error(`Store ${id.toString()} not found`)
 	return c as Store<V>
 }
