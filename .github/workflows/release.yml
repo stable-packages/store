@@ -6,6 +6,8 @@ on:
 jobs:
   code:
     uses: unional/.github/.github/workflows/pnpm-verify-cross-platform.yml@main
+    with:
+      node-version: '[16, 18]'
 
   release:
     uses: unional/.github/.github/workflows/pnpm-release-changeset.yml@main
