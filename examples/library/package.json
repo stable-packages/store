@@ -60,7 +60,6 @@
     "size-limit": "~8.2.4",
     "stable-store": "workspace:*",
     "ts-jest": "^29.1.0",
-    "type-plus": "^6.0.0",
     "typescript": "^5.0.4"
   },
   "peerDependencies": {

@@ -11,7 +11,7 @@ export function StableStoreDisplay() {
   const store = useStableStore()
   const [count, setCount] = useState(store.get().count)
   useEffect(() => {
-    store.listen((state) => setCount(state.count))
+    store.onSet((state) => setCount(state.count))
   }, [])
   return <div>Count: {count}</div>
 }

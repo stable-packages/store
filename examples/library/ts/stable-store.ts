@@ -1,3 +1,3 @@
-import { store } from 'stable-store'
+import { createStore } from 'stable-store'
 
-export const stableStore = store('stable-store', { count: 0 })
+export const stableStore = createStore('stable-store', { count: 0 })
