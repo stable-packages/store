@@ -180,23 +180,4 @@ it('can assert against symbol key with description', () => {
 	expect(() => createStore(Symbol('id'))).toThrow()
 })
 
-it('can assert specific set of ids using regex', () => {
-	expect.assertions(2)
-
-	registerIDAssertion(id => expect(id).toBe('match'), /^match/)
-	expect(() => createStore('notmatch')).not.toThrow()
-	createStore('match')
-})
-
-it('can assert specific set of ids using function', () => {
-	expect.assertions(2)
-
-	registerIDAssertion(
-		id => expect(id).toBe('match'),
-		id => id === 'match'
-	)
-	expect(() => createStore('notmatch')).not.toThrow()
-	createStore('match')
-})
-
 it.todo('per store id assertions')

@@ -33,26 +33,3 @@ it('can assert against symbol key with description', () => {
 	})
 	expect(() => getStore(Symbol.for('id'))).toThrow()
 })
-
-it('can assert specific set of ids using regex', () => {
-	createStore('notmatch')
-	createStore('match')
-	expect.assertions(2)
-
-	registerIDAssertion(id => expect(id).toBe('match'), /^match/)
-	expect(() => getStore('notmatch')).not.toThrow()
-	getStore('match')
-})
-
-it('can assert specific set of ids using function', () => {
-	createStore('notmatch')
-	createStore('match')
-	expect.assertions(2)
-
-	registerIDAssertion(
-		id => expect(id).toBe('match'),
-		id => id === 'match'
-	)
-	expect(() => getStore('notmatch')).not.toThrow()
-	getStore('match')
-})

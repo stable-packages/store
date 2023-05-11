@@ -10,13 +10,14 @@ export type MissingInit<T> = { [brandedSymbol]: T }
 /**
  * Register an assertion for the ID globally.
  *
+ * Since the same stable store is used for every module loaded,
+ * your ID should follow certain pattern which you can match before doing your assertion.
  *
+ * e.g. `<module name><version>:<token>`.
+ * so that you will not accidentally prevent other modules from using the store.
  */
-export function registerIDAssertion(
-	assertion: (id: string) => void,
-	filter?: RegExp | ((id: string) => boolean)
-) {
-	idAssertions.push([assertion, filter])
+export function registerIDAssertion(assertion: (id: string) => void) {
+	idAssertions.push(assertion)
 }
 
 function assertID(id: string | symbol) {
@@ -28,15 +29,7 @@ function assertID(id: string | symbol) {
 }
 
 function assertIDString(id: string) {
-	idAssertions.forEach(([assertion, filter]) => {
-		if (
-			!filter ||
-			(filter instanceof RegExp && filter.test(id)) ||
-			(typeof filter === 'function' && filter(id))
-		) {
-			assertion(id)
-		}
-	})
+	idAssertions.forEach(assertion => assertion(id))
 }
 
 /**
