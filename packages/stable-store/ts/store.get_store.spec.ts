@@ -1,6 +1,6 @@
 import { afterEach, expect, it } from '@jest/globals'
-import { idAssertions } from './index.ctx.js'
-import { registerIDAssertion, createStore, getStore } from './index.js'
+import { createStore, getStore, registerIDAssertion } from './index.js'
+import { idAssertions, storeMap } from './store.ctx.js'
 
 it('throws if store does not exist', () => {
 	expect(() => getStore('does not exist')).toThrow()
@@ -15,6 +15,7 @@ it('returns the same store if the key is the same string', () => {
 
 afterEach(() => {
 	idAssertions.splice(0, idAssertions.length)
+	storeMap.clear()
 })
 
 it('can assert against string key', () => {
@@ -32,4 +33,24 @@ it('can assert against symbol key with description', () => {
 		throw new Error('invalid id')
 	})
 	expect(() => getStore(Symbol.for('id'))).toThrow()
+})
+
+it('uses per-store assertion', () => {
+	let count = 0
+	createStore(
+		'id',
+		{ a: 1 },
+		{
+			idAssertion() {
+				if (count === 0) {
+					count++
+					return
+				}
+
+				throw new Error('just because')
+			}
+		}
+	)
+
+	expect(() => getStore('id')).toThrow()
 })

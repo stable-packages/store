@@ -1,9 +1,12 @@
-import { afterEach } from '@jest/globals'
-import { idAssertions } from './index.ctx.js'
-import { registerIDAssertion } from './index.js'
-import { expect, it } from '@jest/globals'
+import { afterEach, expect, it } from '@jest/globals'
 import { testType } from 'type-plus'
-import { MissingInit, createStore, type Store } from './index.js'
+import { idAssertions, storeMap } from './store.ctx.js'
+import { MissingInit, createStore, registerIDAssertion, type Store } from './index.js'
+
+afterEach(() => {
+	idAssertions.splice(0, idAssertions.length)
+	storeMap.clear()
+})
 
 it('can create store with string key', () => {
 	createStore('key')
@@ -162,10 +165,6 @@ it('can use a different logger', () => {
 	s.set({ a: 2 })
 })
 
-afterEach(() => {
-	idAssertions.splice(0, idAssertions.length)
-})
-
 it('can assert against string key', () => {
 	registerIDAssertion(_ => {
 		throw new Error('invalid id')
@@ -180,4 +179,35 @@ it('can assert against symbol key with description', () => {
 	expect(() => createStore(Symbol('id'))).toThrow()
 })
 
-it.todo('per store id assertions')
+it('can assert with per-store assertion', () => {
+	expect(() =>
+		createStore(
+			Symbol('id'),
+			{ a: 1 },
+			{
+				idAssertion() {
+					throw new Error('just because')
+				}
+			}
+		)
+	).toThrow()
+})
+
+it('assert on re-create', () => {
+	let count = 0
+	createStore(
+		'id',
+		{ a: 1 },
+		{
+			idAssertion() {
+				if (count === 0) {
+					count++
+					return
+				}
+
+				throw new Error('just because')
+			}
+		}
+	)
+	expect(() => createStore('id', { a: 1 })).toThrow()
+})
