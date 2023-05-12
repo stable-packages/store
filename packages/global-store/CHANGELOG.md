@@ -1,5 +1,12 @@
 # global-store
 
+## 1.0.0-beta.22
+
+### Patch Changes
+
+- 44aa1cc: adding `import type`.
+- 92e5973: Update flow type.
+
 ## 1.0.0-beta.21
 
 ### Patch Changes
