@@ -16,7 +16,7 @@
     "@types/react-dom": "^18.0.6",
     "astro": "^2.3.1",
     "examples-library": "workspace:^",
-    "global-store": "workspace:1.0.0-beta.21",
+    "global-store": "workspace:1.0.0-beta.22",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "stable-store": "workspace:^",
