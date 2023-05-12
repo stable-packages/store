@@ -19,7 +19,7 @@
     "prepack": "pinst --disable",
     "postpack": "pinst --enable",
     "prepare": "husky install",
-    "publish": "changeset publish",
+    "release": "changeset publish",
     "size": "turbo run size",
     "ss": "pnpm --filter=stable-store",
     "test": "turbo run test",

@@ -4,4 +4,4 @@
 
 ### Major Changes
 
-- fecb2b7: Initial and final release of [stable-store].
+- fecb2b7: Beta release of [stable-store].
