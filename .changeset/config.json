@@ -8,6 +8,7 @@
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": [
+    "astro-app",
     "examples-library",
     "tests-node-pkg",
     "tests-rollup-pkg",

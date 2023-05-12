@@ -2,4 +2,4 @@
 "global-store": patch
 ---
 
-adding `import type`
+adding `import type`.
