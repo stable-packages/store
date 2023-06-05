@@ -74,7 +74,7 @@ importers:
         specifier: workspace:^
         version: link:../library
       global-store:
-        specifier: workspace:1.0.0-beta.21
+        specifier: workspace:1.0.0-beta.22
         version: link:../../packages/global-store
       react:
         specifier: ^18.0.0

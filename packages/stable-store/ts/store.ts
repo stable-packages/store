@@ -1,8 +1,7 @@
 import { idAssertions, storeMap } from './store.ctx.js'
-import { Store } from './store.types.js'
+import { type Store } from './store.types.js'
 
-
-export const brandedSymbol = Symbol('internal branded symbol')
+const brandedSymbol = Symbol('internal branded symbol')
 
 /**
  * Init value is required.
