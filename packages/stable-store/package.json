@@ -1,6 +1,6 @@
 {
   "name": "stable-store",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "A single-versioned store to share anything in memory",
   "keywords": [
     "store",
