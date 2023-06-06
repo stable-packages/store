@@ -79,7 +79,7 @@ Type: `<T>(options: StoreOptions<T>) => Store<T>`
 
 Creates a store of type `T`.
 
-`T` is inferred by [`initializer`](#StoreOptionsInitializer).
+`T` is inferred by [`initializer`](#storeoptionsinitializer).
 
 ```ts
 import { createStore } from 'global-store'
@@ -137,9 +137,9 @@ Type: `StoreVersion = string | number`
 
 The version of the store.
 
-This is used during initialization to determine should the [`StoreOptions#initializer`](#StoreOptionsinitializer) be called (and in what order for [`createAsyncStore()`](#createAsyncStore)).
+This is used during initialization to determine should the [`StoreOptions#initializer`](#storeoptionsinitializer) be called (and in what order for [`createAsyncStore()`](#createasyncstore)).
 
-It will be added to the `processedVersions` argument of the [`StoreOptions#initializer()`](#StoreOptionsinitializer) after it is being called.
+It will be added to the `processedVersions` argument of the [`StoreOptions#initializer()`](#storeoptionsinitializer) after it is being called.
 
 When specified as a string (recommended),
 it must be in this format: `major.minor.patch`.
@@ -154,17 +154,17 @@ Type: `<T extends StoreValue>(current: StoreValue, processedVersions: StoreVersi
 The function to initialize the store.
 
 Since there may be multiple copies of your library loaded,
-multiple calls to the store creation function (e.g. [`createStore()`](#createStore)) may occur.
+multiple calls to the store creation function (e.g. [`createStore()`](#createstore)) may occur.
 For the first call, the `current` argument will be an empty object.
 For subsequence calls, it will be the value returned by the last call.
 
 The `processedVersions` contains all the versions the have been processed so far.
 You can use it to help determine what do you need to do.
 
-For [`createAsyncStore`](#createAsyncStore),
+For [`createAsyncStore`](#createasyncstore),
 the `initializer` function will be called in the order of `version`.
 
-For [`createStore`](#createStore),
+For [`createStore`](#createstore),
 since there is no way to control the load order,
 they can be called by a newer version of your library before an older version.
 This means your `initializer` needs to be future-proof.
@@ -204,17 +204,17 @@ This is mostly used in tests so that the tests would not interfere with each oth
 
 ### createAsyncStore()
 
-A `async` variant of [`createStore()`](#createStore).
+A `async` variant of [`createStore()`](#createstore).
 It will return a promise,
-which will resolve when the [`initializeAsyncStore()`](#initializeAsyncStore) is called.
+which will resolve when the [`initializeAsyncStore()`](#initializeasyncstore) is called.
 
-One benefit of using this over [`createStore()`](#createStore) is that the initializers will be called in the order of `version`.
+One benefit of using this over [`createStore()`](#createstore) is that the initializers will be called in the order of `version`.
 
 This makes initialization much easier to handle.
 
 ### initializeAsyncStore()
 
-Calling [`initializeAsyncStore()`](#initializeAsyncStore) will start the initialization process of [`createAsyncStore()`](#createAsyncStore).
+Calling [`initializeAsyncStore()`](#initializeasyncstore) will start the initialization process of [`createAsyncStore()`](#createasyncstore).
 
 It takes two arguments:
 
@@ -241,7 +241,5 @@ all libraries should declare [global-store] as a peer dependency.
 [global-store]: https://github.com/unional/global-store
 [npm-image]: https://img.shields.io/npm/v/global-store.svg?style=flat
 [npm-url]: https://npmjs.org/package/global-store
-[downloads-image]: https://img.shields.io/npm/dm/global-store.svg?style=flat
-[downloads-url]: https://npmjs.org/package/global-store
 [vscode-image]: https://img.shields.io/badge/vscode-ready-green.svg
 [vscode-url]: https://code.visualstudio.com/
