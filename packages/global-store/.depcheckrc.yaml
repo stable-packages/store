@@ -5,9 +5,8 @@ ignores:
   - '@rollup/plugin-typescript'
   - '@size-limit/preset-small-lib'
   - '@types/jest'
-  - eslint-*
   - jest*
-  - rimraf # depcheck false negative
+  - rimraf                     # https://github.com/depcheck/depcheck/issues/776
   - rollup*
   - ts-jest
   - tslib
