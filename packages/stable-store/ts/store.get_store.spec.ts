@@ -1,6 +1,7 @@
 import { afterEach, expect, it } from '@jest/globals'
 import { createStore, getStore, registerIDAssertion } from './index.js'
-import { idAssertions, storeMap } from './store.ctx.js'
+import { storeMap } from './store.ctx.js'
+import { idAssertions } from './assert_id.ctx.js'
 
 it('throws if store does not exist', () => {
 	expect(() => getStore('does not exist')).toThrow()

@@ -1,7 +1,8 @@
 import { afterEach, expect, it } from '@jest/globals'
 import { testType } from 'type-plus'
-import { idAssertions, storeMap } from './store.ctx.js'
+import { storeMap } from './store.ctx.js'
 import { type MissingInit, createStore, registerIDAssertion, type Store } from './index.js'
+import { idAssertions } from './assert_id.ctx.js'
 
 afterEach(() => {
 	idAssertions.splice(0, idAssertions.length)

@@ -1,4 +1,6 @@
-import { idAssertions, storeMap } from './store.ctx.js'
+import { assertID } from './assert_id.js'
+import { assertIDInternal } from './asset_id.internal.js'
+import { storeMap } from './store.ctx.js'
 import type { Store } from './store.types.js'
 
 const brandedSymbol = Symbol('internal branded symbol')
@@ -7,35 +9,6 @@ const brandedSymbol = Symbol('internal branded symbol')
  * Init value is required.
  */
 export type MissingInit<T> = { [brandedSymbol]: T }
-
-/**
- * Register an assertion for the ID globally.
- *
- * Since the same stable store is used for every module loaded,
- * your ID should follow certain pattern which you can match before doing your assertion.
- *
- * e.g. `<module name><version>:<token>`.
- * so that you will not accidentally prevent other modules from using the store.
- */
-export function registerIDAssertion(assertion: (id: string) => void) {
-	idAssertions.push(assertion)
-}
-
-function assertID(id: string | symbol) {
-	assertIDInternal(id, assertIDString)
-}
-
-function assertIDInternal(id: string | symbol, assertion: (id: string) => void) {
-	if (typeof id === 'string') {
-		assertion(id)
-	} else if (id.description) {
-		assertion(id.description)
-	}
-}
-
-function assertIDString(id: string) {
-	idAssertions.forEach((assertion) => assertion(id))
-}
 
 /**
  * Options for creating a store.
