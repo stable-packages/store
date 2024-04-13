@@ -1,23 +1,23 @@
 {
-  "name": "tests-rollup-pkg",
-  "version": "1.0.0",
-  "private": true,
-  "description": "",
-  "keywords": [],
-  "license": "ISC",
-  "author": "",
-  "main": "index.js",
-  "scripts": {
-    "build": "rollup -c rollup.config.mjs"
-  },
-  "dependencies": {
-    "global-store": "workspace:*"
-  },
-  "devDependencies": {
-    "@rollup/plugin-typescript": "^8.3.4",
-    "add": "^2.0.6",
-    "rollup": "^2.78.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "typescript": "^4.9.5"
-  }
+	"name": "tests-rollup-pkg",
+	"version": "1.0.0",
+	"private": true,
+	"description": "",
+	"keywords": [],
+	"license": "ISC",
+	"author": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "rollup -c rollup.config.mjs"
+	},
+	"dependencies": {
+		"global-store": "workspace:*"
+	},
+	"devDependencies": {
+		"@rollup/plugin-typescript": "^8.3.4",
+		"add": "^2.0.6",
+		"rollup": "^2.78.0",
+		"rollup-plugin-terser": "^7.0.2",
+		"typescript": "^4.9.5"
+	}
 }

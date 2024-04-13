@@ -1,18 +1,18 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@2.0.0/schema.json",
-  "changelog": "@changesets/cli/changelog",
-  "commit": false,
-  "fixed": [],
-  "linked": [],
-  "access": "public",
-  "baseBranch": "main",
-  "updateInternalDependencies": "patch",
-  "ignore": [
-    "astro-app",
-    "examples-library",
-    "tests-node-pkg",
-    "tests-rollup-pkg",
-    "tests-webpack5-app-es5",
-    "tests-webpack5-pkg"
-  ]
+	"$schema": "https://unpkg.com/@changesets/config@2.0.0/schema.json",
+	"changelog": "@changesets/cli/changelog",
+	"commit": false,
+	"fixed": [],
+	"linked": [],
+	"access": "public",
+	"baseBranch": "main",
+	"updateInternalDependencies": "patch",
+	"ignore": [
+		"astro-app",
+		"examples-library",
+		"tests-node-pkg",
+		"tests-rollup-pkg",
+		"tests-webpack5-app-es5",
+		"tests-webpack5-pkg"
+	]
 }

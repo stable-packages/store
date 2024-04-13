@@ -1,5 +1,5 @@
 import { idAssertions, storeMap } from './store.ctx.js'
-import { type Store } from './store.types.js'
+import type { Store } from './store.types.js'
 
 const brandedSymbol = Symbol('internal branded symbol')
 
@@ -34,7 +34,7 @@ function assertIDInternal(id: string | symbol, assertion: (id: string) => void) 
 }
 
 function assertIDString(id: string) {
-	idAssertions.forEach(assertion => assertion(id))
+	idAssertions.forEach((assertion) => assertion(id))
 }
 
 /**
@@ -110,7 +110,7 @@ export function createStore<V>(id: string | symbol, init?: V, options?: StoreOpt
 		notify(setListeners, v)
 	}
 	function notify(listeners: Array<(value: V | undefined) => void>, value: V | undefined) {
-		listeners.forEach(fn => {
+		listeners.forEach((fn) => {
 			try {
 				fn(value)
 			} catch (e) {
@@ -131,7 +131,7 @@ export function createStore<V>(id: string | symbol, init?: V, options?: StoreOpt
 }
 
 function listenerAdder<V>(listeners: Array<(value: V) => void>) {
-	return function (fn: (value: V) => void) {
+	return (fn: (value: V) => void) => {
 		if (listeners.indexOf(fn) === -1) {
 			listeners.push(fn)
 		}

@@ -1,7 +1,7 @@
 import { afterEach, expect, it } from '@jest/globals'
 import { testType } from 'type-plus'
 import { idAssertions, storeMap } from './store.ctx.js'
-import { MissingInit, createStore, registerIDAssertion, type Store } from './index.js'
+import { type MissingInit, createStore, registerIDAssertion, type Store } from './index.js'
 
 afterEach(() => {
 	idAssertions.splice(0, idAssertions.length)
@@ -79,7 +79,7 @@ it('returns different stores for different symbol even if the labels are the sam
 it('can listen to changes', () => {
 	expect.assertions(1)
 	const s = createStore('listen', { a: 1 })
-	s.onSet(v => expect(v).toEqual({ a: 2 }))
+	s.onSet((v) => expect(v).toEqual({ a: 2 }))
 	s.set({ a: 2 })
 })
 
@@ -95,7 +95,7 @@ it('notifies the same listener only once', () => {
 it('can unsubscribe from changes', () => {
 	expect.assertions(1)
 	const s = createStore('unsubscribe', { a: 1 })
-	const unsub = s.onSet(v => expect(v).toEqual({ a: 2 }))
+	const unsub = s.onSet((v) => expect(v).toEqual({ a: 2 }))
 	s.set({ a: 2 })
 	unsub()
 	s.set({ a: 3 })
@@ -166,14 +166,14 @@ it('can use a different logger', () => {
 })
 
 it('can assert against string key', () => {
-	registerIDAssertion(_ => {
+	registerIDAssertion((_) => {
 		throw new Error('invalid id')
 	})
 	expect(() => createStore('id')).toThrow()
 })
 
 it('can assert against symbol key with description', () => {
-	registerIDAssertion(_ => {
+	registerIDAssertion((_) => {
 		throw new Error('invalid id')
 	})
 	expect(() => createStore(Symbol('id'))).toThrow()

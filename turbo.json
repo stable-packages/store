@@ -1,74 +1,48 @@
 {
-  "$schema": "https://turborepo.org/schema.json",
-  "pipeline": {
-    "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        ":(glob)ts/**/*.ts",
-        ":(glob)!ts/**/*.spec.ts",
-        ":(glob)tsconfig.*",
-        ":(glob)package.json",
-        ":(glob)webpack.*"
-      ],
-      "outputs": [
-        "dist/**",
-        "lib/**"
-      ]
-    },
-    "build:dev": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        ":(glob)ts/**/*.ts",
-        ":(glob)!ts/**/*.spec.ts",
-        ":(glob)tsconfig.*",
-        ":(glob)package.json",
-        ":(glob)webpack.*"
-      ],
-      "outputs": [
-        "dist/**",
-        "lib/**"
-      ]
-    },
-    "clean": {
-      "cache": false
-    },
-    "coverage": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        ":(glob)ts/**/*.ts",
-        ":(glob)!ts/**/*.spec.ts"
-      ]
-    },
-    "depcheck": {
-      "dependsOn": [
-        "^build"
-      ]
-    },
-    "lint": {
-      "dependsOn": [
-        "^build"
-      ]
-    },
-    "size": {
-      "dependsOn": [
-        "build"
-      ]
-    },
-    "test": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        ":(glob)ts/**/*.ts"
-      ]
-    },
-    "verify": {
-    }
-  }
+	"$schema": "https://turborepo.org/schema.json",
+	"pipeline": {
+		"build": {
+			"dependsOn": ["^build"],
+			"inputs": [
+				":(glob)ts/**/*.ts",
+				":(glob)!ts/**/*.spec.ts",
+				":(glob)tsconfig.*",
+				":(glob)package.json",
+				":(glob)webpack.*"
+			],
+			"outputs": ["dist/**", "lib/**"]
+		},
+		"build:dev": {
+			"dependsOn": ["^build"],
+			"inputs": [
+				":(glob)ts/**/*.ts",
+				":(glob)!ts/**/*.spec.ts",
+				":(glob)tsconfig.*",
+				":(glob)package.json",
+				":(glob)webpack.*"
+			],
+			"outputs": ["dist/**", "lib/**"]
+		},
+		"clean": {
+			"cache": false
+		},
+		"coverage": {
+			"dependsOn": ["^build"],
+			"inputs": [":(glob)ts/**/*.ts", ":(glob)!ts/**/*.spec.ts"]
+		},
+		"depcheck": {
+			"dependsOn": ["^build"]
+		},
+		"lint": {
+			"dependsOn": ["^build"]
+		},
+		"size": {
+			"dependsOn": ["build"]
+		},
+		"test": {
+			"dependsOn": ["^build"],
+			"inputs": [":(glob)ts/**/*.ts"]
+		},
+		"verify": {}
+	}
 }

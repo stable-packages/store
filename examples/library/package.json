@@ -1,69 +1,69 @@
 {
-  "name": "examples-library",
-  "private": true,
-  "version": "0.0.0",
-  "description": "example library to use the stores",
-  "homepage": "https://github.com/unional/global-store",
-  "bugs": {
-    "url": "https://github.com/unional/global-store/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/unional/global-store.git",
-    "directory": "examples/library"
-  },
-  "license": "MIT",
-  "author": {
-    "name": "Homa Wong (unional)",
-    "email": "homawong@gmail.com",
-    "url": "https://github.com/unional"
-  },
-  "type": "module",
-  "exports": {
-    "import": {
-      "types": "./esm/index.d.ts",
-      "default": "./esm/index.js"
-    }
-  },
-  "files": [
-    "esm",
-    "ts",
-    "!**/*.{spec,unit,test,accept,integrate,system,pref,stress}.*"
-  ],
-  "scripts": {
-    "build": "tsc",
-    "clean": "rimraf esm coverage --glob *.tsbuildinfo",
-    "coverage": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 jest --coverage",
-    "depcheck": "depcheck",
-    "lint": "cross-env TIMING=1 eslint --ext=js,cjs,mjs,ts,tsx,ctx,mtx,yaml,yml .",
-    "nuke": "rimraf node_modules",
-    "size": "size-limit",
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
-    "test:watch": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 jest --watch",
-    "w": "pnpm test:watch",
-    "verify": "npm-run-all -p build lint coverage depcheck -p size"
-  },
-  "devDependencies": {
-    "@jest/globals": "^29.5.0",
-    "@repobuddy/jest": "^3.3.0",
-    "@repobuddy/typescript": "^1.1.2",
-    "@size-limit/preset-small-lib": "~8.2.4",
-    "cross-env": "^7.0.3",
-    "depcheck": "~1.4.3",
-    "global-store": "workspace:*",
-    "jest": "^29.5.0",
-    "jest-watch-suspend": "^1.1.2",
-    "jest-watch-toggle-config-2": "^2.1.0",
-    "jest-watch-typeahead": "^2.2.2",
-    "npm-run-all": "^4.1.5",
-    "rimraf": "~5.0.0",
-    "size-limit": "~8.2.4",
-    "stable-store": "workspace:*",
-    "ts-jest": "^29.1.0",
-    "typescript": "^5.0.4"
-  },
-  "peerDependencies": {
-    "global-store": "workspace:*",
-    "stable-store": "workspace:*"
-  }
+	"name": "examples-library",
+	"private": true,
+	"version": "0.0.0",
+	"description": "example library to use the stores",
+	"homepage": "https://github.com/unional/global-store",
+	"bugs": {
+		"url": "https://github.com/unional/global-store/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/unional/global-store.git",
+		"directory": "examples/library"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Homa Wong (unional)",
+		"email": "homawong@gmail.com",
+		"url": "https://github.com/unional"
+	},
+	"type": "module",
+	"exports": {
+		"import": {
+			"types": "./esm/index.d.ts",
+			"default": "./esm/index.js"
+		}
+	},
+	"files": [
+		"esm",
+		"ts",
+		"!**/*.{spec,unit,test,accept,integrate,system,pref,stress}.*"
+	],
+	"scripts": {
+		"build": "tsc",
+		"clean": "rimraf esm coverage --glob *.tsbuildinfo",
+		"coverage": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 jest --coverage",
+		"depcheck": "depcheck",
+		"lint": "cross-env TIMING=1 eslint --ext=js,cjs,mjs,ts,tsx,ctx,mtx,yaml,yml .",
+		"nuke": "rimraf node_modules",
+		"size": "size-limit",
+		"test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+		"test:watch": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 jest --watch",
+		"w": "pnpm test:watch",
+		"verify": "npm-run-all -p build lint coverage depcheck -p size"
+	},
+	"devDependencies": {
+		"@jest/globals": "^29.5.0",
+		"@repobuddy/jest": "^3.3.0",
+		"@repobuddy/typescript": "^1.1.2",
+		"@size-limit/preset-small-lib": "~8.2.4",
+		"cross-env": "^7.0.3",
+		"depcheck": "~1.4.3",
+		"global-store": "workspace:*",
+		"jest": "^29.5.0",
+		"jest-watch-suspend": "^1.1.2",
+		"jest-watch-toggle-config-2": "^2.1.0",
+		"jest-watch-typeahead": "^2.2.2",
+		"npm-run-all": "^4.1.5",
+		"rimraf": "~5.0.0",
+		"size-limit": "~8.2.4",
+		"stable-store": "workspace:*",
+		"ts-jest": "^29.1.0",
+		"typescript": "^5.0.4"
+	},
+	"peerDependencies": {
+		"global-store": "workspace:*",
+		"stable-store": "workspace:*"
+	}
 }

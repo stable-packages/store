@@ -1,26 +1,21 @@
 {
-  "extends": "plugin:harmony/latest",
-  "env": {
-    "es6": true,
-    "node": true,
-    "jest": true
-  },
-  "parserOptions": {
-    "sourceType": "module"
-  },
-  "plugins": [
-    "flowtype"
-  ],
-  "overrides": [
-    {
-      "extends": "plugin:harmony/ts-recommended-type-check",
-      "files": [
-        "*.ts",
-        "*.tsx"
-      ],
-      "parserOptions": {
-        "project": "tsconfig.json"
-      }
-    }
-  ]
+	"extends": "plugin:harmony/latest",
+	"env": {
+		"es6": true,
+		"node": true,
+		"jest": true
+	},
+	"parserOptions": {
+		"sourceType": "module"
+	},
+	"plugins": ["flowtype"],
+	"overrides": [
+		{
+			"extends": "plugin:harmony/ts-recommended-type-check",
+			"files": ["*.ts", "*.tsx"],
+			"parserOptions": {
+				"project": "tsconfig.json"
+			}
+		}
+	]
 }

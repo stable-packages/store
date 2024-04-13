@@ -20,7 +20,7 @@ afterEach(() => {
 
 it('can assert against string key', () => {
 	createStore('id')
-	registerIDAssertion(_ => {
+	registerIDAssertion((_) => {
 		throw new Error('invalid id')
 	})
 	expect(() => getStore('id')).toThrow()
@@ -29,7 +29,7 @@ it('can assert against string key', () => {
 it('can assert against symbol key with description', () => {
 	createStore(Symbol.for('id'))
 
-	registerIDAssertion(_ => {
+	registerIDAssertion((_) => {
 		throw new Error('invalid id')
 	})
 	expect(() => getStore(Symbol.for('id'))).toThrow()

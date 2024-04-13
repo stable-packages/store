@@ -1,16 +1,16 @@
 {
-  "compilerOptions": {
-    "composite": true,
-    "esModuleInterop": true,
-    "noImplicitAny": true,
-    "module": "ES2015",
-    "moduleResolution": "Node",
-    "target": "ES5"
-  },
-  "references": [
-    {
-      "path": "../../../packages/global-store"
-    }
-  ],
-  "files": ["src/index.ts"]
+	"compilerOptions": {
+		"composite": true,
+		"esModuleInterop": true,
+		"noImplicitAny": true,
+		"module": "ES2015",
+		"moduleResolution": "Node",
+		"target": "ES5"
+	},
+	"references": [
+		{
+			"path": "../../../packages/global-store"
+		}
+	],
+	"files": ["src/index.ts"]
 }

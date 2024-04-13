@@ -1,11 +1,10 @@
 {
-  "name": "tests-node-pkg",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-  },
-  "keywords": [],
-  "author": "",
-  "license": "MIT"
+	"name": "tests-node-pkg",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {},
+	"keywords": [],
+	"author": "",
+	"license": "MIT"
 }
