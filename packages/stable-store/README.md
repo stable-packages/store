@@ -1,13 +1,13 @@
-# stable-store
+# Stable Store
 
 [![NPM version][npm-image]][npm-url]
 [![NPM downloads][downloads-image]][npm-url]
 
-[stable-store] allows you to create in-memory stores and access them anywhere within the physical boundary of your application.
+[`stable-store`] allows you to create in-memory stores and access them anywhere within the physical boundary of your application.
 
 ## The problem
 
-Let's say you want to share something between two piece of code.
+Let's say you want to share something between two pieces of code.
 It can be data or functions, doesn't really matter.
 
 There are several ways to do it:
@@ -20,10 +20,10 @@ There are pros and cons for each approach.
 But if you want to make sure the sharing works across:
 
 - different versions of your library loaded into memory, and
-- different copies of your library loaded through bundles of differene MFEs (micro frontends), and
+- different copies of your library loaded through bundles of different MFEs (micro frontends), and
 - isolated rendering such as [island architecture]
 
-only "parameter passing" and "global scope attachment" will work.
+Only "parameter passing" and "global scope attachment" will work.
 
 But as you might know, there are major drawbacks for either approach.
 
@@ -35,9 +35,9 @@ The key for this library to work is to make sure there will always be one and on
 
 It achieves this by:
 
-- stable version: this library will always stay at `1.x` and will never have a breaking change.
+- Stable version: this library will always stay at `1.x` and will never have a breaking change.
 - ESM only: this library is only available as ESM.
-- host loading: only the host application should load this library. All other libraries reference this library as `peerDependency`.
+- Lost loading: only the host application should load this library. All other libraries reference this library as `peerDependency`.
 
 ## Install
 
@@ -89,14 +89,14 @@ const data = appStore.get()
 appStore.set({ ... })
 ```
 
-It does not provide any other fancy features each as immutability (e.g. [immer]) or version merging (e.g. [global-store]).
+It does not provide any other fancy features each as immutability (e.g. [`immer`]) or version merging (e.g. [`global-store`]).
 
 This is by design so that there are minimum moving parts and the library can stay stable.
 
 [downloads-image]: https://img.shields.io/npm/dm/unional/stable-store.svg?style=flat
-[global-store]: https://www.npmjs.com/package/global-store
-[immer]: https://www.npmjs.com/package/immer
+[`global-store`]: https://www.npmjs.com/package/global-store
+[`immer`]: https://www.npmjs.com/package/immer
 [island architecture]: https://jasonformat.com/islands-architecture/
 [npm-image]: https://img.shields.io/npm/v/unional/stable-store.svg?style=flat
 [npm-url]: https://npmjs.org/package/unional/stable-store
-[stable-store]: https://www.npmjs.com/package/stable-store
+[`stable-store`]: https://www.npmjs.com/package/stable-store
