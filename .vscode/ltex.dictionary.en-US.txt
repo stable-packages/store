@@ -10,3 +10,5 @@ Changesets
 unional
 Homa
 NONINFRINGEMENT
+npm-url
+MFEs
