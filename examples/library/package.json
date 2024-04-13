@@ -1,7 +1,7 @@
 {
 	"name": "examples-library",
-	"private": true,
 	"version": "0.0.0",
+	"private": true,
 	"description": "example library to use the stores",
 	"homepage": "https://github.com/unional/global-store",
 	"bugs": {
