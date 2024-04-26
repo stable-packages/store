@@ -4,7 +4,7 @@ ignores:
   - "@repobuddy/*"
   - "@rollup/plugin-typescript"
   - "@size-limit/preset-small-lib"
-  - "@swc/jest" # used by jest from @repobuddy/jest
+  - "@swc/*" # used by jest from @repobuddy/jest
   - "@types/jest"
   - jest*
   - rimraf # https://github.com/depcheck/depcheck/issues/776
