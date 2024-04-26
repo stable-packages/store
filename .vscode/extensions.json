@@ -3,6 +3,7 @@
 		"dbaeumer.vscode-eslint",
 		"astro-build.astro-vscode",
 		"bradlc.vscode-tailwindcss",
-		"redhat.vscode-yaml"
+		"redhat.vscode-yaml",
+		"biomejs.biome"
 	]
 }

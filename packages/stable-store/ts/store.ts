@@ -8,7 +8,9 @@ const brandedSymbol = Symbol('internal branded symbol')
 /**
  * Init value is required.
  */
-export type MissingInit<T> = { [brandedSymbol]: T }
+export interface MissingInit<T> {
+	[brandedSymbol]: T
+}
 
 /**
  * Options for creating a store.
@@ -16,11 +18,11 @@ export type MissingInit<T> = { [brandedSymbol]: T }
  * @property suppressListenerError If true, listener errors will be suppressed.
  * @property logger A logger to log listener errors. Defaults to `console`.
  */
-export type StoreOptions = {
+export interface StoreOptions {
 	/**
 	 * If true, any listener errors will be suppressed and logged through the `logger`.
 	 */
-	suppressListenerError?: boolean
+	suppressListenerError?: boolean | undefined
 	/**
 	 * If specified, this store will use this assertion instead of the globally defined one.
 	 */
@@ -29,7 +31,7 @@ export type StoreOptions = {
 	 * Specify a logger to log listener errors.
 	 * Defaults to `console`.
 	 */
-	logger?: { error(...args: any[]): void }
+	logger?: { error(...args: any[]): void } | undefined
 }
 
 /**
@@ -50,13 +52,17 @@ export type StoreOptions = {
  *
  * @see https://www.npmjs.com/package/stable-store
  */
-export function createStore<V>(key: string | symbol, init: V, options?: StoreOptions): Store<V>
+export function createStore<V>(key: string | symbol, init: V, options?: StoreOptions | undefined): Store<V>
 export function createStore<V>(
 	key: string | symbol,
 	init?: undefined,
-	options?: StoreOptions
+	options?: StoreOptions | undefined
 ): [undefined] extends [V] ? Store<V> : MissingInit<V>
-export function createStore<V>(id: string | symbol, init?: V, options?: StoreOptions): Store<V> {
+export function createStore<V>(
+	id: string | symbol,
+	init?: V | undefined,
+	options?: StoreOptions | undefined
+): Store<V> {
 	assertID(id)
 	const c = storeMap.get(id)
 	if (c) {

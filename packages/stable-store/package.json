@@ -63,7 +63,6 @@
 		"rimraf": "~5.0.0",
 		"size-limit": "~8.2.4",
 		"ts-jest": "^29.1.2",
-		"type-plus": "^6.0.0",
-		"typescript": "^5.0.4"
+		"type-plus": "^6.0.0"
 	}
 }

@@ -28,13 +28,13 @@ export function resetStoreValue(stores: Stores, id: StoreId) {
 	store.versions = []
 	store.value = store.initializers.reduce<StoreValue>((value, initializer, i) => {
 		value = initializer(value, store.versions)
-		store.versions.push(versions[i])
+		store.versions.push(versions[i]!)
 		return value
 	}, {})
 }
 
 export function getStore(stores: Stores, id: StoreId) {
-	const moduleStore = (stores[id.moduleName] = stores[id.moduleName] || Object.create(null))
+	const moduleStore: Stores[string] = (stores[id.moduleName] = stores[id.moduleName] || Object.create(null))
 	const key = id.key ?? 'default'
 	return (moduleStore[key] = moduleStore[key] || { versions: [], value: {}, initializers: [] })
 }

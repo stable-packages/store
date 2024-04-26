@@ -5,6 +5,14 @@ test('calling initializeAsyncStore() with no createAsyncStore() call does nothin
 	initializeAsyncStore('unknown-module')
 })
 
+it('unknown key', async () => {
+	const moduleName = 'module-one-store-init-with-key'
+	const key = '6e9dec9c-db22-4bbd-a088-ce734e34b5fd'
+	createAsyncStore({ moduleName, key, version: 0, initializer: () => ({ a: 1 }) })
+	initializeAsyncStore(moduleName, 'some-unknown-key')
+
+})
+
 test('init single store with key', async () => {
 	const moduleName = 'module-one-store-init-with-key'
 	const key = '6e9dec9c-db22-4bbd-a088-ce734e34b5fd'

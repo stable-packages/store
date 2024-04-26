@@ -2,7 +2,7 @@ import type { StoreInitializer, StoreValue, StoreVersion } from './types.js'
 
 export interface StoreId {
 	moduleName: string
-	key?: string
+	key?: string | undefined
 }
 
 export type Stores = Record<
