@@ -2,7 +2,6 @@
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Q[GitHub NodeJS]github-action-url [Codecov]codecov-url\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Q[Visual Studio Code]vscode-url\\E$"}
 {"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qglobal-store provides version stable stores for libraries.\\E$"}
-
 {"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QIf not, there will be multiple copies of global-store loaded and will completely defeat the purpose.\\E$"}
 {"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qglobal-store\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Q[NPM version]npm-url [NPM downloads]downloads-url badge-size-es6-url\\E$"}
