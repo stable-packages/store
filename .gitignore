@@ -50,6 +50,9 @@ typings
 !.yarn/sdks
 !.yarn/versions
 
+# turborepo
+.turbo
+
 # project folders
 *.tsbuildinfo
 .rpt2_cache

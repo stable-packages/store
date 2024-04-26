@@ -4,31 +4,21 @@
 		"build": {
 			"dependsOn": ["^build"],
 			"inputs": [
-				":(glob)ts/**/*.ts",
-				":(glob)!ts/**/*.spec.ts",
-				":(glob)tsconfig.*",
-				":(glob)package.json",
-				":(glob)webpack.*"
+				"ts/**/*.ts",
+				"!ts/**/*.spec.ts",
+				"tsconfig.*",
+				"package.json",
+				"webpack.*"
 			],
-			"outputs": ["dist/**", "lib/**"]
-		},
-		"build:dev": {
-			"dependsOn": ["^build"],
-			"inputs": [
-				":(glob)ts/**/*.ts",
-				":(glob)!ts/**/*.spec.ts",
-				":(glob)tsconfig.*",
-				":(glob)package.json",
-				":(glob)webpack.*"
-			],
-			"outputs": ["dist/**", "lib/**"]
+			"outputs": ["dist/**", "lib/**", "esm/**"]
 		},
 		"clean": {
 			"cache": false
 		},
 		"coverage": {
 			"dependsOn": ["^build"],
-			"inputs": [":(glob)ts/**/*.ts", ":(glob)!ts/**/*.spec.ts"]
+			"inputs": ["ts/**/*.ts", "!ts/**/*.spec.ts"],
+			"outputs": ["coverage/**"]
 		},
 		"depcheck": {
 			"dependsOn": ["^build"]
@@ -40,8 +30,7 @@
 			"dependsOn": ["build"]
 		},
 		"test": {
-			"dependsOn": ["^build"],
-			"inputs": [":(glob)ts/**/*.ts"]
+			"dependsOn": ["^build"]
 		},
 		"verify": {}
 	}
