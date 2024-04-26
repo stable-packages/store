@@ -159,7 +159,7 @@ describe('freeze store', () => {
 		})
 		store.freeze()
 		store.value
-		a.throws(() => (store.value.b = 2), TypeError)
+		a.throws(() => (store.value['b'] = 2), TypeError)
 	})
 
 	test('cannot be freezed again', () => {
@@ -217,7 +217,7 @@ describe('freeze store', () => {
 			initializer: () => ({ a: [{ x: 'x' }] })
 		})
 		store.freeze()
-		store.value.a[0].x = 'y'
+		store.value.a[0]!.x = 'y'
 	})
 
 	test('freeze provided value but not array property', () => {

@@ -28,9 +28,10 @@ export async function createAsyncStore<T extends StoreValue>({
  * @see https://github.com/unional/global-store#initializeAsyncStore
  */
 export function initializeAsyncStore(moduleName: string, key?: string) {
-	const creatorsOfModules = asyncStoreCreators[moduleName]
-	if (!creatorsOfModules) return
+	const s = asyncStoreCreators[moduleName]
+	if (!s) return
+	if (key &&!s[key]) return
 
-	const keys = key ? [key] : Object.keys(creatorsOfModules)
-	keys.forEach((key) => resolveCreators(moduleName, key, creatorsOfModules[key], createStore))
+	const keys = key ? [key] : Object.keys(s)
+	keys.forEach((key) => resolveCreators(moduleName, key, s[key]!, createStore))
 }
