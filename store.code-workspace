@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../.github"
+		}
+	],
+	"settings": {
+		"javascript.validate.enable": false,
+		"typescript.enablePromptUseWorkspaceTsdk": true,
+		"typescript.tsdk": "node_modules/typescript/lib"
+	},
+	"extensions": {
+		"recommendations": [
+			"biomejs.biome"
+		]
+	}
+}
