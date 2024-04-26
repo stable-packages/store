@@ -5,6 +5,4 @@ on:
 
 jobs:
   code:
-    uses: stable-packages/.github/.github/workflows/pnpm-verify-cross-platform.yml@main
-    with:
-      node-version: '[16, 18]'
+    uses: stable-packages/.github/.github/workflows/pnpm-verify.yml@main
