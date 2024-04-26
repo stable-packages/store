@@ -100,10 +100,12 @@ rush add -p stable-store --save-peer
 This library provides a basic store with the ability to listen to changes.
 
 ```ts
-import { store } from 'stable-store'
+import { createStore, getStore } from 'stable-store'
 
 const initialData = { ... }
-const myStore = store(Symbol.for('your-library'), initialData)
+let myStore = createStore(Symbol.for('your-library'), initialData)
+
+myStore = getStore(Symbol.for('your-library'))
 
 // Listen to changes
 myStore.listen(data => console.log('data changed', data))
@@ -119,10 +121,10 @@ It does not provide any other fancy features each as immutability (e.g. [`immer`
 
 This is by design so that there are minimum moving parts and the library can stay stable.
 
-[downloads-image]: https://img.shields.io/npm/dm/unional/stable-store.svg?style=flat
 [`global-store`]: https://www.npmjs.com/package/global-store
 [`immer`]: https://www.npmjs.com/package/immer
-[island architecture]: https://jasonformat.com/islands-architecture/
-[npm-image]: https://img.shields.io/npm/v/unional/stable-store.svg?style=flat
-[npm-url]: https://npmjs.org/package/unional/stable-store
 [`stable-store`]: https://www.npmjs.com/package/stable-store
+[downloads-image]: https://img.shields.io/npm/dm/stable-store.svg?style=flat
+[island architecture]: https://jasonformat.com/islands-architecture/
+[npm-image]: https://img.shields.io/npm/v/stable-store.svg?style=flat
+[npm-url]: https://www.npmjs.com/package/stable-store
