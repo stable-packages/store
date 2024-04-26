@@ -2,7 +2,6 @@ ignores:
   - "@repobuddy/jest" # depcheck unable to detect jest presets
   - "@repobuddy/typescript" # depcheck unable to detect TypeScript extends
   - "@size-limit/*" # depcheck unable to recognize size-limit
-  - "@swc/*" # used by jest from @repobuddy/jest
   - jest-* # depcheck unable to detect jest dependencies in `*.mjs` files
   - rimraf # https://github.com/depcheck/depcheck/issues/776
   - size-limit # depcheck unable to recognize size-limit
