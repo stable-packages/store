@@ -45,7 +45,7 @@
 	},
 	"devDependencies": {
 		"@jest/globals": "^29.5.0",
-		"@repobuddy/jest": "^3.3.0",
+		"@repobuddy/jest": "^4.0.0",
 		"@repobuddy/typescript": "^1.1.2",
 		"@size-limit/preset-small-lib": "~8.2.4",
 		"cross-env": "^7.0.3",
