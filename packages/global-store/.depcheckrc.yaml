@@ -1,12 +1,13 @@
 ignores:
-  - '@babel/core'
-  - '@commitlint/*'
-  - '@repobuddy/*'
-  - '@rollup/plugin-typescript'
-  - '@size-limit/preset-small-lib'
-  - '@types/jest'
+  - "@babel/core"
+  - "@commitlint/*"
+  - "@repobuddy/*"
+  - "@rollup/plugin-typescript"
+  - "@size-limit/preset-small-lib"
+  - "@swc/jest" # used by jest from @repobuddy/jest
+  - "@types/jest"
   - jest*
-  - rimraf                     # https://github.com/depcheck/depcheck/issues/776
+  - rimraf # https://github.com/depcheck/depcheck/issues/776
   - rollup*
   - ts-jest
   - tslib
