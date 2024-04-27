@@ -6,3 +6,27 @@ on:
 jobs:
   code:
     uses: stable-packages/.github/.github/workflows/pnpm-verify.yml@main
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 9.0.6
+      - name: Use Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: pnpm
+      - name: codecov - global-store
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./packages/global-store/coverage/coverage-final.json
+          flags: global-store
+          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: codecov - stable-store
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./packages/stable-store/coverage/coverage-final.json
+          flags: stable-store
+          token: ${{ secrets.CODECOV_TOKEN }}
