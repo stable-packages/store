@@ -6,6 +6,13 @@ on:
 jobs:
   code:
     uses: stable-packages/.github/.github/workflows/pnpm-verify.yml@main
+    with:
+      artifact_paths: |
+        packages/global-store/coverage
+        packages/global-store/dist
+        packages/global-store/lib
+        packages/stable-store/coverage
+        packages/stable-store/esm
   coverage:
     runs-on: ubuntu-latest
     steps:
@@ -23,10 +30,8 @@ jobs:
         with:
           files: ./packages/global-store/coverage/coverage-final.json
           flags: global-store
-          token: ${{ secrets.CODECOV_TOKEN }}
       - name: codecov - stable-store
         uses: codecov/codecov-action@v4
         with:
           files: ./packages/stable-store/coverage/coverage-final.json
           flags: stable-store
-          token: ${{ secrets.CODECOV_TOKEN }}
