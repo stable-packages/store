@@ -6,7 +6,13 @@ on:
 jobs:
   code:
     uses: stable-packages/.github/.github/workflows/pnpm-verify.yml@main
-
+    with:
+      artifact_paths: |
+        packages/global-store/coverage
+        packages/global-store/dist
+        packages/global-store/lib
+        packages/stable-store/coverage
+        packages/stable-store/esm
   release:
     uses: stable-packages/.github/.github/workflows/pnpm-release-changeset.yml@main
     needs: code
