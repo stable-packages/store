@@ -11,3 +11,9 @@ Homa
 NONINFRINGEMENT
 npm-url
 MFEs
+github-action-url
+vscode-url
+global-store-npm-url
+global-store-codecov-url
+stable-store-npm-url
+stable-store-codecov-url
