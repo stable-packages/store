@@ -15,6 +15,7 @@ jobs:
         packages/stable-store/esm
   coverage:
     runs-on: ubuntu-latest
+    needs: code
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
@@ -30,8 +31,10 @@ jobs:
         with:
           files: ./packages/global-store/coverage/coverage-final.json
           flags: global-store
+          token: ${{ secrets.CODECOV_TOKEN }}
       - name: codecov - stable-store
         uses: codecov/codecov-action@v4
         with:
           files: ./packages/stable-store/coverage/coverage-final.json
           flags: stable-store
+          token: ${{ secrets.CODECOV_TOKEN }}
