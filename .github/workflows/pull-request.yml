@@ -26,6 +26,8 @@ jobs:
         with:
           node-version: 20
           cache: pnpm
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v4
       - name: codecov - global-store
         uses: codecov/codecov-action@v4
         with:
