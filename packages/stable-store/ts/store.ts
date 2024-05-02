@@ -48,7 +48,7 @@ export interface StoreOptions<G, S = G> {
  * ```ts
  * const appStore = store('my-app-unique-key', { count: 0 }, { suppressListenerError: true })
  *
- * appStore.listen(value => console.log(value)) // listen to changes
+ * appStore.onSet(value => console.log(value)) // listen to changes
  * appStore.get() // { count: 0 }
  * appStore.set({ count: 1 })
  * ```
@@ -137,7 +137,7 @@ function listenerAdder<V>(listeners: Array<(value: V) => void>) {
  * ```ts
  * const appStore = store('my-app-unique-key', { count: 0 }, { suppressListenerError: true })
  *
- * appStore.listen(value => console.log(value)) // listen to changes
+ * appStore.onSet(value => console.log(value)) // listen to changes
  * appStore.get() // { count: 0 }
  * appStore.set({ count: 1 })
  * ```
