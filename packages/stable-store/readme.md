@@ -39,6 +39,9 @@ and global scope attachment has security implication.
 
 DOM scope attachment is a good alternative.
 That's basically what React Context is.
+But it suffers from the same problem as scope sharing,
+two different source code creates two different React Contexts,
+and each contains two different copies of the data.
 
 But DOM scope attachment also has its drawback.
 To ensure two pieces of code, e.g. two versions of your library, can access the same data,
