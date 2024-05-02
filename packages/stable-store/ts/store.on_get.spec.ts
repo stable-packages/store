@@ -1,5 +1,5 @@
-import { createStore } from './store.js'
 import { expect, it } from '@jest/globals'
+import { createStore } from './store.js'
 
 it('listen to get calls', () => {
 	expect.assertions(1)
