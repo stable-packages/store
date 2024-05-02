@@ -7,11 +7,13 @@ export type Store<V> = {
 	 */
 	get(): V
 	/**
-	 * Adds a listener function to be called whenever the value is retrieved.
+	 * Registers a listener to be called whenever the value is retrieved.
 	 *
-	 * @param {function} listener - A callback function to be called whenever the value is retrieved.
+	 * This is used mostly for debugging purpose.
+	 *
+	 * @param listener - A callback function to be called whenever the value is retrieved.
 	 * It should take in one parameter, the retrieved value.
-	 * @return {function} A function that can be called to remove the listener from the list of listeners.
+	 * @return A function that can be called to remove the listener from the list of listeners.
 	 */
 	onGet(listener: (value: V) => void): () => void
 	/**
@@ -21,7 +23,7 @@ export type Store<V> = {
 	/**
 	 * Registers a listener to be called when the value is set.
 	 *
-	 * @returns {() => void} An unregister l to remove the listener.
+	 * @returns An unregister l to remove the listener.
 	 */
 	onSet(listener: (value: V) => void): () => void
 }

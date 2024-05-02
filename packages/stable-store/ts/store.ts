@@ -18,7 +18,7 @@ export interface MissingInit<T> {
  * @property suppressListenerError If true, listener errors will be suppressed.
  * @property logger A logger to log listener errors. Defaults to `console`.
  */
-export interface StoreOptions {
+export interface StoreOptions<G, S = G> {
 	/**
 	 * If true, any listener errors will be suppressed and logged through the `logger`.
 	 */
@@ -32,6 +32,18 @@ export interface StoreOptions {
 	 * Defaults to `console`.
 	 */
 	logger?: { error(...args: any[]): void } | undefined
+	/**
+	 * Registers a listener to be called whenever the value is retrieved..
+	 *
+	 * This is used mostly for debugging purpose.
+	 */
+	onGet?: (value: G) => void
+	/**
+	 * Registers a listener to be called when the value is set.
+	 *
+	 * @returns An unregister l to remove the listener.
+	 */
+	onSet?: (value: S) => void
 }
 
 /**
@@ -52,29 +64,32 @@ export interface StoreOptions {
  *
  * @see https://www.npmjs.com/package/stable-store
  */
-export function createStore<V>(key: string | symbol, init: V, options?: StoreOptions | undefined): Store<V>
+export function createStore<V>(key: string | symbol, init: V, options?: StoreOptions<V> | undefined): Store<V>
 export function createStore<V>(
 	key: string | symbol,
 	init?: undefined,
-	options?: StoreOptions | undefined
-): [undefined] extends [V] ? Store<V> : MissingInit<V>
+	options?: StoreOptions<V | undefined, V> | undefined
+): Store<V | undefined>
 export function createStore<V>(
 	id: string | symbol,
 	init?: V | undefined,
-	options?: StoreOptions | undefined
+	options?: StoreOptions<V> | undefined
 ): Store<V> {
 	assertID(id)
-	const c = storeMap.get(id)
+	var c = storeMap.get(id)
 	if (c) {
-		const [s, a] = c
+		// biome-ignore lint/correctness/noInnerDeclarations: on purpose
+		var [s, a] = c
 		if (a) assertIDInternal(id, a)
 		return s as Store<V>
 	}
 
 	if (options?.idAssertion) assertIDInternal(id, options.idAssertion)
 
-	var setListeners: Array<(value: V | undefined) => void> = []
-	var getListeners: Array<(value: V | undefined) => void> = []
+	var getListeners: Array<(value: V) => void> = []
+	var setListeners: Array<(value: V) => void> = []
+	if (options?.onGet) getListeners.push(options.onGet)
+	if (options?.onSet) setListeners.push(options.onSet)
 
 	var v = init
 	var logger = options?.logger ?? console
@@ -88,23 +103,20 @@ export function createStore<V>(
 		v = s
 		notify(setListeners, v)
 	}
-	function notify(listeners: Array<(value: V | undefined) => void>, value: V | undefined) {
+	function notify(listeners: Array<(value: any) => void>, value: V | undefined) {
 		listeners.forEach((fn) => {
 			try {
 				fn(value)
 			} catch (e) {
-				if (suppressListenerError) {
-					logger.error(e)
-				} else {
-					throw e
-				}
+				if (!suppressListenerError) throw e
+				logger.error(e)
 			}
 		})
 	}
-	const onGet = listenerAdder<V>(getListeners)
-	const onSet = listenerAdder<V>(setListeners)
+	var onGet = listenerAdder<V>(getListeners)
+	var onSet = listenerAdder<V>(setListeners)
 
-	const store = { get, onGet, set, onSet }
+	var store = { get, onGet, set, onSet }
 	storeMap.set(id, [store, options?.idAssertion])
 	return store
 }
@@ -115,7 +127,7 @@ function listenerAdder<V>(listeners: Array<(value: V) => void>) {
 			listeners.push(fn)
 		}
 		return () => {
-			const x = listeners.indexOf(fn)
+			var x = listeners.indexOf(fn)
 			if (x >= 0) {
 				listeners.splice(x, 1)
 			}
@@ -143,9 +155,9 @@ function listenerAdder<V>(listeners: Array<(value: V) => void>) {
  */
 export function getStore<V>(id: string | symbol): Store<V> {
 	assertID(id)
-	const c = storeMap.get(id)
+	var c = storeMap.get(id)
 	if (!c) throw new Error(`Store ${id.toString()} not found`)
-	const [s, a] = c
+	var [s, a] = c
 	if (a) assertIDInternal(id, a)
 	return s as Store<V>
 }

@@ -1,8 +1,8 @@
 import { afterEach, expect, it } from '@jest/globals'
 import { testType } from 'type-plus'
-import { storeMap } from './store.ctx.js'
-import { type MissingInit, createStore, registerIDAssertion, type Store } from './index.js'
 import { idAssertions } from './assert_id.ctx.js'
+import { createStore, registerIDAssertion, type Store } from './index.js'
+import { storeMap } from './store.ctx.js'
 
 afterEach(() => {
 	idAssertions.splice(0, idAssertions.length)
@@ -27,9 +27,16 @@ it('can specify the type of the store', () => {
 	testType.equal<typeof store, Store<{ a: number; b?: string }>>(true)
 })
 
-it('requires init if the type does not include undefined', () => {
+it('adds undefined to store type if init value is not provided', () => {
 	const store = createStore<{ a: number }>('type')
-	testType.equal<typeof store, MissingInit<{ a: number }>>(true)
+	const v = store.get()
+	testType.equal<typeof v, { a: number } | undefined>(true)
+})
+
+it('adds undefined to store type if init value is undefined', () => {
+	const store = createStore<{ a: number }>('type', undefined)
+	const v = store.get()
+	testType.equal<typeof v, { a: number } | undefined>(true)
 })
 
 it('allows skipping init value if type includes undefined', () => {
@@ -211,4 +218,16 @@ it('assert on re-create', () => {
 		}
 	)
 	expect(() => createStore('id', { a: 1 })).toThrow()
+})
+
+it('can specify an onGet listener', () => {
+	expect.assertions(1)
+	const s = createStore('on-get', { a: 1 }, { onGet: (v) => expect(v).toEqual({ a: 1 }) })
+	s.get()
+})
+
+it('can specify an onSet listener', () => {
+	expect.assertions(1)
+	const s = createStore<{ a: number }>('on-get', undefined, { onSet: (v) => expect(v).toEqual({ a: 1 }) })
+	s.set({ a: 1 })
 })
