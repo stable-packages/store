@@ -3,15 +3,6 @@ import { assertIDInternal } from './asset_id.internal.js'
 import { storeMap } from './store.ctx.js'
 import type { Store } from './store.types.js'
 
-const brandedSymbol = Symbol('internal branded symbol')
-
-/**
- * Init value is required.
- */
-export interface MissingInit<T> {
-	[brandedSymbol]: T
-}
-
 /**
  * Options for creating a store.
  *
