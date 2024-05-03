@@ -69,10 +69,8 @@ export function createStore<V>(
 	assertID(id)
 	var c = storeMap[id]
 	if (c) {
-		// biome-ignore lint/correctness/noInnerDeclarations: on purpose
-		var [s, a] = c
-		if (a) assertIDInternal(id, a)
-		return s as Store<V>
+		if (c[1]) assertIDInternal(id, c[1])
+		return c[0] as Store<V>
 	}
 
 	if (options?.idAssertion) assertIDInternal(id, options.idAssertion)
