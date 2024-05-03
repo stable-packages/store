@@ -28,13 +28,13 @@ export interface StoreOptions<G, S = G> {
 	 *
 	 * This is used mostly for debugging purpose.
 	 */
-	onGet?: (value: G) => void
+	onGet?: ((value: G) => void) | undefined
 	/**
 	 * Registers a listener to be called when the value is set.
 	 *
 	 * @returns An unregister l to remove the listener.
 	 */
-	onSet?: (value: S) => void
+	onSet?: ((value: S) => void) | undefined
 }
 
 /**
