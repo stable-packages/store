@@ -82,7 +82,7 @@ export function createStore<V>(
 
 	var v = init
 	var logger = options?.logger ?? console
-	var suppressListenerError = options?.suppressListenerError ?? false
+	var suppressListenerError = !!options?.suppressListenerError
 
 	function get() {
 		notify(getListeners, v)
