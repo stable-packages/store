@@ -38,7 +38,7 @@ export interface StoreOptions<G, S = G> {
 }
 
 /**
- * Get a store of of type V.
+ * Create a store of type V.
  *
  * @param key A unique key for the store.
  * @param init The optional initial value of the store.
@@ -46,9 +46,8 @@ export interface StoreOptions<G, S = G> {
  *
  * @example
  * ```ts
- * const appStore = store('my-app-unique-key', { count: 0 }, { suppressListenerError: true })
+ * const appStore = createStore('my-app-unique-key', { count: 0 }, { suppressListenerError: true })
  *
- * appStore.onSet(value => console.log(value)) // listen to changes
  * appStore.get() // { count: 0 }
  * appStore.set({ count: 1 })
  * ```
@@ -123,26 +122,29 @@ function listenerAdder<V>(listeners: Array<(value: V) => void>) {
 /**
  * Get a store of of type V.
  *
- * @param id A unique key for the store.
+ * @param key A unique key for the store.
  * @param init The optional initial value of the store.
  * @param options The optional store options.
  *
  * @example
  * ```ts
- * const appStore = store('my-app-unique-key', { count: 0 }, { suppressListenerError: true })
+ * // when the application starts
+ * createStore('my-app-unique-key', { count: 0 })
  *
- * appStore.onSet(value => console.log(value)) // listen to changes
+ * // in your code
+ * const appStore = getStore('my-app-unique-key')
+ *
  * appStore.get() // { count: 0 }
  * appStore.set({ count: 1 })
  * ```
  *
  * @see https://www.npmjs.com/package/stable-store
  */
-export function getStore<V>(id: StoreKey): Store<V> {
-	assertID(id)
-	var c = storeMap[id]
-	if (!c) throw new Error(`Store ${id.toString()} not found`)
+export function getStore<V>(key: StoreKey): Store<V> {
+	assertID(key)
+	var c = storeMap[key]
+	if (!c) throw new Error(`Store ${key.toString()} not found`)
 	var [s, a] = c
-	if (a) assertIDInternal(id, a)
+	if (a) assertIDInternal(key, a)
 	return s as Store<V>
 }
