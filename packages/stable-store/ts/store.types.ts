@@ -1,3 +1,5 @@
+export type StoreKey = string | symbol
+
 /**
  * A store containing value of V.
  */

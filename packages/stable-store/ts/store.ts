@@ -1,7 +1,7 @@
 import { assertID } from './assert_id.js'
 import { assertIDInternal } from './asset_id.internal.js'
 import { storeMap } from './store.ctx.js'
-import type { Store } from './store.types.js'
+import type { Store, StoreKey } from './store.types.js'
 
 /**
  * Options for creating a store.
@@ -55,25 +55,21 @@ export interface StoreOptions<G, S = G> {
  *
  * @see https://www.npmjs.com/package/stable-store
  */
-export function createStore<V>(key: string | symbol, init: V, options?: StoreOptions<V> | undefined): Store<V>
+export function createStore<V>(key: StoreKey, init: V, options?: StoreOptions<V> | undefined): Store<V>
 export function createStore<V>(
-	key: string | symbol,
+	key: StoreKey,
 	init?: undefined,
 	options?: StoreOptions<V | undefined, V> | undefined
 ): Store<V | undefined>
-export function createStore<V>(
-	id: string | symbol,
-	init?: V | undefined,
-	options?: StoreOptions<V> | undefined
-): Store<V> {
-	assertID(id)
-	var c = storeMap[id]
+export function createStore<V>(key: StoreKey, init?: V | undefined, options?: StoreOptions<V> | undefined): Store<V> {
+	assertID(key)
+	var c = storeMap[key]
 	if (c) {
-		if (c[1]) assertIDInternal(id, c[1])
+		if (c[1]) assertIDInternal(key, c[1])
 		return c[0] as Store<V>
 	}
 
-	if (options?.idAssertion) assertIDInternal(id, options.idAssertion)
+	if (options?.idAssertion) assertIDInternal(key, options.idAssertion)
 
 	var getListeners: Array<(value: V) => void> = []
 	var setListeners: Array<(value: V) => void> = []
@@ -106,7 +102,7 @@ export function createStore<V>(
 	var onSet = listenerAdder<V>(setListeners)
 
 	var store = { get, onGet, set, onSet }
-	storeMap[id] = [store, options?.idAssertion]
+	storeMap[key] = [store, options?.idAssertion]
 	return store
 }
 
@@ -142,7 +138,7 @@ function listenerAdder<V>(listeners: Array<(value: V) => void>) {
  *
  * @see https://www.npmjs.com/package/stable-store
  */
-export function getStore<V>(id: string | symbol): Store<V> {
+export function getStore<V>(id: StoreKey): Store<V> {
 	assertID(id)
 	var c = storeMap[id]
 	if (!c) throw new Error(`Store ${id.toString()} not found`)
