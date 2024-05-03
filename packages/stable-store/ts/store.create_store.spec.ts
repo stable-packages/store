@@ -6,7 +6,9 @@ import { storeMap } from './store.ctx.js'
 
 afterEach(() => {
 	idAssertions.splice(0, idAssertions.length)
-	storeMap.clear()
+	Object.keys(storeMap).forEach((k) => {
+		delete storeMap[k]
+	})
 })
 
 it('can create store with string key', () => {

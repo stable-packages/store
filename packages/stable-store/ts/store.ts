@@ -67,7 +67,7 @@ export function createStore<V>(
 	options?: StoreOptions<V> | undefined
 ): Store<V> {
 	assertID(id)
-	var c = storeMap.get(id)
+	var c = storeMap[id]
 	if (c) {
 		// biome-ignore lint/correctness/noInnerDeclarations: on purpose
 		var [s, a] = c
@@ -108,7 +108,7 @@ export function createStore<V>(
 	var onSet = listenerAdder<V>(setListeners)
 
 	var store = { get, onGet, set, onSet }
-	storeMap.set(id, [store, options?.idAssertion])
+	storeMap[id] = [store, options?.idAssertion]
 	return store
 }
 
@@ -146,7 +146,7 @@ function listenerAdder<V>(listeners: Array<(value: V) => void>) {
  */
 export function getStore<V>(id: string | symbol): Store<V> {
 	assertID(id)
-	var c = storeMap.get(id)
+	var c = storeMap[id]
 	if (!c) throw new Error(`Store ${id.toString()} not found`)
 	var [s, a] = c
 	if (a) assertIDInternal(id, a)

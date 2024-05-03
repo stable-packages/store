@@ -16,7 +16,9 @@ it('returns the same store if the key is the same string', () => {
 
 afterEach(() => {
 	idAssertions.splice(0, idAssertions.length)
-	storeMap.clear()
+	Object.keys(storeMap).forEach((k) => {
+		delete storeMap[k]
+	})
 })
 
 it('can assert against string key', () => {
