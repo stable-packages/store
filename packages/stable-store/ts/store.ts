@@ -9,7 +9,7 @@ import type { Store, StoreKey } from './store.types.js'
  * @property suppressListenerError If true, listener errors will be suppressed.
  * @property logger A logger to log listener errors. Defaults to `console`.
  */
-export interface StoreOptions<G, S = G> {
+export interface StoreConfig<V> {
 	/**
 	 * A unique key for the store.
 	 * It can be a string or a symbol.
@@ -44,7 +44,7 @@ export interface StoreOptions<G, S = G> {
 	 *
 	 * The value returned will be used by all compatible instances of the store.
 	 */
-	initialize: (current: unknown) => S
+	initialize: (current: unknown) => V
 	/**
 	 * If true, any listener errors will be suppressed and logged through the `logger`.
 	 */
@@ -63,13 +63,13 @@ export interface StoreOptions<G, S = G> {
 	 *
 	 * This is used mostly for debugging purpose.
 	 */
-	onGet?: ((value: G) => void) | undefined
+	onGet?: ((value: V) => void) | undefined
 	/**
 	 * Registers a listener to be called when the value is set.
 	 *
 	 * @returns An unregister l to remove the listener.
 	 */
-	onSet?: ((value: S) => void) | undefined
+	onSet?: ((value: V) => void) | undefined
 }
 
 /**
@@ -89,7 +89,7 @@ export interface StoreOptions<G, S = G> {
  *
  * @see https://www.npmjs.com/package/stable-store
  */
-export function createStore<V>( options: StoreOptions<V>): Store<V> {
+export function createStore<V>(options: StoreConfig<V>): Store<V> {
 	var key = options.key
 	assertID(key)
 	var c = storeMap[key]
