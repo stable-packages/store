@@ -13,7 +13,8 @@ afterEach(() => {
 
 it('can create store with string key', () => {
 	createStore({
-		key: 'key',
+		key: 'library-a',
+		version: '1.0.0',
 		initialize() {
 			return { a: 1 }
 		}
@@ -22,7 +23,8 @@ it('can create store with string key', () => {
 
 it('can create store with symbol key', () => {
 	createStore({
-		key: Symbol.for('key'),
+		key: Symbol.for('library-b'),
+		version: '1.0.0',
 		initialize() {
 			return { a: 1 }
 		}
@@ -32,6 +34,7 @@ it('can create store with symbol key', () => {
 it('defaults store type to return type of initialize', () => {
 	const store = createStore({
 		key: 'return-type',
+		version: '1.0.0',
 		initialize() {
 			return { a: 1 }
 		}
@@ -39,9 +42,10 @@ it('defaults store type to return type of initialize', () => {
 	testType.equal<typeof store, Store<{ a: number }>>(true)
 })
 
-it('can specify the type of the store', () => {
+it('can specify the type of the store using type params', () => {
 	const store = createStore<{ a: number; b?: string }>({
 		key: 'type-specified',
+		version: '1.0.0',
 		initialize() {
 			return { a: 1 }
 		}
@@ -52,11 +56,31 @@ it('can specify the type of the store', () => {
 it('contains the initial value', () => {
 	const s = createStore({
 		key: 'initial-value',
+		version: '1.0.0',
 		initialize() {
 			return 1
 		}
 	})
 	expect(s.get()).toBe(1)
+})
+
+it.skip('throws if creating store with same key', () => {
+	createStore({
+		key: 'duplicate-key',
+		version: '1.0.0',
+		initialize() {
+			return 1
+		}
+	})
+	expect(() =>
+		createStore({
+			key: 'duplicate-key',
+			version: '1.0.0',
+			initialize() {
+				return 1
+			}
+		})
+	).toThrow()
 })
 
 it('returns the same store if the key is the same string', () => {

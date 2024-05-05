@@ -1,76 +1,7 @@
 import { assertID } from './assert_id.js'
 import { assertIDInternal } from './asset_id.internal.js'
 import { storeMap } from './store.ctx.js'
-import type { Store, StoreKey } from './store.types.js'
-
-/**
- * Options for creating a store.
- *
- * @property suppressListenerError If true, listener errors will be suppressed.
- * @property logger A logger to log listener errors. Defaults to `console`.
- */
-export interface StoreConfig<V> {
-	/**
-	 * A unique key for the store.
-	 * It can be a string or a symbol.
-	 *
-	 * This key must remain the same as across versions.
-	 * That means you need to use `Synbol.for()` to create a symbol as `Symbol()` cannot be shared across modules.
-	 *
-	 * So the simplest way to define your key is using your module name,
-	 * and maybe adding a random uuid after it (e.g. `<module>:<uuid>`).
-	 *
-	 * You can also create multiple stores for different purposes.
-	 * In that case: `<module>:<purpose>:<uuid>`
-	 *
-	 * @example
-	 * `@just-web/store:state:0fc2bd30-183c-555f-bfff-8299218f7b6b`
-	 */
-	key: StoreKey
-	/**
-	 * The initialize function of your store.
-	 *
-	 * When `getStore()` is called,
-	 * `stable-store` will match the latest version that matches the version requested.
-	 *
-	 * If the store has not been created,
-	 * the `initialize()` function of the matching version will be called.
-	 * In that case, the `current` will be `undefined`.
-	 *
-	 * If the store has already created,
-	 * but there is a newer compatible version registered,
-	 * the `initialize()` function of the newer version will be called,
-	 * and the `current` will be the value of the existing store.
-	 *
-	 * The value returned will be used by all compatible instances of the store.
-	 */
-	initialize: (current: unknown) => V
-	/**
-	 * If true, any listener errors will be suppressed and logged through the `logger`.
-	 */
-	suppressListenerError?: boolean | undefined
-	/**
-	 * If specified, this store will use this assertion instead of the globally defined one.
-	 */
-	idAssertion?: ((id: string) => void) | undefined
-	/**
-	 * Specify a logger to log listener errors.
-	 * Defaults to `console`.
-	 */
-	logger?: { error(...args: any[]): void } | undefined
-	/**
-	 * Registers a listener to be called whenever the value is retrieved..
-	 *
-	 * This is used mostly for debugging purpose.
-	 */
-	onGet?: ((value: V) => void) | undefined
-	/**
-	 * Registers a listener to be called when the value is set.
-	 *
-	 * @returns An unregister l to remove the listener.
-	 */
-	onSet?: ((value: V) => void) | undefined
-}
+import type { Store, StoreConfig, StoreKey } from './store.types.js'
 
 /**
  * Create a store of type V.
