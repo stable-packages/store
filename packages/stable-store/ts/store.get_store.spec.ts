@@ -8,7 +8,12 @@ it('throws if store does not exist', () => {
 })
 
 it('returns the same store if the key is the same string', () => {
-	createStore('same-key')
+	createStore( {
+		key:'same-key',
+		initialize() {
+			return { a: 1 }
+		}
+	})
 	const a = getStore('same-key')
 	const b = getStore('same-key')
 	expect(a).toBe(b)
@@ -22,7 +27,12 @@ afterEach(() => {
 })
 
 it('can assert against string key', () => {
-	createStore('id')
+	createStore( {
+		key: 'id',
+		initialize() {
+			return { a: 1 }
+		}
+	})
 	registerIDAssertion((_) => {
 		throw new Error('invalid id')
 	})
@@ -30,7 +40,12 @@ it('can assert against string key', () => {
 })
 
 it('can assert against symbol key with description', () => {
-	createStore(Symbol.for('id'))
+	createStore( {
+		key: Symbol.for('id'),
+		initialize() {
+			return { a: 1 }
+		}
+	})
 
 	registerIDAssertion((_) => {
 		throw new Error('invalid id')
@@ -40,20 +55,20 @@ it('can assert against symbol key with description', () => {
 
 it('uses per-store assertion', () => {
 	let count = 0
-	createStore(
-		'id',
-		{ a: 1 },
-		{
-			idAssertion() {
-				if (count === 0) {
-					count++
-					return
-				}
-
-				throw new Error('just because')
+	createStore( {
+		key: 'id',
+		initialize() {
+			return { a: 1 }
+		},
+		idAssertion() {
+			if (count === 0) {
+				count++
+				return
 			}
+
+			throw new Error('just because')
 		}
-	)
+	})
 
 	expect(() => getStore('id')).toThrow()
 })

@@ -11,6 +11,41 @@ import type { Store, StoreKey } from './store.types.js'
  */
 export interface StoreOptions<G, S = G> {
 	/**
+	 * A unique key for the store.
+	 * It can be a string or a symbol.
+	 *
+	 * This key must remain the same as across versions.
+	 * That means you need to use `Synbol.for()` to create a symbol as `Symbol()` cannot be shared across modules.
+	 *
+	 * So the simplest way to define your key is using your module name,
+	 * and maybe adding a random uuid after it (e.g. `<module>:<uuid>`).
+	 *
+	 * You can also create multiple stores for different purposes.
+	 * In that case: `<module>:<purpose>:<uuid>`
+	 *
+	 * @example
+	 * `@just-web/store:state:0fc2bd30-183c-555f-bfff-8299218f7b6b`
+	 */
+	key: StoreKey
+	/**
+	 * The initialize function of your store.
+	 *
+	 * When `getStore()` is called,
+	 * `stable-store` will match the latest version that matches the version requested.
+	 *
+	 * If the store has not been created,
+	 * the `initialize()` function of the matching version will be called.
+	 * In that case, the `current` will be `undefined`.
+	 *
+	 * If the store has already created,
+	 * but there is a newer compatible version registered,
+	 * the `initialize()` function of the newer version will be called,
+	 * and the `current` will be the value of the existing store.
+	 *
+	 * The value returned will be used by all compatible instances of the store.
+	 */
+	initialize: (current: unknown) => S
+	/**
 	 * If true, any listener errors will be suppressed and logged through the `logger`.
 	 */
 	suppressListenerError?: boolean | undefined
@@ -54,13 +89,8 @@ export interface StoreOptions<G, S = G> {
  *
  * @see https://www.npmjs.com/package/stable-store
  */
-export function createStore<V>(key: StoreKey, init: V, options?: StoreOptions<V> | undefined): Store<V>
-export function createStore<V>(
-	key: StoreKey,
-	init?: undefined,
-	options?: StoreOptions<V | undefined, V> | undefined
-): Store<V | undefined>
-export function createStore<V>(key: StoreKey, init?: V | undefined, options?: StoreOptions<V> | undefined): Store<V> {
+export function createStore<V>( options: StoreOptions<V>): Store<V> {
+	var key = options.key
 	assertID(key)
 	var c = storeMap[key]
 	if (c) {
@@ -68,16 +98,16 @@ export function createStore<V>(key: StoreKey, init?: V | undefined, options?: St
 		return c[0] as Store<V>
 	}
 
-	if (options?.idAssertion) assertIDInternal(key, options.idAssertion)
+	if (options.idAssertion) assertIDInternal(key, options.idAssertion)
 
 	var getListeners: Array<(value: V) => void> = []
 	var setListeners: Array<(value: V) => void> = []
-	if (options?.onGet) getListeners.push(options.onGet)
-	if (options?.onSet) setListeners.push(options.onSet)
+	if (options.onGet) getListeners.push(options.onGet)
+	if (options.onSet) setListeners.push(options.onSet)
 
-	var v = init
-	var logger = options?.logger ?? console
-	var suppressListenerError = !!options?.suppressListenerError
+	var v = options.initialize(undefined)
+	var logger = options.logger ?? console
+	var suppressListenerError = !!options.suppressListenerError
 
 	function get() {
 		notify(getListeners, v)
@@ -101,7 +131,7 @@ export function createStore<V>(key: StoreKey, init?: V | undefined, options?: St
 	var onSet = listenerAdder<V>(setListeners)
 
 	var store = { get, onGet, set, onSet }
-	storeMap[key] = [store, options?.idAssertion]
+	storeMap[key] = [store, options.idAssertion]
 	return store
 }
 
