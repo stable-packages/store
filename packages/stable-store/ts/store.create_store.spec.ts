@@ -1,7 +1,7 @@
 import { afterEach, expect, it } from '@jest/globals'
 import { testType } from 'type-plus'
 import { resetCtx } from './ctx.js'
-import { createStore, type Store } from './index.js'
+import { config, createStore, type Store } from './index.js'
 
 afterEach(() => {
 	resetCtx()
@@ -236,7 +236,7 @@ it('can suppress listener error', () => {
 		suppressListenerError: true
 	})
 	const listener = () => {
-		throw new Error('listener error to console')
+		throw new Error('error throw in listener will show up in console as expected')
 	}
 	s.onSet(listener)
 	s.set({ a: 2 })
@@ -249,6 +249,7 @@ it('can use a different logger', () => {
 			expect(error.message).toEqual('listener error')
 		}
 	}
+	config({ logger })
 
 	const s = createStore({
 		key: 'different-logger',
@@ -256,7 +257,6 @@ it('can use a different logger', () => {
 			return { a: 1 }
 		},
 		suppressListenerError: true,
-		logger
 	})
 	s.onSet(() => {
 		throw new Error('listener error')

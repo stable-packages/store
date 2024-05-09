@@ -7,9 +7,9 @@ afterEach(() => {
 })
 
 it('throws when called the second time', () => {
-	config()
+	config({})
 
 	expect(() => {
-		config()
+		config({})
 	}).toThrow()
 })

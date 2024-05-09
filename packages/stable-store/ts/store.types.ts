@@ -58,11 +58,7 @@ export interface StoreConfig<V> {
 	 * If true, any listener errors will be suppressed and logged through the `logger`.
 	 */
 	suppressListenerError?: boolean | undefined
-	/**
-	 * Specify a logger to log listener errors.
-	 * Defaults to `console`.
-	 */
-	logger?: { error(...args: any[]): void } | undefined
+
 	/**
 	 * Registers a listener to be called whenever the value is retrieved..
 	 *
