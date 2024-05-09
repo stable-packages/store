@@ -6,6 +6,12 @@ export interface Config {
 	 * Defaults to `console`.
 	 */
 	logger?: { error(...args: any[]): void } | undefined
+	/**
+	 * The error thrown within listener will be suppressed and logged through the `logger`.
+	 *
+	 * Defaults to true
+	 */
+	suppressListenerError?: boolean | undefined
 }
 
 /**
@@ -14,11 +20,12 @@ export interface Config {
  *
  * Calling this function more than once will throw an exception.
  */
-export function config({ logger }: Config) {
+export function config({ logger, suppressListenerError }: Config) {
 	if (ctx.configured) {
 		throw new Error('stable-store is already configured')
 	}
 
 	ctx.configured = true
 	ctx.logger = logger ?? console
+	ctx.suppressListenerError = suppressListenerError ?? true
 }

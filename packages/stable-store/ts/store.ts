@@ -31,7 +31,6 @@ export function createStore<V>(options: StoreConfig<V>): Store<V> {
 	if (options.onSet) setListeners.push(options.onSet)
 
 	var v = options.initialize(undefined)
-	var suppressListenerError = !!options.suppressListenerError
 
 	function get() {
 		notify(getListeners, v)
@@ -46,7 +45,7 @@ export function createStore<V>(options: StoreConfig<V>): Store<V> {
 			try {
 				fn(value)
 			} catch (e) {
-				if (!suppressListenerError) throw e
+				if (!ctx.suppressListenerError) throw e
 				ctx.logger.error(e)
 			}
 		})

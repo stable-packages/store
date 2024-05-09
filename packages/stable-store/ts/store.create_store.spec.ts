@@ -227,19 +227,36 @@ it('ignores unsubscribe call if already unsubscribed (from different listen call
 	s.set({ a: 3 })
 })
 
-it('can suppress listener error', () => {
+it('listener error is suppressed by default and shows up in console', () => {
+	config({ suppressListenerError: true })
+
 	const s = createStore({
 		key: 'suppress-listener-error',
 		initialize() {
 			return { a: 1 }
-		},
-		suppressListenerError: true
+		}
 	})
 	const listener = () => {
 		throw new Error('error throw in listener will show up in console as expected')
 	}
 	s.onSet(listener)
 	s.set({ a: 2 })
+})
+
+it('can disable listener error suppression', () => {
+	config({ suppressListenerError: false })
+
+	const s = createStore({
+		key: 'suppress-listener-error',
+		initialize() {
+			return { a: 1 }
+		}
+	})
+	const listener = () => {
+		throw new Error('error throw in listener will show up in console as expected')
+	}
+	s.onSet(listener)
+	expect(() => s.set({ a: 2 })).toThrow()
 })
 
 it('can use a different logger', () => {
@@ -255,8 +272,7 @@ it('can use a different logger', () => {
 		key: 'different-logger',
 		initialize() {
 			return { a: 1 }
-		},
-		suppressListenerError: true,
+		}
 	})
 	s.onSet(() => {
 		throw new Error('listener error')

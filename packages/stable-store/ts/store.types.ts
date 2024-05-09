@@ -55,11 +55,6 @@ export interface StoreConfig<V> {
 	 */
 	initialize: (current: unknown) => V
 	/**
-	 * If true, any listener errors will be suppressed and logged through the `logger`.
-	 */
-	suppressListenerError?: boolean | undefined
-
-	/**
 	 * Registers a listener to be called whenever the value is retrieved..
 	 *
 	 * This is used mostly for debugging purpose.
