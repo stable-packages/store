@@ -59,10 +59,6 @@ export interface StoreConfig<V> {
 	 */
 	suppressListenerError?: boolean | undefined
 	/**
-	 * If specified, this store will use this assertion instead of the globally defined one.
-	 */
-	idAssertion?: ((id: string) => void) | undefined
-	/**
 	 * Specify a logger to log listener errors.
 	 * Defaults to `console`.
 	 */

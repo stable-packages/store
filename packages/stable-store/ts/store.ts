@@ -1,6 +1,4 @@
-import { assertID } from './assert_id.js'
-import { assertIDInternal } from './asset_id.internal.js'
-import { storeMap } from './store.ctx.js'
+import { ctx } from './ctx.js'
 import type { Store, StoreConfig, StoreKey } from './store.types.js'
 
 /**
@@ -22,14 +20,10 @@ import type { Store, StoreConfig, StoreKey } from './store.types.js'
  */
 export function createStore<V>(options: StoreConfig<V>): Store<V> {
 	var key = options.key
-	assertID(key)
-	var c = storeMap[key]
+	var c = ctx.storeMap[key]
 	if (c) {
-		if (c[1]) assertIDInternal(key, c[1])
 		return c[0] as Store<V>
 	}
-
-	if (options.idAssertion) assertIDInternal(key, options.idAssertion)
 
 	var getListeners: Array<(value: V) => void> = []
 	var setListeners: Array<(value: V) => void> = []
@@ -62,7 +56,7 @@ export function createStore<V>(options: StoreConfig<V>): Store<V> {
 	var onSet = listenerAdder<V>(setListeners)
 
 	var store = { get, onGet, set, onSet }
-	storeMap[key] = [store, options.idAssertion]
+	ctx.storeMap[key] = [store]
 	return store
 }
 
@@ -102,10 +96,8 @@ function listenerAdder<V>(listeners: Array<(value: V) => void>) {
  * @see https://www.npmjs.com/package/stable-store
  */
 export function getStore<V>(key: StoreKey): Store<V> {
-	assertID(key)
-	var c = storeMap[key]
+	var c = ctx.storeMap[key]
 	if (!c) throw new Error(`Store ${key.toString()} not found`)
-	var [s, a] = c
-	if (a) assertIDInternal(key, a)
+	var [s] = c
 	return s as Store<V>
 }
