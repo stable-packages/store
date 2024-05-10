@@ -1,4 +1,4 @@
-import { ctx } from './ctx.js'
+import { ctx, notify } from './ctx.js'
 import type { Store, StoreConfig, StoreKey } from './store.types.js'
 
 /**
@@ -19,65 +19,33 @@ import type { Store, StoreConfig, StoreKey } from './store.types.js'
  * @see https://www.npmjs.com/package/stable-store
  */
 export function createStore<V>(options: StoreConfig<V>): Store<V> {
-	var key = options.key
-	var c = ctx.storeMap[key]
+	var id = options.id
+	var c = ctx.storeMap[id]
 	if (c) {
 		return c[0] as Store<V>
 	}
 
-	var getListeners: Array<(value: V) => void> = []
-	var setListeners: Array<(value: V) => void> = []
-	if (options.onGet) getListeners.push(options.onGet)
-	if (options.onSet) setListeners.push(options.onSet)
-
 	var v = options.initialize(undefined)
 
 	function get() {
-		notify(getListeners, v)
+		notify(ctx.onGet, id, v)
 		return v!
 	}
 	function set(s: V) {
 		v = s
-		notify(setListeners, v)
+		notify(ctx.onSet, id, v)
 	}
-	function notify(listeners: Array<(value: any) => void>, value: V | undefined) {
-		listeners.forEach((fn) => {
-			try {
-				fn(value)
-			} catch (e) {
-				if (!ctx.suppressListenerError) throw e
-				ctx.logger.error(e)
-			}
-		})
-	}
-	var onGet = listenerAdder<V>(getListeners)
-	var onSet = listenerAdder<V>(setListeners)
 
-	var store = { get, onGet, set, onSet }
-	ctx.storeMap[key] = [store]
+	var store = { get, set }
+	ctx.storeMap[id] = [store]
 	return store
-}
-
-function listenerAdder<V>(listeners: Array<(value: V) => void>) {
-	return (fn: (value: V) => void) => {
-		if (listeners.indexOf(fn) === -1) {
-			listeners.push(fn)
-		}
-		return () => {
-			var x = listeners.indexOf(fn)
-			if (x >= 0) {
-				listeners.splice(x, 1)
-			}
-		}
-	}
 }
 
 /**
  * Get a store of of type V.
  *
- * @param key A unique key for the store.
- * @param init The optional initial value of the store.
- * @param options The optional store options.
+ * @param id The store id
+ * @param key An optional key to validate the caller can access the store.
  *
  * @example
  * ```ts
@@ -93,9 +61,12 @@ function listenerAdder<V>(listeners: Array<(value: V) => void>) {
  *
  * @see https://www.npmjs.com/package/stable-store
  */
-export function getStore<V>(key: StoreKey): Store<V> {
-	var c = ctx.storeMap[key]
-	if (!c) throw new Error(`Store ${key.toString()} not found`)
-	var [s] = c
+export function getStore<V>(id: StoreKey, key?: string): Store<V> {
+	var c = ctx.storeMap[id]
+	if (!c) throw new Error(`Store ${id.toString()} not found`)
+	var [s, k] = c
+	if (k) {
+		k(key)
+	}
 	return s as Store<V>
 }

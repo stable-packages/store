@@ -10,9 +10,9 @@ it('throws if store does not exist', () => {
 	expect(() => getStore('does not exist')).toThrow()
 })
 
-it('returns the same store if the key is the same string', () => {
+it('returns the same store if the id is the same string', () => {
 	createStore({
-		key: 'same-key',
+		id: 'same-key',
 		initialize() {
 			return { a: 1 }
 		}

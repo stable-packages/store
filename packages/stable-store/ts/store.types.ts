@@ -4,23 +4,13 @@ export type StoreKey = string | symbol
  * Options for creating a store..
  */
 export interface StoreConfig<V> {
+	id: StoreKey
 	/**
-	 * A unique key for the store.
-	 * It can be a string or a symbol.
+	 * An optional key assertion function.
 	 *
-	 * This key must remain the same as across versions.
-	 * That means you need to use `Synbol.for()` to create a symbol as `Symbol()` cannot be shared across modules.
-	 *
-	 * So the simplest way to define your key is using your module name,
-	 * and maybe adding a random uuid after it (e.g. `<module>:<uuid>`).
-	 *
-	 * You can also create multiple stores for different purposes.
-	 * In that case: `<module>:<purpose>:<uuid>`
-	 *
-	 * @example
-	 * `@just-web/store:state:0fc2bd30-183c-555f-bfff-8299218f7b6b`
+	 * This can be used to validate the caller of `getStore()` can access the store.
 	 */
-	key: StoreKey
+	keyAssertion?: (key: string | undefined) => void
 	/**
 	 * Version of the store.
 	 * This version should follow [semantic-versioning](https://semver.org/).
@@ -54,18 +44,6 @@ export interface StoreConfig<V> {
 	 * The value returned will be used by all compatible instances of the store.
 	 */
 	initialize: (current: unknown) => V
-	/**
-	 * Registers a listener to be called whenever the value is retrieved..
-	 *
-	 * This is used mostly for debugging purpose.
-	 */
-	onGet?: ((value: V) => void) | undefined
-	/**
-	 * Registers a listener to be called when the value is set.
-	 *
-	 * @returns An unregister l to remove the listener.
-	 */
-	onSet?: ((value: V) => void) | undefined
 }
 
 /**
@@ -76,24 +54,9 @@ export type Store<V> = {
 	 * Get the current value.
 	 */
 	get(): V
-	/**
-	 * Registers a listener to be called whenever the value is retrieved.
-	 *
-	 * This is used mostly for debugging purpose.
-	 *
-	 * @param listener - A callback function to be called whenever the value is retrieved.
-	 * It should take in one parameter, the retrieved value.
-	 * @return A function that can be called to remove the listener from the list of listeners.
-	 */
-	onGet(listener: (value: V) => void): () => void
+
 	/**
 	 * Set the value.
 	 */
 	set(value: V): void
-	/**
-	 * Registers a listener to be called when the value is set.
-	 *
-	 * @returns An unregister l to remove the listener.
-	 */
-	onSet(listener: (value: V) => void): () => void
 }
