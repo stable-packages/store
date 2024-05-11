@@ -61,7 +61,7 @@ export function createStore<V>(options: StoreConfig<V>): Store<V> {
  *
  * @see https://www.npmjs.com/package/stable-store
  */
-export function getStore<V>(id: StoreKey, key?: string): Store<V> {
+export function getStore<V>({ id, key }: { id: StoreKey; key?: string }): Store<V> {
 	var c = ctx.storeMap[id]
 	if (!c) throw new Error(`Store ${id.toString()} not found`)
 	var [s, k] = c

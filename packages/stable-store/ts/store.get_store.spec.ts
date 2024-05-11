@@ -7,7 +7,7 @@ afterEach(() => {
 })
 
 it('throws if store does not exist', () => {
-	expect(() => getStore('does not exist')).toThrow()
+	expect(() => getStore({ id: 'does not exist' })).toThrow()
 })
 
 it('returns the same store if the id is the same string', () => {
@@ -17,7 +17,7 @@ it('returns the same store if the id is the same string', () => {
 			return { a: 1 }
 		}
 	})
-	const a = getStore('same-key')
-	const b = getStore('same-key')
+	const a = getStore({ id: 'same-key' })
+	const b = getStore({ id: 'same-key' })
 	expect(a).toBe(b)
 })
