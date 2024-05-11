@@ -23,7 +23,7 @@ export function resetCtx() {
 	ctx.onSet = undefined
 }
 
-export function notify(fn:((id: StoreKey, value: any) => void) | undefined,id: StoreKey, value: any) {
+export function notifyHost(fn:((id: StoreKey, value: any) => void) | undefined,id: StoreKey, value: any) {
 	if (fn === undefined) return
 
 	try {

@@ -1,8 +1,14 @@
 {
 	"extends": "astro/tsconfigs/strict",
 	"compilerOptions": {
+		"composite": true,
 		"jsx": "react-jsx",
 		"jsxImportSource": "react",
 		"moduleResolution": "bundler"
-	}
+	},
+	"references": [
+		{ "path": "../../examples/library" },
+		{ "path": "../../packages/global-store" },
+		{ "path": "../../packages/stable-store" }
+	]
 }

@@ -7,7 +7,7 @@ export interface Props {
 }
 
 const { title } = Astro.props
-const stableStore = createStore<{ count: number }>('stable-store', { count: 0 })
+const stableStore = createStore<{ count: number }>({id: 'stable-store', initialize:()=>({ count: 0 })})
 ---
 
 <!DOCTYPE html>

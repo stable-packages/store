@@ -4,5 +4,6 @@
 		"outDir": "esm",
 		"rootDir": "ts"
 	},
-	"include": ["ts", "types"]
+	"include": ["ts", "types"],
+	"references": [{"path": "../../packages/stable-store"}]
 }

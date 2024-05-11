@@ -1,7 +1,8 @@
 import { stableStore } from 'examples-library'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, type Context } from 'react'
+import type { Store } from 'stable-store'
 
-export const StableStoreContext = createContext(stableStore)
+export const StableStoreContext: Context<Store<{count:number}>> = createContext(stableStore)
 
 export function useStableStore() {
 	return useContext(StableStoreContext)

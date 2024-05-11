@@ -1,4 +1,4 @@
-import { ctx, notify } from './ctx.js'
+import { ctx, notifyHost } from './ctx.js'
 import type { Store, StoreConfig, StoreKey } from './store.types.js'
 
 /**
@@ -28,17 +28,46 @@ export function createStore<V>(options: StoreConfig<V>): Store<V> {
 	var v = options.initialize(undefined)
 
 	function get() {
-		notify(ctx.onGet, id, v)
+		notifyHost(ctx.onGet, id, v)
 		return v!
 	}
 	function set(s: V) {
 		v = s
-		notify(ctx.onSet, id, v)
+		notifyHost(ctx.onSet, id, v)
+		notify(setListeners, v)
 	}
 
-	var store = { get, set }
+	var setListeners: Array<(value: V) => void> = []
+	var onSet = listenerAdder<V>(setListeners)
+
+	var store = { get, set, onSet }
 	ctx.storeMap[id] = [store]
 	return store
+}
+
+function notify<V>(listeners: Array<(value: V) => void>, value: V) {
+	listeners.forEach((fn) => {
+		try {
+			fn(value)
+		} catch (e) {
+			if (!ctx.suppressListenerError) throw e
+			ctx.logger.error(e)
+		}
+	})
+}
+
+function listenerAdder<V>(listeners: Array<(value: V) => void>) {
+	return (fn: (value: V) => void) => {
+		if (listeners.indexOf(fn) === -1) {
+			listeners.push(fn)
+		}
+		return () => {
+			var x = listeners.indexOf(fn)
+			if (x >= 0) {
+				listeners.splice(x, 1)
+			}
+		}
+	}
 }
 
 /**

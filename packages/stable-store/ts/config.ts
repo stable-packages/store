@@ -16,25 +16,21 @@ export interface Config {
 	/**
 	 * Registers a listener to be called whenever a store value is retrieved.
 	 *
-	 * This is used mostly for debugging purpose.
+	 * Use this for debug and security monitoring.
 	 *
-	 * @param listener - A callback function to be called whenever the value is retrieved.
-	 * The first parameter is the `id` of the store,
-	 * and the second one is the retrieved value.
-	 * @return An unregister function to remove the listener.
+	 * @param id - The store id
+	 * @param stack - The stack trace of the caller.
 	 */
-	onGet?: (id: StoreKey, value: any) => void
+	onGet?: (id: StoreKey, stack: string[]) => void
 	/**
 	 * Registers a listener to be called when the store value is set.
 	 *
-	 * This is used mostly for debugging purpose.
+	 * Use this for debug and security monitoring.
 	 *
-	 * @param listener - A callback function to be called whenever the value is set.
-	 * The first parameter is the `id` of the store,
-	 * and the second one is the new value.
-	 * @returns An unregister function to remove the listener.
+	 * @param id - The store id
+	 * @param stack - The stack trace of the caller.
 	 */
-	onSet?: (id: StoreKey, value: any) => void
+	onSet?: (id: StoreKey, stack: string[]) => void
 }
 
 /**

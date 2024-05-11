@@ -41,12 +41,7 @@ DOM scope attachment is a good alternative.
 That's basically what React Context is.
 But it suffers from the same problem as scope sharing,
 two different source code creates two different React Contexts,
-and each contains two different copies of the data.
-
-But DOM scope attachment also has its drawback.
-To ensure two pieces of code, e.g. two versions of your library, can access the same data,
-The attachment must be made at some common node in the DOM tree,
-most likely at the root.
+and each contains different copies of the data.
 
 For external storage, it is limited to serializable data only.
 
@@ -62,7 +57,8 @@ To do that, we need to make sure there will always be one and only one copy of t
 
 - Stable consuming API: the API used by the library will remain stable and backward compatible.
 - ESM only: this library is only available as ESM.
-- Loaded by Host: only the host application should load [`stable-store`]. Libraries using [`stable-store`] will reference it as `peerDependency`.
+- Loaded by Host: only the host application should load [`stable-store`].
+  Libraries using [`stable-store`] will reference it as `peerDependency`.
 
 ## Install
 
@@ -105,13 +101,9 @@ This library provides a basic store with the ability to listen to changes.
 ```ts
 import { createStore, getStore } from 'stable-store'
 
-const initialData = { ... }
-let myStore = createStore(Symbol.for('your-library'), initialData)
+createStore({ id: Symbol.for('your-library'), initialize: () => ({ ... }) })
 
-myStore = getStore(Symbol.for('your-library'))
-
-// Listen to changes
-myStore.listen(data => console.log('data changed', data))
+const myStore = getStore({ id: Symbol.for('your-library') })
 
 // Get data
 const data = myStore.get()
@@ -120,12 +112,39 @@ const data = myStore.get()
 myStore.set({ ... })
 ```
 
-It does not provide any other fancy features each as immutability (e.g. [`immer`]) or version merging (e.g. [`global-store`]).
+### Securing access
 
-This is by design so that there are minimum moving parts and the library can stay stable.
+The store access can be secured by `key` and `keyAssertion`.
 
-[`global-store`]: https://www.npmjs.com/package/global-store
-[`immer`]: https://www.npmjs.com/package/immer
+When you create a store, you can provide a `keyAssertion` function:
+
+```ts
+import { createStore } from 'stable-store'
+
+createStore({
+	id: 'some-id',
+	initialize: () => ({ ... })
+	keyAssertion: (key: string | undefined) => {
+		if (isInvalid(key)) throw new Error('invalid key')
+	},
+})
+```
+
+The `key` is provided when calling `getStore()`:
+
+```ts
+import { getStore } from 'stable-store'
+
+const store = getStore({ id: 'some-id', key: 'some-key' })
+```
+
+You can validate against this key to ensure only your code or the code that you trust can access the store.
+
+How to validate the `key` is up to you,
+you can use a simple string comparison, or deploy some cryptographic algorithm.
+
+If the `key` is valid, just return. Otherwise, throw an error.
+
 [`stable-store`]: https://www.npmjs.com/package/stable-store
 [downloads-image]: https://img.shields.io/npm/dm/stable-store.svg?style=flat
 [island architecture]: https://jasonformat.com/islands-architecture/

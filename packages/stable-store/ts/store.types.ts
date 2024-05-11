@@ -59,4 +59,11 @@ export type Store<V> = {
 	 * Set the value.
 	 */
 	set(value: V): void
+	/**
+	 * Registers a listener to be called when the store value is set.
+	 *
+	 * @param listener - A callback function to be called whenever the value is set.
+	 * @returns An unregister function to remove the listener.
+	 */
+	onSet(listener: (value: V) => void): () => void
 }

@@ -1,3 +1,3 @@
 import { createStore } from 'stable-store'
 
-export const stableStore = createStore('stable-store', { count: 0 })
+export const stableStore = createStore({ id: 'stable-store', initialize: () => ({ count: 0 }) })
