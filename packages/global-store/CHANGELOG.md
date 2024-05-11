@@ -1,5 +1,13 @@
 # global-store
 
+## 1.0.0-beta.23
+
+### Patch Changes
+
+- 998833b: Fix handling when `key` is unknown in `initializeAsyncStore()`
+- 998833b: Update TypeScript to 5.4.5.
+  Adjust type to support `exactOptionalPropertyTypes`.
+
 ## 1.0.0-beta.22
 
 ### Patch Changes
