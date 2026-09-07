@@ -6,13 +6,13 @@
 		"store",
 		"module"
 	],
-	"homepage": "https://github.com/unional/global-store",
+	"homepage": "https://github.com/stable-packages/store/tree/main/packages/stable-store",
 	"bugs": {
-		"url": "https://github.com/unional/global-store/issues"
+		"url": "https://github.com/stable-packages/store/issues"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/unional/global-store.git",
+		"url": "git+https://github.com/stable-packages/store.git",
 		"directory": "packages/stable-store"
 	},
 	"license": "MIT",
