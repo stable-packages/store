@@ -14,6 +14,14 @@ jobs:
         packages/stable-store/coverage
         packages/stable-store/esm
   release:
-    uses: stable-packages/.github/.github/workflows/pnpm-release-changeset.yml@main
+    uses: stable-packages/.github/.github/workflows/pnpm-release-changeset-oidc.yml@main
     needs: code
-    secrets: inherit
+    # Declaring `permissions:` replaces the default set, so every scope the callee
+    # needs must be listed — unlisted ones drop to `none`, not to the default.
+    permissions:
+      # Mints the OIDC token npm exchanges for short-lived publish credentials.
+      id-token: write
+      # Lets changesets/action push the version branch and tags.
+      contents: write
+      # Lets changesets/action open the "version packages" PR.
+      pull-requests: write
