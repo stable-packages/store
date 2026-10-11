@@ -1,5 +1,5 @@
 import { assertron as a } from 'assertron'
-import { assertType } from 'type-plus'
+import { testType } from 'type-plus/testing'
 import { createStore, type StoreValue } from './index.js'
 
 const moduleName = 'your-module'
@@ -80,8 +80,8 @@ test('store is typed by the initializer', () => {
 		version: 1,
 		initializer: (prev) => ({ ...prev, b: 1 })
 	})
-	assertType.isNumber(store1.value.a)
-	assertType.isNumber(store2.value.b)
+	testType.equal<typeof store1.value.a, number>(true)
+	testType.equal<typeof store2.value.b, number>(true)
 })
 
 test('initialize input is partial T because previous version may not have the same data structure', () => {
@@ -106,7 +106,7 @@ test('store type can be overridden', () => {
 		version: 0,
 		initializer: () => ({ a: undefined })
 	})
-	assertType<number | undefined>(store.value.a)
+	testType.equal<typeof store.value.a, number | undefined>(true)
 })
 
 test('initializer receives the previous initial value', () => {
