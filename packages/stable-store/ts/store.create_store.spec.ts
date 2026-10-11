@@ -1,5 +1,5 @@
 import { afterEach, expect, it } from '@jest/globals'
-import { testType } from 'type-plus'
+import { testType } from 'type-plus/testing'
 import { resetCtx } from './ctx.js'
 import { createStore, type Store } from './index.js'
 
