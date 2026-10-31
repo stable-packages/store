@@ -34,7 +34,8 @@
 	"files": [
 		"esm",
 		"ts",
-		"!**/*.{spec,unit,test,accept,integrate,system,pref,stress}.*"
+		"!**/*.{spec,unit,test,accept,integrate,system,pref,stress}.*",
+		"CHANGELOG.md"
 	],
 	"scripts": {
 		"build": "tsc",
