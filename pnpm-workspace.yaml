@@ -3,6 +3,14 @@ packages:
   - packages/*
   - tests/**/*
 
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  ejs: true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
+
 # First-party packages are exempt from the soak.
 #
 # The soak exists to stop a COMPROMISED THIRD-PARTY release being pulled into a build

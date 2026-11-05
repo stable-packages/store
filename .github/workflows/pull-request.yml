@@ -7,6 +7,7 @@ jobs:
   code:
     uses: stable-packages/.github/.github/workflows/pnpm-verify.yml@main
     with:
+      pnpm-version: 12.16.1
       artifact_paths: |
         packages/global-store/coverage
         packages/global-store/dist
@@ -19,8 +20,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
-        with:
-          version: 9.0.6
       - name: Use Node.js 20
         uses: actions/setup-node@v3
         with:
