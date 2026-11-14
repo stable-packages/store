@@ -2,10 +2,16 @@
 	"name": "tests-node-pkg",
 	"private": true,
 	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {},
-	"keywords": [],
-	"author": "",
-	"license": "MIT"
+	"description": "Typechecks a Node (NodeNext) consumer of global-store",
+	"license": "MIT",
+	"type": "module",
+	"scripts": {
+		"typecheck": "tsc"
+	},
+	"dependencies": {
+		"global-store": "workspace:*"
+	},
+	"devDependencies": {
+		"typescript": "^7.0.2"
+	}
 }

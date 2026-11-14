@@ -1,16 +1,10 @@
 {
 	"compilerOptions": {
-		"composite": true,
 		"esModuleInterop": true,
 		"noImplicitAny": true,
 		"module": "ES2020",
-		"moduleResolution": "Node",
+		"moduleResolution": "Bundler",
 		"target": "ES2020"
 	},
-	"references": [
-		{
-			"path": "../../../packages/global-store"
-		}
-	],
 	"files": ["src/index.ts"]
 }
