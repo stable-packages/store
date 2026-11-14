@@ -1,16 +1,11 @@
 {
 	"compilerOptions": {
-		"composite": true,
 		"esModuleInterop": true,
-		"noImplicitAny": true,
+		"ignoreDeprecations": "6.0",
 		"module": "ES2015",
-		"moduleResolution": "Node",
+		"moduleResolution": "Bundler",
+		"noImplicitAny": true,
 		"target": "ES5"
 	},
-	"references": [
-		{
-			"path": "../../../packages/global-store"
-		}
-	],
 	"files": ["src/index.ts"]
 }

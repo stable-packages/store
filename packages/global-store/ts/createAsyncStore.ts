@@ -30,8 +30,8 @@ export async function createAsyncStore<T extends StoreValue>({
 export function initializeAsyncStore(moduleName: string, key?: string) {
 	const s = asyncStoreCreators[moduleName]
 	if (!s) return
-	if (key &&!s[key]) return
+	if (key && !s[key]) return
 
 	const keys = key ? [key] : Object.keys(s)
-	keys.forEach((key) => resolveCreators(moduleName, key, s[key]!, createStore))
+	for (const k of keys) resolveCreators(moduleName, k, s[k]!, createStore)
 }

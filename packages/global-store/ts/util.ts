@@ -45,9 +45,9 @@ export function resolveCreators(
 	storeCreators: Array<StoreCreator<any>>,
 	cs: typeof createStore
 ) {
-	sortByVersion(storeCreators).forEach(({ version, resolve, initializer }) =>
+	for (const { version, resolve, initializer } of sortByVersion(storeCreators)) {
 		resolve(cs({ moduleName, key, version, initializer }))
-	)
+	}
 }
 
 export function sortByVersion<S>(storeCreators: Array<StoreCreator<S>>) {
@@ -62,10 +62,10 @@ export function freezeStoreValue(stores: Stores, id: StoreId, value?: StoreValue
 function freezeValue(storeValue: StoreValue) {
 	if (Object.isFrozen(storeValue)) throw TypeError('Frozen value cannot be freezed again')
 
-	Object.keys(storeValue).forEach((k) => freezeIfIsArray(storeValue, k))
+	for (const k of Object.keys(storeValue)) freezeIfIsArray(storeValue, k)
 	// istanbul ignore next
 	if (Object.getOwnPropertySymbols) {
-		Object.getOwnPropertySymbols(storeValue).forEach((k) => freezeIfIsArray(storeValue, k))
+		for (const k of Object.getOwnPropertySymbols(storeValue)) freezeIfIsArray(storeValue, k)
 	}
 
 	return Object.freeze(storeValue)

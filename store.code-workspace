@@ -13,8 +13,6 @@
 		"typescript.tsdk": "node_modules/typescript/lib"
 	},
 	"extensions": {
-		"recommendations": [
-			"biomejs.biome"
-		]
+		"recommendations": ["biomejs.biome"]
 	}
 }
