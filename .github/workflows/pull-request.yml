@@ -1,45 +1,34 @@
 name: pull-request
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, reopened]
+  # The merge queue builds a temporary merge-group branch and looks for the required
+  # contexts there. It fires neither `pull_request` nor `push`, so without this trigger
+  # a queued PR waits forever on checks that never start.
+  merge_group:
+
+# Cancel superseded runs on a PR, but never on a merge-group branch — cancelling
+# there would stall the queue on a check that never reports.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  # The job id `code` makes the required context `code / all-checks`.
+  # Coverage uploads from the ubuntu / lts/* leg inside pnpm-verify.
   code:
     uses: stable-packages/.github/.github/workflows/pnpm-verify.yml@main
+    permissions:
+      contents: read
     with:
-      pnpm-version: 12.16.1
-      artifact_paths: |
-        packages/global-store/coverage
-        packages/global-store/dist
-        packages/global-store/lib
-        packages/stable-store/coverage
-        packages/stable-store/esm
-  coverage:
-    runs-on: ubuntu-latest
-    needs: code
-    steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-      - name: Use Node.js 20
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: pnpm
-      - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v4
-      - name: codecov - global-store
-        uses: codecov/codecov-action@v4
-        # A coverage upload must never fail CI: the tests are the gate.
-        continue-on-error: true
-        with:
-          files: ./packages/global-store/coverage/coverage-final.json
-          flags: global-store
-          token: ${{ secrets.CODECOV_TOKEN }}
-      - name: codecov - stable-store
-        uses: codecov/codecov-action@v4
-        # A coverage upload must never fail CI: the tests are the gate.
-        continue-on-error: true
-        with:
-          files: ./packages/stable-store/coverage/coverage-final.json
-          flags: stable-store
-          token: ${{ secrets.CODECOV_TOKEN }}
+      skip-playwright: true
+
+  # The release PR is the last point where the next publish is reviewable; after it
+  # merges, release.yml publishes unattended. Only runs there. Deliberately not a
+  # required check — it is skipped on every other PR, and a skipped check never
+  # satisfies a required context.
+  publish-gate:
+    if: startsWith(github.head_ref, 'changeset-release/')
+    uses: stable-packages/.github/.github/workflows/pnpm-publish-gate.yml@main
+    permissions:
+      contents: read
