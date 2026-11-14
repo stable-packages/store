@@ -1,14 +1,18 @@
 {
-	"$schema": "https://turborepo.org/schema.json",
-	"pipeline": {
+	"$schema": "https://turborepo.com/schema.json",
+	"tasks": {
 		"build": {
 			"dependsOn": ["^build"],
 			"inputs": [
-				"ts/**/*.ts",
-				"!ts/**/*.spec.ts",
-				"tsconfig.*",
-				"package.json",
-				"webpack.*"
+				"ts/**",
+				"src/**",
+				"!**/*.spec.ts",
+				"tsconfig*.json",
+				"tsdown.config.ts",
+				"rollup.config.mjs",
+				"webpack.config.js",
+				"astro.config.mjs",
+				"package.json"
 			],
 			"outputs": ["dist/**", "lib/**", "esm/**"]
 		},
@@ -17,13 +21,10 @@
 		},
 		"coverage": {
 			"dependsOn": ["^build"],
-			"inputs": ["ts/**/*.ts", "!ts/**/*.spec.ts"],
+			"inputs": ["ts/**", "vitest.config.ts", "tsconfig*.json", "package.json"],
 			"outputs": ["coverage/**"]
 		},
 		"depcheck": {
-			"dependsOn": ["^build"]
-		},
-		"lint": {
 			"dependsOn": ["^build"]
 		},
 		"size": {
@@ -32,6 +33,9 @@
 		"test": {
 			"dependsOn": ["^build"]
 		},
-		"verify": {}
+		"typecheck": {
+			"dependsOn": ["^build"],
+			"inputs": ["ts/**", "src/**", "tsconfig*.json", "package.json"]
+		}
 	}
 }

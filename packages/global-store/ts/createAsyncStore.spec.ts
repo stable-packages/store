@@ -10,7 +10,6 @@ it('unknown key', async () => {
 	const key = '6e9dec9c-db22-4bbd-a088-ce734e34b5fd'
 	createAsyncStore({ moduleName, key, version: 0, initializer: () => ({ a: 1 }) })
 	initializeAsyncStore(moduleName, 'some-unknown-key')
-
 })
 
 test('init single store with key', async () => {

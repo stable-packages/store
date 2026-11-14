@@ -59,3 +59,7 @@ typings
 dist-es5
 dist-es2015
 lib
+
+# build outputs
+dist
+esm

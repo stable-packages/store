@@ -1,9 +1,9 @@
 {
 	"extends": "@repobuddy/typescript/tsconfig/monorepo",
 	"compilerOptions": {
-		"outDir": "esm",
-		"rootDir": "ts"
+		"composite": false,
+		"noEmit": true,
+		"types": ["vitest/globals"]
 	},
-	"include": ["ts", "types"],
-	"references": [{"path": "../../packages/stable-store"}]
+	"include": ["ts", "tsdown.config.ts", "vitest.config.ts"]
 }

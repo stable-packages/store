@@ -6,13 +6,17 @@ on:
 jobs:
   code:
     uses: stable-packages/.github/.github/workflows/pnpm-verify.yml@main
+    permissions:
+      contents: read
     with:
-      artifact_paths: |
-        packages/global-store/coverage
-        packages/global-store/dist
-        packages/global-store/lib
-        packages/stable-store/coverage
-        packages/stable-store/esm
+      os: '["ubuntu-latest"]'
+      skip-playwright: true
+      skip-codecov: true
+
+  # Secretless: GITHUB_TOKEN for the version PR, npm trusted publishing (OIDC) to
+  # publish. No NPM_TOKEN to rotate or silently expire. The trusted publisher
+  # registered at npmjs.com must name THIS file (release.yml), not the reusable
+  # workflow it calls.
   release:
     uses: stable-packages/.github/.github/workflows/pnpm-release-changeset-oidc.yml@main
     needs: code
@@ -25,3 +29,6 @@ jobs:
       contents: write
       # Lets changesets/action open the "version packages" PR.
       pull-requests: write
+      # Approves the Version Packages PR's parked pull_request runs, so its required
+      # checks report and the PR can merge.
+      actions: write

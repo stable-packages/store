@@ -46,7 +46,6 @@
 		"tsconfigs",
 		"unsub"
 	],
-	"eslint.enable": true,
 	"javascript.validate.enable": false,
 	"json.schemas": [
 		{

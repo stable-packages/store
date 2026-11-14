@@ -1,12 +1,7 @@
 ignores:
-  - "@babel/core"
-  - "@commitlint/*"
-  - "@repobuddy/*"
-  - "@rollup/plugin-typescript"
-  - "@size-limit/preset-small-lib"
-  - "@types/jest"
-  - jest*
+  - "@repobuddy/typescript" # depcheck unable to detect TypeScript extends
+  - "@size-limit/preset-small-lib" # depcheck unable to recognize size-limit
+  - "@vitest/coverage-v8" # loaded by vitest through `coverage.provider`
   - rimraf # https://github.com/depcheck/depcheck/issues/776
-  - rollup*
-  - ts-jest
-  - tslib
+  - size-limit # depcheck unable to recognize size-limit
+  - tsdown # runs from `tsdown.config.ts`
