@@ -1,4 +1,4 @@
-import { afterEach, expect, it } from '@jest/globals'
+import { afterEach, expect, it } from 'vitest'
 import { config } from './config.js'
 import { resetCtx } from './ctx.js'
 import { createStore } from './index.js'

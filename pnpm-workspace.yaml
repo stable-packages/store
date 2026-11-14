@@ -4,12 +4,10 @@ packages:
   - tests/**/*
 
 allowBuilds:
-  '@parcel/watcher': true
-  '@swc/core': true
+  "@swc/core": true
   ejs: true
   esbuild: true
   sharp: true
-  unrs-resolver: true
 
 # First-party packages are exempt from the soak.
 #
@@ -34,8 +32,20 @@ minimumReleaseAgeExclude:
   - stable-store
   - mocktomata
   - just-func
-  - '@just-func/*'
-  - '@just-web/*'
-  - '@mocktomata/*'
-  - '@repobuddy/*'
-  - '@unional/*'
+  - "@just-func/*"
+  - "@just-web/*"
+  - "@mocktomata/*"
+  - "@repobuddy/*"
+  - "@unional/*"
+
+overrides:
+  # GHSA-g3hv-75wg-m249: minimatch >=7.0.0 <11.0.1 is open to denial of service through
+  # globparts amplification. depcheck@1.4.7 asks for ^7.4.6, so the range cannot reach the
+  # patched 11.x on its own. minimatch 11 dropped the default export depcheck reads, so
+  # patches/depcheck@1.4.7.patch switches both call sites to the named `minimatch` export.
+  # Remove the override and the patch once depcheck releases a version that depends on
+  # minimatch >=11.0.1.
+  depcheck>minimatch: ^11.0.1
+
+patchedDependencies:
+  depcheck@1.4.7: patches/depcheck@1.4.7.patch

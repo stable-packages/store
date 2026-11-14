@@ -1,7 +1,7 @@
-import { it } from '@jest/globals'
+import { it } from 'vitest'
 
 it.todo('first test')
-// import { expect, it, test } from '@jest/globals'
+// import { expect, it, test } from 'vitest'
 // import { getStore } from './index.js'
 
 // const testStoreSymbol = Symbol('testStore')
