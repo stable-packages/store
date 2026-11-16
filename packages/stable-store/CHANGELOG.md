@@ -1,5 +1,12 @@
 # stable-store
 
+## 1.0.0-beta.3
+
+### Patch Changes
+
+- 9be8c0d: Rebuild the published output with tsdown. The entry points, the `GlobalStore` IIFE and the exported API are unchanged. Declaration and source map files for internal modules are no longer published.
+- 4c648f3: Include `CHANGELOG.md` in the published package.
+
 ## 1.0.0-beta.2
 
 ### Minor Changes
