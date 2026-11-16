@@ -17,7 +17,7 @@ jobs:
   # The job id `code` makes the required context `code / all-checks`.
   # Coverage uploads from the ubuntu / lts/* leg inside pnpm-verify.
   code:
-    uses: stable-packages/.github/.github/workflows/pnpm-verify.yml@main
+    uses: repobuddy/.github/.github/workflows/pnpm-verify.yml@v2
     permissions:
       contents: read
     with:
@@ -29,6 +29,6 @@ jobs:
   # satisfies a required context.
   publish-gate:
     if: startsWith(github.head_ref, 'changeset-release/')
-    uses: stable-packages/.github/.github/workflows/pnpm-publish-gate.yml@main
+    uses: repobuddy/.github/.github/workflows/pnpm-publish-gate.yml@v2
     permissions:
       contents: read
