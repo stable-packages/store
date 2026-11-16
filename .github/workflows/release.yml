@@ -5,7 +5,7 @@ on:
 
 jobs:
   code:
-    uses: stable-packages/.github/.github/workflows/pnpm-verify.yml@main
+    uses: repobuddy/.github/.github/workflows/pnpm-verify.yml@v2
     permissions:
       contents: read
     with:
@@ -18,7 +18,7 @@ jobs:
   # registered at npmjs.com must name THIS file (release.yml), not the reusable
   # workflow it calls.
   release:
-    uses: stable-packages/.github/.github/workflows/pnpm-release-changeset-oidc.yml@main
+    uses: repobuddy/.github/.github/workflows/pnpm-release-changeset-oidc.yml@v2
     needs: code
     # Declaring `permissions:` replaces the default set, so every scope the callee
     # needs must be listed — unlisted ones drop to `none`, not to the default.
