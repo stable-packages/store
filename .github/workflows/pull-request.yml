@@ -1,7 +1,9 @@
 name: pull-request
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    # `labeled`/`unlabeled`: Renovate adds its labels just after it opens the PR, and
+    # the dep-changeset gate reads them.
+    types: [opened, synchronize, reopened, labeled, unlabeled]
   # The merge queue builds a temporary merge-group branch and looks for the required
   # contexts there. It fires neither `pull_request` nor `push`, so without this trigger
   # a queued PR waits forever on checks that never start.
@@ -15,13 +17,14 @@ concurrency:
 
 jobs:
   # The job id `code` makes the required context `code / all-checks`.
-  # Coverage uploads from the ubuntu / lts/* leg inside pnpm-verify.
   code:
-    uses: repobuddy/.github/.github/workflows/pnpm-verify.yml@v2
+    uses: ./.github/workflows/code.yml
     permissions:
       contents: read
-    with:
-      skip-playwright: true
+      pull-requests: write
+    secrets:
+      REPOBUDDY_APP_ID: ${{ secrets.REPOBUDDY_APP_ID }}
+      REPOBUDDY_APP_PRIVATE_KEY: ${{ secrets.REPOBUDDY_APP_PRIVATE_KEY }}
 
   # The release PR is the last point where the next publish is reviewable; after it
   # merges, release.yml publishes unattended. Only runs there. Deliberately not a

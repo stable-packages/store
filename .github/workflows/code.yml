@@ -1,0 +1,61 @@
+name: code
+# Everything the required `code / all-checks` check stands for on a pull request.
+#
+# The ruleset requires `code / all-checks`. pnpm-verify.yml has its own `all-checks`, but a
+# caller cannot add jobs to its `needs:`, so the dep-changeset gate and the release guard
+# could not feed it. This workflow is called as the `code` job instead, and its own
+# `all-checks` (below) rolls up verify, the gate and the guard under the same check name.
+on:
+  workflow_call:
+    secrets:
+      REPOBUDDY_APP_ID:
+        required: false
+      REPOBUDDY_APP_PRIVATE_KEY:
+        required: false
+
+jobs:
+  # Coverage uploads from the ubuntu / lts/* leg inside pnpm-verify.
+  verify:
+    uses: repobuddy/.github/.github/workflows/pnpm-verify.yml@v2
+    permissions:
+      contents: read
+    with:
+      skip-playwright: true
+
+  # Renovate PRs: writes a patch changeset when the leak checks pass, or fails until a
+  # person commits one. Passes on every other PR and on merge_group.
+  # The published packages have no runtime dependencies to inline, so `bundled` stays off.
+  dep-changeset:
+    uses: repobuddy/.github/.github/workflows/dep-changeset.yml@v2
+    permissions:
+      contents: read
+      pull-requests: write
+    secrets:
+      REPOBUDDY_APP_ID: ${{ secrets.REPOBUDDY_APP_ID }}
+      REPOBUDDY_APP_PRIVATE_KEY: ${{ secrets.REPOBUDDY_APP_PRIVATE_KEY }}
+
+  # The Version Packages PR: fails on a major bump no person-written changeset asked for.
+  # Skipped on every other branch.
+  release-guard:
+    uses: repobuddy/.github/.github/workflows/dep-changeset-release-guard.yml@v2
+    permissions:
+      contents: read
+      pull-requests: read
+
+  all-checks:
+    needs: [verify, dep-changeset, release-guard]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: All checks passed
+        env:
+          VERIFY: ${{ needs.verify.result }}
+          GATE: ${{ needs.dep-changeset.result }}
+          GUARD: ${{ needs.release-guard.result }}
+        run: |
+          echo "verify=$VERIFY dep-changeset=$GATE release-guard=$GUARD"
+          [ "$VERIFY" = success ] || exit 1
+          # The gate's verdict job always runs, so anything but success is a failure.
+          [ "$GATE" = success ] || exit 1
+          # The guard's only job is skipped off the release branch.
+          [ "$GUARD" = success ] || [ "$GUARD" = skipped ] || exit 1
