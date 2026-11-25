@@ -1,5 +1,11 @@
 # global-store
 
+## 1.0.0-beta.24
+
+### Patch Changes
+
+- 9be8c0d: Rebuild the published output with tsdown. The entry points, the `GlobalStore` IIFE and the exported API are unchanged. Declaration and source map files for internal modules are no longer published.
+
 ## 1.0.0-beta.23
 
 ### Patch Changes
